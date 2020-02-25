@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="27BB412A-FF75-1F01-B6F1-492F58B2099B" name="TBL_TIPO_USUARIO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:07:39 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_3</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIPO_USUARIO" id="C5A8BE42-1738-F6CE-420D-27576984A11E">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:08:47 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_TIPO_USUARIO" id="0F210FB2-7C2D-F567-2A71-D1E51D3F9268">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:08:47 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="88E76DC8-7A4B-3F9B-C569-A71A15767D92" name="TBL_TIPO_USUARIO_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:08:47 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C5A8BE42-1738-F6CE-420D-27576984A11E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

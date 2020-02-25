@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="350A5A7C-9ACB-07E7-021F-F1F568C974FF" containerWithKeyObject="FDC06A93-2E49-5EFC-3CCF-E6D3E80FCD6D" localFKIndex="F6E12CD6-9282-FC82-D0F1-92187E737464" name="TBL_USUARIO_COMPRADOR_TBL_USUARIOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:28:26 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_USUARIOS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>5F8A163B-D950-24CC-32DF-A11D091A3D56</referredTableID>
+<keyObject>18A4379C-1369-D448-E65B-A36E1AE70026</keyObject>
+<referredKeyID>18A4379C-1369-D448-E65B-A36E1AE70026</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_USUARIO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

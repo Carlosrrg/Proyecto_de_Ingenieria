@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FDC06A93-2E49-5EFC-3CCF-E6D3E80FCD6D" name="TBL_USUARIO_COMPRADORES">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:28:03 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_7</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_USUARIO_COMPRADOR" id="D8A590FB-46E8-4F12-F86B-36023A2AE06B">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:28:26 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="350A5A7C-9ACB-07E7-021F-F1F568C974FF" referredColumn="21AEE52B-5726-7587-B8FE-4631CAB26B5B"/>
+</associations>
+</Column>
+<Column name="CODIGO_COMPRADOR" id="FA032A8D-5A22-96B9-E164-8BFAC18CE319">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:29:53 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AEF4D353-85E3-8047-42CA-144714999E49" name="TBL_USUARIO_COMPRADOR_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:28:37 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D8A590FB-46E8-4F12-F86B-36023A2AE06B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F6E12CD6-9282-FC82-D0F1-92187E737464" name="TBL_USUARIO_COMPRADOR_TBL_USUARIOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 20:28:26 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D8A590FB-46E8-4F12-F86B-36023A2AE06B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

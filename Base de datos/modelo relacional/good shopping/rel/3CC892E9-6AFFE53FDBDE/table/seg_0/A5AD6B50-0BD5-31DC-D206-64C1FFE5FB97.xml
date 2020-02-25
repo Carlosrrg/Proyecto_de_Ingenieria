@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A5AD6B50-0BD5-31DC-D206-64C1FFE5FB97" name="TBL_MONEDA">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:52:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_15</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIPO_MONEDA" id="C35CF5C6-8762-0167-652B-0AB6B57B77AD">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:53:15 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_TIPO_MONEDA" id="0211AD8A-EF18-3882-9270-7D74F6854C15">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:53:15 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A7AAE37B-F679-4256-9051-FB2A4A61DF5A" name="TBL_MONEDA_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:53:15 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C35CF5C6-8762-0167-652B-0AB6B57B77AD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,45 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="350D7610-F10C-C366-AFAF-23D507703985" name="TBL_ESTADO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:54:45 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_16</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_ESTADO" id="3914A2A7-0A7C-C190-C7D6-3CF05B2988F9">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:55:21 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_ESTADO" id="7A7C69D4-53B0-6CC4-571A-B0749886CE06">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:55:21 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7DD73438-C3D5-7391-B3E8-F0A839ACE75C" name="TBL_ESTADO_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:55:21 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3914A2A7-0A7C-C190-C7D6-3CF05B2988F9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

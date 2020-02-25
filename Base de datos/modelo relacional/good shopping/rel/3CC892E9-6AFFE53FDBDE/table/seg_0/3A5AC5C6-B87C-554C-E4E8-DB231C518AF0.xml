@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3A5AC5C6-B87C-554C-E4E8-DB231C518AF0" name="TBL_TIENDA_X_TBL_PRODUCTO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:47:45 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_13</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIENDA" id="7433B4A2-2119-507A-6B6D-003182A86FFE">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:48:22 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3AA621BD-3514-FC61-A102-C49B7E9132A1" referredColumn="C1C4E8B3-0600-A173-388A-FEE4094C1233"/>
+</associations>
+</Column>
+<Column name="CODIGO_PRODUCTO" id="485D5E75-4689-2558-CEA8-E71C17C18D41">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:48:27 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="897E9348-A63C-3DD6-B086-A0A2F30EB1C1" referredColumn="9032F9D4-C8EB-C5BA-9EF6-121DD049A8BE"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F62E0F3E-E1C8-8D96-FFF6-8055AB4CAD38" name="TBL_TIENDA_X_TBL_PRODUCTO_TBL_TIENDAS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:48:22 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7433B4A2-2119-507A-6B6D-003182A86FFE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7E955BCE-DB4A-5766-A721-E716F382E7D0" name="TBL_TIENDA_X_TBL_PRODUCTO_TBL_PRODUCTOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-24 23:48:27 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="485D5E75-4689-2558-CEA8-E71C17C18D41"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A5C7D050-3B5B-9525-29A6-3A139D3F8092" name="TBL_SUB_CATEGORIAS">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-25 00:01:37 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_18</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_SUB_CATEGORIA" id="6B7FA6D7-BE51-698A-DB7D-5FFA4C94B74E">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-25 00:03:11 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_SUB_CATEGORIA" id="8B1098FF-F1EC-6988-352D-DB932F6EE7BA">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-25 00:03:11 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1A549FA3-0A71-74E6-397E-A544C9C59FF3" name="TBL_SUB_CATEGORIAS_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-25 00:03:11 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6B7FA6D7-BE51-698A-DB7D-5FFA4C94B74E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

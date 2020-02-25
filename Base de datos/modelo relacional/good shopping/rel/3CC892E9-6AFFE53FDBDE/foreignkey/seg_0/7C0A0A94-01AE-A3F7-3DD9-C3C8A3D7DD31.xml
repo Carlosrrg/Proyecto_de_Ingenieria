@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="7C0A0A94-01AE-A3F7-3DD9-C3C8A3D7DD31" containerWithKeyObject="C9DA6755-5BAD-79C7-7DF3-DCEB62D1D778" localFKIndex="1A91AF65-3B34-2826-809A-586D40CE12E9" name="TBL_SUBCATEGO_X_TBL_PRODUCTO_TBL_CATEGORIAS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-25 00:05:26 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_CATEGORIAS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>6AD5BD0D-A65E-FFBE-C5DB-784D4C997671</referredTableID>
+<keyObject>24EF8579-2097-7034-B1CF-7C979EE1E48B</keyObject>
+<referredKeyID>24EF8579-2097-7034-B1CF-7C979EE1E48B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_CATEGORIA</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
