@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4E5F3259-9FC1-BB3E-16F9-27EA3589CD59" name="TBL_TIENDA_X_TBL_PRODUCTO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>3A5AC5C6-B87C-554C-E4E8-DB231C518AF0</importedID>
+<ordsAlias>table_13</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIENDA" id="8442D314-E562-DF58-A54E-CFC2A13F210E">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>7433B4A2-2119-507A-6B6D-003182A86FFE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0ECAB429-077C-7F06-0BC2-40A8AEC7FF59" referredColumn="B3A80DA8-C02A-3366-DC55-DEF8D1FFA028"/>
+</associations>
+</Column>
+<Column name="CODIGO_PRODUCTO" id="A1D4277A-122C-FCCA-C7D2-2B21272B9FC8">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>485D5E75-4689-2558-CEA8-E71C17C18D41</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3F02480B-AA19-99F2-A3D9-42DA7858A9EF" referredColumn="BA987CAC-7617-3746-9A89-F54FA0B259AD"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BE470726-AB6C-9D79-5050-62A52FFF84D3" name="TBL_TIENDA_X_TBL_PRODU_FKv2">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8442D314-E562-DF58-A54E-CFC2A13F210E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C6013424-6708-6B78-D1CF-EA803DE19C88" name="TBL_TIENDA_X_TBL_PRODU_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A1D4277A-122C-FCCA-C7D2-2B21272B9FC8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

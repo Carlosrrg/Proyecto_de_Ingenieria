@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B43E8755-A902-08C0-A508-FF05C604A075" name="TBL_CATEGORIAS">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>6AD5BD0D-A65E-FFBE-C5DB-784D4C997671</importedID>
+<ordsAlias>table_10</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_CATEGORIA" id="0B2707D8-40D4-80C1-EDEE-B4E83CC25160">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>F89F4697-E32F-2110-B0C8-A57AD39019D5</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_CATEGORIA" id="C7530B65-0366-BA1E-BD54-AD9B145E986A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>C81CCF8C-0B7E-D792-2648-A0F9FE68CFA9</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A7FC8CE5-609D-BEB6-8DA5-6496D0689BBE" name="TBL_CATEGORIAS_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>24EF8579-2097-7034-B1CF-7C979EE1E48B</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0B2707D8-40D4-80C1-EDEE-B4E83CC25160"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

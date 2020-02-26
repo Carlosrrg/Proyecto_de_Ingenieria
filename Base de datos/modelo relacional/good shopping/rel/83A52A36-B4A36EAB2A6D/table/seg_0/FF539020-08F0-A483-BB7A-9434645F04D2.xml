@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FF539020-08F0-A483-BB7A-9434645F04D2" name="TBL_CATEGO_X_TBL_SUBCATEGO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>C9DA6755-5BAD-79C7-7DF3-DCEB62D1D778</importedID>
+<ordsAlias>table_17</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_CATEGORIA" id="190786E2-226E-FC91-82D6-DD324E3B6FF0">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>D1360099-71B7-7D73-66FF-9A52ACF28213</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B4149E22-E2B8-FDF4-FBFB-532597013885" referredColumn="0B2707D8-40D4-80C1-EDEE-B4E83CC25160"/>
+</associations>
+</Column>
+<Column name="CODIGO_SUB_CATEGORIA" id="5F8DD7F9-5E6A-E239-5184-70EF77430E3A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>89139BB9-40C7-1510-A593-73EFE61CB2D9</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="20707D34-0FCA-DE1E-968C-718521D8BBF7" referredColumn="9460C52E-6BA8-434A-B183-445B36E017E0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="522BCDC1-2B7C-9555-07A5-B5C7B9AD98BE" name="TBL_SUBCATEGO_X_TBL_SUB_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5F8DD7F9-5E6A-E239-5184-70EF77430E3A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="66B56DBC-5976-14A6-5E8D-33494A2DB360" name="TBL_SUBCATEGO_X_TBL_CAT_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="190786E2-226E-FC91-82D6-DD324E3B6FF0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

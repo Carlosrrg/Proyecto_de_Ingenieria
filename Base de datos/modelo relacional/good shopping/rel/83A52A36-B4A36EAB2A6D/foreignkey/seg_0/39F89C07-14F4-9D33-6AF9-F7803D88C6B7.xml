@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="39F89C07-14F4-9D33-6AF9-F7803D88C6B7" containerWithKeyObject="6875D8AB-C07A-2981-64FA-C06D11A20A12" localFKIndex="C8347AC3-8661-3202-B2B8-CB1E2AE2A05A" name="TBL_USUARIOS_TBL_LUGA_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>B3B815D5-539B-33CF-A040-808BF6717DF3</importedID>
+<referredTableLongName>TBL_LUGARES</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>9A163530-5F93-55CB-CD41-7CE5C7A8A257</referredTableID>
+<keyObject>ED846CF1-C2E3-43F3-903E-8BD598580BD5</keyObject>
+<referredKeyID>ED846CF1-C2E3-43F3-903E-8BD598580BD5</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_LUGAR</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

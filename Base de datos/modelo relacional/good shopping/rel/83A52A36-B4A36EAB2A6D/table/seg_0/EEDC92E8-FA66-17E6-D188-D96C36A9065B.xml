@@ -1,0 +1,170 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EEDC92E8-FA66-17E6-D188-D96C36A9065B" name="TBL_PRODUCTOS">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>DFDD9DBD-622F-36B8-B86C-2B6B0559E49E</importedID>
+<ordsAlias>table_8</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_PRODUCTO" id="BA987CAC-7617-3746-9A89-F54FA0B259AD">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>9032F9D4-C8EB-C5BA-9EF6-121DD049A8BE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO_TIPO_PRODUCTO" id="72C4279E-16A1-8E69-3C10-79336C58D191">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>1BE175AF-A395-0046-C8AD-49F053FD9396</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D9C9925E-6352-CC34-18A0-7EEAE578D326" referredColumn="3D0B03F1-6F5B-34AA-3190-869E5F3CEAB6"/>
+</associations>
+</Column>
+<Column name="CODIGO_TIPO_MONEDA" id="42A671FA-196D-E1DB-46C2-11439DCA4184">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>7C1989ED-1F57-D92E-0FBC-CC83F04D55FE</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D08C664B-E966-5486-AE94-03229F72D541" referredColumn="AB2E6853-FAB2-0700-BFE8-ECB30B08F979"/>
+</associations>
+</Column>
+<Column name="CODIGO_ESTADO" id="8A2FDCC4-6F0A-C2D3-26B7-7676EFA4447A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>DD1944A9-84D7-4A7D-2991-4EE87E1F3E0C</importedID>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5D38205A-0D28-D9CF-3615-69DA98C81C1B" referredColumn="58825C8D-1ADE-E8D9-0A53-3D367847A34B"/>
+</associations>
+</Column>
+<Column name="CODIGO_CATEGORIA" id="FA0F3DBD-79F3-C07F-99B0-DC1E955A0725">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>F8E9EC34-F101-EF05-8749-65BDEAD2D464</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="469084D5-3B2E-07DA-E7C6-328C958F76BA" referredColumn="0B2707D8-40D4-80C1-EDEE-B4E83CC25160"/>
+</associations>
+</Column>
+<Column name="NOMBRE_PRODUCTO" id="62E6D49F-C605-D94D-FA2A-E3239C321A59">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>126A2961-55AA-E2AF-E10E-FA59EEDF81C5</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIO" id="3D7A3DA2-B4DF-FAFF-C4CC-B7136544D835">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>7A17D8DE-58B1-74BD-28CF-A361FD51A69C</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCIPCION" id="AB899304-DB57-9923-A13B-A7B7A2A916B5">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>1BBA7581-1C00-762E-3F33-2A08C0461002</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="69BA25B9-FFEB-C177-3A5C-9CC8E5F2699C" name="TBL_PRODUCTOS_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>02CAEDC5-C651-33FD-607F-A215C63E5A59</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BA987CAC-7617-3746-9A89-F54FA0B259AD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DA696B27-54D3-ADF8-4E69-42BE530E3CF5" name="TBL_PRODU_TBL_CATEGO_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FA0F3DBD-79F3-C07F-99B0-DC1E955A0725"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="762A179A-0B34-1922-CE81-3D42CB739C57" name="TBL_PROD_TBL_EST_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8A2FDCC4-6F0A-C2D3-26B7-7676EFA4447A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="07B7A012-09AD-92B8-97EE-A00F7ED05FA2" name="TBL_PROD_TBL_TIPO_PROD_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="72C4279E-16A1-8E69-3C10-79336C58D191"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="02C071F8-D63C-FEE0-726A-CB546868E056" name="TBL_PROD_TBL_MONEDA_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="42A671FA-196D-E1DB-46C2-11439DCA4184"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3AC50E06-4C52-3AB9-565C-CC9BC22580F6" name="TBL_VENDEDORES">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>04817898-F79C-5A7E-D31D-ECF6CC80FEFE</importedID>
+<ordsAlias>table_6</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_USUARIO_VENDEDOR" id="03529A6B-AABC-F0A6-16A3-E6CC02BF4A01">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>3E50E55F-15A2-FA96-8EFE-C9A6528D4FE4</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2EDE6F09-2650-7EA7-56B9-1A79E61D4A1A" referredColumn="EC247553-D325-1C5A-8327-806281621B0C"/>
+</associations>
+</Column>
+<Column name="CODIGO_VENDEDOR" id="7E6BDF2C-2458-E472-CDE4-AD6CCFFC5B20">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>D65F2494-69ED-8C70-1004-DC3AF80C5D12</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO_TIENDA" id="73F3D514-2D5A-9E9E-1469-3FD5A368EDAF">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>85046115-1CA3-9F9D-0C1A-E3023AFB522B</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="195CE4CD-94DA-93C7-462B-AE76C511D3FF" referredColumn="B3A80DA8-C02A-3366-DC55-DEF8D1FFA028"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EDBF4CCE-0935-653F-30FA-B80FE7BDEFB9" name="TBL_VENDEDOR_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>CC1BF286-180E-6EAE-EFEE-B731BE8D4211</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="03529A6B-AABC-F0A6-16A3-E6CC02BF4A01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B07153FD-9054-6B32-B0A8-78D536E0F90F" name="TBL_VENDEDOR_TBL_TIENDA_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="73F3D514-2D5A-9E9E-1469-3FD5A368EDAF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D53CF3AB-EF44-085A-5E56-15F0CF5F9130" name="TBL_VENDEDOR_TBL_USUARIOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="03529A6B-AABC-F0A6-16A3-E6CC02BF4A01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

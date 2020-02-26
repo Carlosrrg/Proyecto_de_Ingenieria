@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0DFAF993-D81C-7571-8B12-7B9BC82DC937" name="TBL_TIENDA_X_TBL_SERVICIO">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>A14F9B01-551B-BA29-090F-B05706C218FE</importedID>
+<ordsAlias>table_20</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIENDA" id="60EF75A4-4655-A49C-3D2F-368CB924AD91">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>03520353-1AAD-9686-E09E-F29EF2217191</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="181B0AFA-2628-0F6E-05CF-B77A584665A7" referredColumn="B3A80DA8-C02A-3366-DC55-DEF8D1FFA028"/>
+</associations>
+</Column>
+<Column name="CODIGO_SERVICIO_OFRECE" id="8BD5329B-CF4E-6847-64B8-93555BEC52F5">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<importedID>A9B15037-479D-F873-9570-466F0275B8A2</importedID>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AA225436-CC1B-7B68-ACC5-BAF46057263D" referredColumn="B62FE74A-D7AD-0658-AE5F-8BF95A238494"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="497DF7D1-35B8-9975-22BA-37869560E53D" name="TBL_TIENDA_X_TBL_TIEN_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="60EF75A4-4655-A49C-3D2F-368CB924AD91"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5793072C-9173-51B7-EBAC-54E7666A92BF" name="TBL_TIENDA_X_TBL_SERV_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BD5329B-CF4E-6847-64B8-93555BEC52F5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

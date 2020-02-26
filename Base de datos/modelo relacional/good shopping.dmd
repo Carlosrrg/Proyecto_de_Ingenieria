@@ -1,8 +1,13 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="good shopping" id="B904A8AE-A1C2-86E2-FF1D-52B3AAE335E6" version="3.5">
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="good shopping" id="F7BA0029-2D30-0E3C-AB2F-0B02CCBC45B7" version="3.5">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-24 19:56:05 UTC</createdTime>
+<createdTime>2020-02-26 19:31:52 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <capitalNames>false</capitalNames>
-<designId>B904A8AE-A1C2-86E2-FF1D-52B3AAE335E6</designId>
+<designId>F7BA0029-2D30-0E3C-AB2F-0B02CCBC45B7</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="B904A8AE-A1C2-86E2-FF1D-52B3AAE335E6">
+<designStoragePath>C:\Users\Carlos Ramos\Desktop\Proyecto de Ing. software\Base de datos\modelo relacional\good shopping</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
 </OSDM_Design>
