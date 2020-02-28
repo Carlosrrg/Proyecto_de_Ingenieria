@@ -22,3 +22,19 @@ div#dialogo p{
 	font-size: 1.2em;
 	text-align: center;
 }
+
+
+.errores{
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	-o-box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	background: red;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	color: #fff;
+	display: none;
+	font-size: 14px;
+	margin-top: -50px;
+	margin-left: 410px;
+	padding: 10px;
+	position: absolute;
+}

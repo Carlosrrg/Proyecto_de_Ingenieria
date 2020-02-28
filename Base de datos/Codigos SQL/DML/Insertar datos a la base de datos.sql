@@ -51,6 +51,8 @@ Insert into TBL_GENERO (CODIGO_GENERO, NOMBRE_GENERO)
 values (1,'Masculino');
 Insert into TBL_GENERO (CODIGO_GENERO, NOMBRE_GENERO)
 values (2,'Femenino');
+Insert into TBL_GENERO (CODIGO_GENERO, NOMBRE_GENERO)
+values (3,'No seleccionado');
 
 
 

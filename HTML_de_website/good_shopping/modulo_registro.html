@@ -20,6 +20,7 @@
     
       <link rel="canonical" href="#">
       <link rel="stylesheet" href="css/inicio_session.css">
+      <link rel="stylesheet" href="css/mensaje_error.css">
   </head>
 
 
@@ -56,43 +57,51 @@
                                                         Nombre
                                                       </label>
                                                       <input type="text" id="txt-nombre" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Nombre">
+                                                      <div id="mensaje1" class="errores">Ingrese su nombre</div>
                                                   </li>
                                                   <li class="">
                                                       <label class="sr-only required" for="register-displayname">
                                                         Apellido
                                                       </label>
                                                       <input type="text" id="txt-apellido" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Apellido">
+                                                      <div id="mensaje2" class="errores">Ingrese su apellido</div>
                                                   </li> 
                                                   <li class="">
                                                       <label class="sr-only required" for="register-email">
                                                         Correo electronico
                                                       </label>
                                                       <input type="email" id="txt-correo" name="signup_form[email]" required="required" autocapitalize="off" autocorrect="off" autocomplete="off" maxlength="30" placeholder="Correo electronico">
+                                                      <div id="mensaje3" class="errores">Ingresa su correo electronico</div>
                                                   </li>
                                                   <li class="">
                                                       <label class="sr-only required" for="register-password">
                                                         Contraseña
                                                       </label>
                                                       <input type="password" id="txt-contrasena" name="signup_form[password]" required="required" autocomplete="off" maxlength="100" placeholder="Contraseña" aria-autocomplete="list">
+                                                      <div id="mensaje4" class="errores">Ingrese su Contraseña</div>
                                                   </li>
                                                   <li class="">
                                                       <label class="sr-only required" for="register-password">
                                                         Confirmar contraseña
                                                       </label>
-                                                      <input type="password" id="txt-confirmar-contrasena" name="signup_form[password]" required="required" autocomplete="off" maxlength="100" placeholder="Confirmar contraseña" aria-autocomplete="list">
+                                                      <input type="password" id="txt-confirmar-contrasena" name="signup_form[password]" required="required" autocomplete="off" maxlength="100" placeholder="Confirmar Contraseña" aria-autocomplete="list">
+                                                      <div id="mensaje5" class="errores">Confirme su Contraseña</div>
+                                                      <div id="mensaje9" class="errores">Las contraseñas no coinciden</div>
                                                   </li>
+                                                  <div id="confirmar"></div>
                                                   <li class="">
                                                       <label class="sr-only required" for="register-displayname">
                                                         Telefono
                                                       </label>
-                                                      <input type="text" id="txt-telefono" name="signup_form[displayname]" required="required" autocapitalize="off" autocorrect="off" autocomplete="off" maxlength="30" placeholder="Telefono">
+                                                      <input type="number" id="txt-telefono" name="signup_form[displayname]" required="required" autocapitalize="off" autocorrect="off" autocomplete="off" maxlength="30" placeholder="Telefono">
+                                                      <div id="mensaje6" class="errores">Numero telefonico invalido</div>
                                                   </li>
                                                   <li class="">
                                                       <label class="sr-only required">
                                                         Ubicación
                                                       </label>
                                                       <select id="slc-ubicacion" name="slc-ubicacion" required="required">
-                                                                  <option value="0" selected="selected">Seleccione su ubicacion</option>
+                                                                  <option value="" selected="selected">Seleccione su ubicacion</option>
                                                                   <option value="1">Francisco Morazán</option>
                                                                   <option value="2">Atlántida</option>
                                                                   <option value="3">Choluteca</option>
@@ -112,6 +121,7 @@
                                                                   <option value="17">Valle</option>
                                                                   <option value="18">Yoro</option>
                                                       </select>
+                                                      <div id="mensaje7" class="errores">Seleccione su ubicacion</div>
                                                   </li>
                                                   <li id="li-dob" class="controls-dob">
                                                       <label for="register-age" class="">
@@ -123,7 +133,7 @@
                                                           </div>
                                                           <div class="controls controls-month">
                                                               <select id="slc-mes" name="slc-mes" required="required">
-                                                                  <option value="0" selected="selected">Mes</option>
+                                                                  <option value="" selected="selected">Mes</option>
                                                                   <option value="1">enero</option>
                                                                   <option value="2">febrero</option>
                                                                   <option value="3">marzo</option>
@@ -141,6 +151,9 @@
                                                           <div class="controls controls-year">
                                                               <input type="number" id="txt-anio" name="signup_form[dob_year]" required="required" placeholder="Año">
                                                           </div>
+                                                          <div id="mensaje8" class="errores">Ingrese su fecha de nacimiento</div>
+                                                           <div id="mensaje10" class="errores">Dia no valido</div>
+                                                           <div id="mensaje11" class="errores">Año no valido</div>
                                                       </div>
                                                   </li>
                                                     
@@ -153,6 +166,7 @@
                                                           <a href="#" target="">Política de Privacidad
                                                           </a> de Good Shopping.
                                                         </p>
+                                                        <div id="mensaje12" class="errores">Acepte los terminos y condiciones de uso</div>
                                                   </li>   
                                               </ul>
                                           </fieldset>
