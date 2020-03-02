@@ -5,42 +5,31 @@
 
 	$conexion = new Conexion();
 	$conexion->establecerConexion();
-	$email = $_POST["inputEmail"];
-	$password = $_POST["inputPassword"];
-	$verificacion = 0;
 
+	$correo = $_POST["txt-correo"];
+	$contrasena = $_POST["txt-contrasena"];
+	$codigo_usuario = "";
+	$mensaje = "";
 
-	if ($email == "" ||  $password == "") {
-		//echo "Ingrese los datos solicitados para iniciar seccion";
-		echo $verificacion;
-	}
-	else{
-		$resultado_usuarios = $conexion->ejecutarInstruccion("	SELECT 	CODIGO_USUARIO,
-											 							USUARIO_PLATAFORMA,
-											 							NOMBRE_COMPLETO, 
-											 							CORREO_ELECTRONICO, 
-											 							CONTRASENA
+	if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+		$resultado_usuarios = $conexion->ejecutarInstruccion("	SELECT CODIGO_USUARIO
 																FROM TBL_USUARIOS
-																WHERE CORREO_ELECTRONICO = '$email'
-																AND CONTRASENA = '$password'");
+																WHERE CORREO_ELECTRONICO = '$correo'
+																AND CONTRASENA = '$contrasena'");
 		oci_execute($resultado_usuarios);
 		while ($fila = $conexion->obtenerFila($resultado_usuarios)) {
-		 	if ($fila["CORREO_ELECTRONICO"] == $_POST["inputEmail"] && $fila["CONTRASENA"] == $_POST["inputPassword"]) {
-		 		//echo $fila["CODIGO_USUARIO"] . ", nombre= ". $fila["NOMBRE_COMPLETO"] . ",    correo = " . $fila["CORREO_ELECTRONICO"] . "   " . "contrasena = " . $fila["CONTRASENA"] . "<br>";
-		 		$codigo_usuario = $fila["CODIGO_USUARIO"];
-		 	}
-		} 
+		 	$codigo_usuario = $fila["CODIGO_USUARIO"];
+		}
 	}
 
 	//valida session
 	if (!isset($codigo_usuario)) {
-		echo $verificacion;
+		echo $mensaje = 0;
 	}
 	else{
-		echo $_SESSION['codigo_usuario'] = $codigo_usuario;
-		//echo "<br>variable codigo_usuario con un valor= " . $_SESSION['codigo_usuario'];
+		echo $_SESSION['codigo_usuario_sesion'] = $codigo_usuario;
 	}
 	
-	//echo "<br>";
+
 	$conexion->cerrarConexion();
 ?>

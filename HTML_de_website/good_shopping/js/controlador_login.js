@@ -123,19 +123,20 @@ $(document).ready(function(){
 																	data:parametros,
 																	method:"POST",
 																	//dataType:"json",
-																	success:function(respuesta){
+																	success:function(respuesta1){
 																		//$("#prueba").html(respuesta);
-																		//alert(respuesta);
-																		if(respuesta == 1){
+																		//alert(respuesta1);
+																		if(respuesta1 == 1){
 																			alert("Lo sentimos, el correo ingresado ya existe, intente con uno nuevo...");
 																			$("#txt-correo").val("");
 																		}
-																		else if (respuesta == 2){
+																		else if (respuesta1 == 2){
 																			alert("Datos ingresados con exito");
 																			//window.location="modulo_registro.html";
 																		}
-																		else if (respuesta == 3){
+																		else if (respuesta1 == 3){
 																			alert("Lo sentimos, el correo electronico ingresado es invalido...");
+																			//$("#txt-correo").val("");
 																		}
 																	}
 															});	
@@ -152,5 +153,42 @@ $(document).ready(function(){
 				}
 			}		
 		}					
-	});	
+	});
+
+
+
+
+	$("#btn_iniciar").click(function(){
+
+		var correo = $("#txt-correo").val();
+		var contrasena = $("#txt-contrasena").val();
+
+		if (correo=="" && contrasena=="") {
+			$("#mostrar_error_login").fadeIn();
+			return false;
+		}
+		else{
+			$("#mostrar_error_login").fadeOut()
+			var parametros = 	"&txt-correo="+correo+"&txt-contrasena="+contrasena;
+			//alert(parametros);
+
+			$.ajax({
+				url:"ajax_procesar_php/acciones_login.php",
+				data:parametros,
+				method:"POST",
+				success:function(respuesta){
+					//alert(respuesta);
+					if(respuesta == 0){
+						alert("El usuario ingresado no existe...");
+						$("#txt-correo").val("");
+						$("#txt-contrasena").val("");
+					}
+					else{
+						alert("El usuario ingresado existe...");
+						window.location="index.php";
+					}
+				}
+			});	
+		}
+	});
 });
