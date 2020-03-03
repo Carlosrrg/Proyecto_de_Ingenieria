@@ -410,7 +410,7 @@
 
 	<!--Pie de página-->
 	<div class="clearfix">
-		<footer class="footer" style="background: #fff;">
+		<footer class="footer" style="background: #fff; margin-top:0px;">
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
