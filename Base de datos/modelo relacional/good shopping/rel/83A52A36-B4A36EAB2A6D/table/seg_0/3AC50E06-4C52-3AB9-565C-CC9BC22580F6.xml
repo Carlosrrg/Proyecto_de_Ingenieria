@@ -34,11 +34,26 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="CODIGO_TIPO_VENDEDOR" id="DD28D9B3-1F92-A241-398B-A95F227102E3">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-04 22:52:39 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6B84A96D-AB01-42F7-91B7-34900E49D557" referredColumn="44CA59E6-331E-4C95-7581-574F5ADA69D9"/>
+</associations>
+</Column>
 <Column name="CODIGO_TIENDA" id="73F3D514-2D5A-9E9E-1469-3FD5A368EDAF">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <importedID>85046115-1CA3-9F9D-0C1A-E3023AFB522B</importedID>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -80,6 +95,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="03529A6B-AABC-F0A6-16A3-E6CC02BF4A01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="052384CC-F17C-82A8-2BC7-AF7F4B3EBD80" name="TBL_VENDEDORES_TBL_TIPO_VENDEDORES_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-04 22:52:39 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DD28D9B3-1F92-A241-398B-A95F227102E3"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E8C6D0A0-FBD2-880F-AEE5-5947BC957436" containerWithKeyObject="4C051E26-1304-6A90-2AAC-74C38C6FB7E3" localFKIndex="934C0AAC-B9E6-248E-D628-F86824817827" name="TBL_REPORTES_TBL_MOTIVO_ELIMINACION_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-05 01:29:34 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_MOTIVO_ELIMINACION</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>E5166EF3-E7D7-7958-8384-8303AD7EE35E</referredTableID>
+<keyObject>45769DBE-5892-2098-7D5D-00519A2C88F3</keyObject>
+<referredKeyID>45769DBE-5892-2098-7D5D-00519A2C88F3</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_MOTIVO_ELIMINACION</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

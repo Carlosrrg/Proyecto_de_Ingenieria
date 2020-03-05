@@ -9,7 +9,7 @@
 <referredTableID>C4A7322A-5244-DCE9-F578-180FB78DC3CB</referredTableID>
 <keyObject>D8A1985E-7C72-8CBD-D752-5B6784100CF4</keyObject>
 <referredKeyID>D8A1985E-7C72-8CBD-D752-5B6784100CF4</referredKeyID>
-<mandatory>true</mandatory>
+<mandatory>false</mandatory>
 <refColNames>CODIGO_TIENDA</refColNames>
 <transferable>true</transferable>
 <rely>false</rely>

@@ -32,6 +32,28 @@
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="TELEFONO_TIENDA" id="24D5EFBA-8784-4E94-8FE6-2386248A05BE">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-04 23:15:53 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CORREO_TIENDA" id="DA898920-E6E2-161E-846B-AB3136AA97B5">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-04 23:15:53 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="DIRECCION_FISICA_TIENDA" id="05791F3B-6B89-F983-8745-2A86B08BC1A9">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>

@@ -1,30 +1,27 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0BF71BF0-E52D-2404-5B82-40DCAFDCC358" name="TBL_ESTADO_PRODUCTO">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5A29D17F-FCBE-18AC-DF29-A426C0D672B3" name="TBL_ESTADO_PUBLICACION">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 01:03:23 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>350D7610-F10C-C366-AFAF-23D507703985</importedID>
-<ordsAlias>table_16</ordsAlias>
+<ordsAlias>table_29</ordsAlias>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="CODIGO_ESTADO_PRODUCTO" id="58825C8D-1ADE-E8D9-0A53-3D367847A34B">
+<Column name="CODIGO_ESTADO_PUBLICACION" id="4B5A3933-590F-60CB-1AF2-EE63E51D23BD">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 01:04:32 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>3914A2A7-0A7C-C190-C7D6-3CF05B2988F9</importedID>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="NOMBRE_ESTADO_PRODUCTO" id="660C9DB0-D575-D4A3-1318-EB1FC3C3CCBF">
+<Column name="NOMBRE_ESTADO_PUBLICACION" id="92C30EA8-D259-C8AE-F523-748C87BF2802">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 01:04:32 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>7A7C69D4-53B0-6CC4-571A-B0749886CE06</importedID>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
@@ -34,16 +31,15 @@
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="E22094AF-B1E6-6029-1373-9428A3FDE8F1" name="TBL_ESTADO_PK">
+<ind_PK_UK id="E4738826-8CB4-8CAB-2409-7C86DA37AAC5" name="TBL_ESTADO_PUBLICACION_PK">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 01:04:32 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>7DD73438-C3D5-7391-B3E8-F0A839ACE75C</importedID>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="58825C8D-1ADE-E8D9-0A53-3D367847A34B"/>
+<colUsage columnID="4B5A3933-590F-60CB-1AF2-EE63E51D23BD"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

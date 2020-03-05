@@ -1,61 +1,61 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="55926CDE-9949-1C94-BC9F-1DA5416AE0B2" name="TBL_COMPRADORES">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="76240193-E377-71BE-8880-3A57B4DF54A8" name="TBL_VEND_X_TBL_PUBLI">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 00:57:03 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>FDC06A93-2E49-5EFC-3CCF-E6D3E80FCD6D</importedID>
-<ordsAlias>table_7</ordsAlias>
+<ordsAlias>table_28</ordsAlias>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="CODIGO_USUARIO_COMPRADOR" id="B6460BE9-32C2-EF8A-F600-A222C64B25E4">
+<Column name="CODIGO_USUARIO_VENDEDOR" id="0511060E-E414-4B97-FF17-F9D732E954C0">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 00:58:18 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>D8A590FB-46E8-4F12-F86B-36023A2AE06B</importedID>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="E39CB99B-E18D-7D6D-D728-DBFE4E9781E8" referredColumn="EC247553-D325-1C5A-8327-806281621B0C"/>
+<colAssociation fkAssociation="A6B5083F-454F-4CF6-C405-C5173930679E" referredColumn="03529A6B-AABC-F0A6-16A3-E6CC02BF4A01"/>
 </associations>
 </Column>
-<Column name="CODIGO_COMPRADOR" id="978D5DDE-16A1-5367-80EC-51D188F4787F">
+<Column name="CODIGO_PUBLICACION_PRODUCTO" id="B3908D6C-3A2B-AD9F-4BDC-117BD69866EB">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 00:58:47 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<importedID>FA032A8D-5A22-96B9-E164-8BFAC18CE319</importedID>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B431A4DB-FCB6-F8C1-C173-635110998087" referredColumn="BA987CAC-7617-3746-9A89-F54FA0B259AD"/>
+</associations>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="A601525F-1DCF-E9EB-7AEC-64AD2C218253" name="TBL_USUARIO_COMPRADOR_PK">
+<ind_PK_UK id="59B94683-99CA-6589-C6BC-2444B36792B8" name="TBL_VEND_X_TBL_PUBLI_TBL_VENDEDORES_FK">
 <createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
-<ownerDesignName>good shopping</ownerDesignName>
-<importedID>AEF4D353-85E3-8047-42CA-144714999E49</importedID>
-<pk>true</pk>
-<indexState>Primary Constraint</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<indexColumnUsage>
-<colUsage columnID="B6460BE9-32C2-EF8A-F600-A222C64B25E4"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="FF131219-BD7E-C6A8-889A-319C0CE9FC2A" name="TBL_USUARIO_CO_FK">
-<createdBy>Carlos Ramos</createdBy>
-<createdTime>2020-02-26 19:32:34 UTC</createdTime>
+<createdTime>2020-03-05 00:58:18 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="B6460BE9-32C2-EF8A-F600-A222C64B25E4"/>
+<colUsage columnID="0511060E-E414-4B97-FF17-F9D732E954C0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="960622BB-60EA-7027-C94C-B33C9C872ECB" name="TBL_VEND_X_TBL_PUBLI_TBL_PUBLICACION_PRODUCTOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-05 00:58:47 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B3908D6C-3A2B-AD9F-4BDC-117BD69866EB"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

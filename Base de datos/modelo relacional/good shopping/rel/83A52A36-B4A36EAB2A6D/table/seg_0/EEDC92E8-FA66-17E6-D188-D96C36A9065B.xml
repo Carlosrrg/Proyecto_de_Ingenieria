@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EEDC92E8-FA66-17E6-D188-D96C36A9065B" name="TBL_PRODUCTOS">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EEDC92E8-FA66-17E6-D188-D96C36A9065B" name="TBL_PUBLICACION_PRODUCTOS">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
@@ -9,7 +9,7 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="CODIGO_PRODUCTO" id="BA987CAC-7617-3746-9A89-F54FA0B259AD">
+<Column name="CODIGO_PUBLICACION_PRODUCTO" id="BA987CAC-7617-3746-9A89-F54FA0B259AD">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="CODIGO_TIPO_PRODUCTO" id="72C4279E-16A1-8E69-3C10-79336C58D191">
+<Column name="CODIGO_TIPO_PUBLICACION" id="72C4279E-16A1-8E69-3C10-79336C58D191">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
@@ -48,7 +48,7 @@
 <colAssociation fkAssociation="D08C664B-E966-5486-AE94-03229F72D541" referredColumn="AB2E6853-FAB2-0700-BFE8-ECB30B08F979"/>
 </associations>
 </Column>
-<Column name="CODIGO_ESTADO" id="8A2FDCC4-6F0A-C2D3-26B7-7676EFA4447A">
+<Column name="CODIGO_ESTADO_PRODUCTO" id="8A2FDCC4-6F0A-C2D3-26B7-7676EFA4447A">
 <createdBy>Carlos Ramos</createdBy>
 <createdTime>2020-02-26 19:32:34 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
@@ -75,6 +75,20 @@
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="469084D5-3B2E-07DA-E7C6-328C958F76BA" referredColumn="0B2707D8-40D4-80C1-EDEE-B4E83CC25160"/>
+</associations>
+</Column>
+<Column name="CODIGO_ESTADO_PUBLICACION" id="8CA6E648-91F3-CD94-495F-9E295867767A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-05 01:04:46 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C368302F-B8B1-75BC-A39C-78BA61E07EA2" referredColumn="4B5A3933-590F-60CB-1AF2-EE63E51D23BD"/>
 </associations>
 </Column>
 <Column name="NOMBRE_PRODUCTO" id="62E6D49F-C605-D94D-FA2A-E3239C321A59">
@@ -110,6 +124,16 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>500</dataTypeSize>
 <ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_PUBLICACION" id="001AF522-0580-EE8A-1E74-7609E730D231">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-05 00:31:53 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
@@ -164,6 +188,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="42A671FA-196D-E1DB-46C2-11439DCA4184"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2A99EBC4-6E31-2A8A-CBF5-B7C2BF98310F" name="TBL_PUBLICACION_PRODUCTOS_TBL_ESTADO_PUBLICACION_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-05 01:04:46 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8CA6E648-91F3-CD94-495F-9E295867767A"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
