@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Good Shopping</title>
+    <title>Goodshopping</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="icon" type="image/jpg" href="img/logo2.png">
     <link rel="stylesheet" href="css/mensaje_error.css">
 </head>
-<body>
+<body style ="margin:0; padding:0; display: flex; min-height: 100vh; flex-wrap: wrap;">
 	<?php
         include_once("class/conexion_copy.php");
         session_start();
         $conexion = new Conexion();
     ?>
 	<!--Barra-->
-	<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276;">
+	<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276; width: 100%; height:5%;">
 		<!-- centrar horizontalmente mx-auto -->
 		<!-- ml-auto: meter margen por la izquierda -->
 		<!-- mr-auto: meter margen por la derecha -->
@@ -101,7 +101,7 @@
 	
 	<!--Barra de busqueda-->
 	<br>
-	<div class="container">
+	<div class="container barra" style="padding-top:30px;">
 		<div class="input-group mb-3">
 			<input id="txt-barraBusqueda" name="txt-barraBusqueda" type="text" class="form-control" placeholder="¿Qué estas buscando?">
 			<div class="input-group-append">
@@ -409,85 +409,83 @@
 	</div>
 
 	<!--Pie de página-->
-	<div class="clearfix">
-		<footer class="footer" style="background: #fff; margin-top:0px;">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
-						<br>
-						<h6>Goodshopping</h6>
-						<a href="#" style="color: black;">
-							<span>
-								Acerca de nosotros
-							</span>
-						</a>
-						<br>
-						<a href="#" style="color: black;">
-							<span>
-								Contáctanos
-							</span>
-						</a>
-					</div>
-		
-					<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
-						<br>
-						<h6>Destacados</h6>
-						<a href="#" style="color: black;">
-							<span>
-								Región
-							</span>
-						</a>
-						<br>
-						<a href="#" style="color: black;">
-							<span>
-								Categoría
-							</span>
-						</a>
-						<br>
-						<a href="#" style="color: black;">
-							<span>
-								Vendedor
-							</span>
-						</a>
-					</div>
-	
-					<div class="col-xs-3 col-mx-3" style="padding-left:40px; padding-right: 10px;">
-						<br>
-						<h6>Terminos y condiciones</h6>
-						<a href="#" style="color: black;">
-							<span>
-								Condiciones de servicio
-							</span>
-						</a>
-						<br>
-						<a href="#" style="color: black;">
-							<span>
-								Políticas de privacidad
-							</span>
-						</a>
-					</div>
-	
-					<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
-						<br>
-						<h6>Ayuda</h6>
-						<a href="#" style="color: black;">
-							<span>
-								Soporte técnico
-							</span>
-						</a>
-					</div>
-	
-					<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
-						<br>
-						<h6>Siguenos en</h6>
-						<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-						<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-						<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
-					</div>
+	<footer style="background: #fff; margin-top:0px; width:100%;">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
+					<br>
+					<h6>Goodshopping</h6>
+					<a href="#" style="color: black;">
+						<span>
+							Acerca de nosotros
+						</span>
+					</a>
+					<br>
+					<a href="#" style="color: black;">
+						<span>
+							Contáctanos
+						</span>
+					</a>
 				</div>
-			</div>		
-		</footer>
-	</div>
+	
+				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
+					<br>
+					<h6>Destacados</h6>
+					<a href="#" style="color: black;">
+						<span>
+							Región
+						</span>
+					</a>
+					<br>
+					<a href="#" style="color: black;">
+						<span>
+							Categoría
+						</span>
+					</a>
+					<br>
+					<a href="#" style="color: black;">
+						<span>
+							Vendedor
+						</span>
+					</a>
+				</div>
+
+				<div class="col-xs-3 col-mx-3" style="padding-left:40px; padding-right: 10px;">
+					<br>
+					<h6>Terminos y condiciones</h6>
+					<a href="#" style="color: black;">
+						<span>
+							Condiciones de servicio
+						</span>
+					</a>
+					<br>
+					<a href="#" style="color: black;">
+						<span>
+							Políticas de privacidad
+						</span>
+					</a>
+				</div>
+
+				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
+					<br>
+					<h6>Ayuda</h6>
+					<a href="#" style="color: black;">
+						<span>
+							Soporte técnico
+						</span>
+					</a>
+				</div>
+
+				<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
+					<br>
+					<h6>Siguenos en</h6>
+					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
+					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
+					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
+				</div>
+			</div>
+		</div>		
+	</footer>
 	
 	<!--Agregando bootstrap al archivo html-->
 	<script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
