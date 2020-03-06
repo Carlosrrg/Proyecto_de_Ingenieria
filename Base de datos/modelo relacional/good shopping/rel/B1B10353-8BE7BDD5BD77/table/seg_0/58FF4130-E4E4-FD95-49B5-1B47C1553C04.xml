@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="58FF4130-E4E4-FD95-49B5-1B47C1553C04" name="TBL_MOTIVO_ELIMINACION">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_33</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_MOTIVO_ELIMINACION" id="DC1ADD32-357B-45E1-3513-420EB96632BE">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_MOTIVO_ELIMINACION" id="2EB96CF8-EEF4-20DF-587C-70E3A94AC593">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E4A83264-4397-B742-4FA5-109E5C2A2A8C" name="TBL_MOTIVO_ELIMINACION_PK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DC1ADD32-357B-45E1-3513-420EB96632BE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

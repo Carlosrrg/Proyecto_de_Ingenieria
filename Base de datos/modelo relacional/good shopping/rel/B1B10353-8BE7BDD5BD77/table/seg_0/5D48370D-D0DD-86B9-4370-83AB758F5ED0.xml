@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5D48370D-D0DD-86B9-4370-83AB758F5ED0" name="TBL_CATEGORIAS">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_10</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_CATEGORIA" id="A5B5D545-2112-F979-A32B-6FF4A15CF781">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE_CATEGORIA" id="2434F59B-0375-91CF-7321-39635C7FF33B">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="19F611B7-0C57-F1C2-A9AE-5A5F4D096C68" name="TBL_CATEGORIAS_PK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A5B5D545-2112-F979-A32B-6FF4A15CF781"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

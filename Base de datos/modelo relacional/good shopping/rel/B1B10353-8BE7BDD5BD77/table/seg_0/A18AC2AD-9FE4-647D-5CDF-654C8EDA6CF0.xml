@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A18AC2AD-9FE4-647D-5CDF-654C8EDA6CF0" name="TBL_TIENDA_X_TBL_PUBLICACION">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_13</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_TIENDA" id="015B7D24-11AD-D642-AE23-710C52F2B3D0">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FC295BE4-2C72-3D57-EC55-4199D84DA0A8" referredColumn="ADC69984-F6A7-36A5-DADF-6AA9594999C0"/>
+</associations>
+</Column>
+<Column name="CODIGO_PUBLICACION_PRODUCTO" id="23B34C06-E733-97E5-8E22-2DD424DA4F0E">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="55F30C30-27D2-0063-9B18-0C1155C722CA" referredColumn="76A66DC4-274B-F176-C944-12B95B0B3589"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4D70DA7A-F56A-7870-4E88-6213D4A9C0F8" name="TBL_TI_X_TBL_P_FKv2">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="015B7D24-11AD-D642-AE23-710C52F2B3D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C2CC0181-1AFF-9434-60B9-8B354F617096" name="TBL_TI_X_TBL_PR_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23B34C06-E733-97E5-8E22-2DD424DA4F0E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

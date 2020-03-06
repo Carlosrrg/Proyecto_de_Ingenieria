@@ -1,0 +1,204 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4A228ECA-B991-C8DA-B47F-0BAC853DEDAC" name="TBL_PUBLICACION_PRODUCTOS">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_8</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_PUBLICACION_PRODUCTO" id="76A66DC4-274B-F176-C944-12B95B0B3589">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO_TIPO_PUBLICACION" id="38C5804F-4B58-A09C-6CC7-1C29F7AC2E1B">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="EA154876-6653-A698-C091-2C20B2C9F4D5" referredColumn="322E5D0F-19DB-E88F-AAD0-7C8895531783"/>
+</associations>
+</Column>
+<Column name="CODIGO_TIPO_MONEDA" id="8B31E05E-4041-57B0-83AE-EAB589B523CD">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="08F9013A-8906-65BB-02FB-FC582271C946" referredColumn="30507CCF-879F-6347-E415-6C25B28E5072"/>
+</associations>
+</Column>
+<Column name="CODIGO_ESTADO_PRODUCTO" id="08E8E569-6761-5A61-C152-525DBB360E03">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2B0D79C5-7658-4611-1B91-89712FDF0D4D" referredColumn="5E02ECFC-FA73-61F9-C51A-1111FBA37B84"/>
+</associations>
+</Column>
+<Column name="CODIGO_CATEGORIA" id="3799E374-E3E2-62FB-2B0E-B942D690514F">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A0E88826-1C4E-2AE1-5BAC-5CF46A63121F" referredColumn="A5B5D545-2112-F979-A32B-6FF4A15CF781"/>
+</associations>
+</Column>
+<Column name="CODIGO_ESTADO_PUBLICACION" id="D24B0EAF-679A-8792-6EBA-A57108697528">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A038538B-09B8-9FFB-6156-53797FACE58D" referredColumn="30517E72-6D49-2BD1-C8A2-5068CA3EA723"/>
+</associations>
+</Column>
+<Column name="NOMBRE_PRODUCTO" id="1F293B9B-A814-4769-E36B-49A91DF67FE0">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIO" id="01FF31DE-3BB8-70C4-B442-C4A7FE3B7C33">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCIPCION" id="CC61B8EC-B254-FEDB-F4A1-94694D5573F3">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_PUBLICACION" id="A59D5BA8-B11F-F85B-B5DC-1F49160C9407">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ELIMINACION_LOGICA" id="5E63E883-F8F6-1658-1577-9CEA0A6260E7">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-06 00:05:57 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D9AD7F07-6FC4-8AC8-C3B0-CEFCA8BB688F" name="TBL_PRODUCTOS_PK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="76A66DC4-274B-F176-C944-12B95B0B3589"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="75F6512C-647B-7AB1-15E5-FE3E6AAF3F03" name="TBL_PRO_TBL_CAT_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3799E374-E3E2-62FB-2B0E-B942D690514F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A8C6DC46-16C4-19E0-DC41-5FBBB8E2F4F4" name="TBL_PROD_TBL_EST_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08E8E569-6761-5A61-C152-525DBB360E03"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7792943F-D4D4-BAB4-BBCB-F071E14DBB05" name="TBL_PU_P_TBL_E_PUB_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D24B0EAF-679A-8792-6EBA-A57108697528"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A0F303A5-782D-3CC4-9C36-2A00BB4D87EE" name="TBL_PROD_TBL_MON_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8B31E05E-4041-57B0-83AE-EAB589B523CD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8F6BFB48-1A14-9DCA-2529-206078EBA4C4" name="PROD_TIPO_PROD_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="38C5804F-4B58-A09C-6CC7-1C29F7AC2E1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

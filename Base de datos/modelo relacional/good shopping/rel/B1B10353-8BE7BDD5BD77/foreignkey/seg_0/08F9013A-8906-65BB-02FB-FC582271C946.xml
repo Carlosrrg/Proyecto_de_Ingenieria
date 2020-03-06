@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="08F9013A-8906-65BB-02FB-FC582271C946" containerWithKeyObject="4A228ECA-B991-C8DA-B47F-0BAC853DEDAC" localFKIndex="A0F303A5-782D-3CC4-9C36-2A00BB4D87EE" name="TBL_PROD_TBL_MON_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_MONEDA</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3E0BFF7B-AA2B-A031-D473-0962761C8CA3</referredTableID>
+<keyObject>60B35449-0098-40CD-D075-4876D852307E</keyObject>
+<referredKeyID>60B35449-0098-40CD-D075-4876D852307E</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_TIPO_MONEDA</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

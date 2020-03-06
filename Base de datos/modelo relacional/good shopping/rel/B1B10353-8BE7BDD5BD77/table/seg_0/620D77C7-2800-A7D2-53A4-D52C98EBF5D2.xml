@@ -1,0 +1,106 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="620D77C7-2800-A7D2-53A4-D52C98EBF5D2" name="TBL_VENDEDORES">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_6</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_USUARIO_VENDEDOR" id="EAFC73AA-3377-1E1B-F28E-976116D607A8">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8498AE6B-AC39-0CAC-F959-3B6C2D42FFA3" referredColumn="0C321793-1387-303B-D835-E66DF6BC3FB4"/>
+</associations>
+</Column>
+<Column name="CODIGO_VENDEDOR" id="23B3858E-1BAC-6394-E852-4366C28325F5">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO_TIPO_VENDEDOR" id="F4930308-E8E3-44F5-B996-0A3260538A8E">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="95A23785-4C3E-616E-077B-836AA13792EC" referredColumn="C7B0141C-EE5B-399E-1C3E-5CB6F215ABC2"/>
+</associations>
+</Column>
+<Column name="CODIGO_TIENDA" id="58784AFB-E752-DC21-230F-4B7A350496A8">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="59CF5925-9B52-1A1A-C5C2-7BFD29BB7251" referredColumn="ADC69984-F6A7-36A5-DADF-6AA9594999C0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F9EF9444-E3B4-2FC4-920F-998080BC6523" name="TBL_VENDEDOR_PK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EAFC73AA-3377-1E1B-F28E-976116D607A8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1393C294-1764-ED74-F6BF-2B810AF323B9" name="TBL_VEN_TBL_TI_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="58784AFB-E752-DC21-230F-4B7A350496A8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6062D1F2-6124-A0DD-CF65-CF763483C889" name="TBL_VE_TBL_US_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EAFC73AA-3377-1E1B-F28E-976116D607A8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BD2FF0FE-042B-2C25-50D9-E9DEB4B99E5E" name="TBL_VEND_TBL_T_V_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 04:26:42 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F4930308-E8E3-44F5-B996-0A3260538A8E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

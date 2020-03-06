@@ -1,0 +1,93 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2CB730FC-31D6-DB4C-6F46-66E9A7AE1597" name="TBL_FAVORITOS">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:16:40 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_36</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_FAVORITO" id="23083515-DDF5-F94D-92AD-CD9BD9F6ABD3">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:06 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CODIGO_USUARIO_COMPRADOR" id="23B09937-FF48-8D18-9615-3B3AD1C632D0">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:17 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B343B290-41CA-016C-569E-698BD4BCCE7E" referredColumn="5845CE34-C20A-182A-CDB6-47C294E4FDDC"/>
+</associations>
+</Column>
+<Column name="CODIGO_USUARIO_VENDEDOR" id="309DD258-3997-1AD7-6604-E4E90A697D5A">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:30 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CDA82918-0939-B1AC-1E16-4117FA8B0355" referredColumn="EAFC73AA-3377-1E1B-F28E-976116D607A8"/>
+</associations>
+</Column>
+<Column name="FECHA_AGREGADO" id="98D31ABF-BC19-588D-2543-84725913151C">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:18:45 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C898E1D0-1144-63C8-B563-7903FF066886" name="TBL_FAVORITOS_PK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:06 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23083515-DDF5-F94D-92AD-CD9BD9F6ABD3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B257D5FE-A021-F28C-2210-3DD307FB3FA1" name="TBL_FAV_TBL_CO_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:17 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23B09937-FF48-8D18-9615-3B3AD1C632D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="318C5944-27D1-9F17-E153-C55D2074391A" name="TBL_FAV_TBL_VE_FK">
+<createdBy>ronme</createdBy>
+<createdTime>2020-03-05 23:17:30 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="309DD258-3997-1AD7-6604-E4E90A697D5A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
