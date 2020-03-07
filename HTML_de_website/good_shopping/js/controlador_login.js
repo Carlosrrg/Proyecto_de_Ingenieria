@@ -184,7 +184,7 @@ $(document).ready(function(){
 						$("#txt-contrasena").val("");
 					}
 					else{
-						alert("El usuario ingresado existe...");
+						alert("El usuario ingresado existe... "+respuesta);
 						window.location="index.php";
 					}
 				}
