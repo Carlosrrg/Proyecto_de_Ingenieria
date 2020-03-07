@@ -26,7 +26,7 @@
 			<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 				<img src="recursos/imagenes/Menu.png" width=20>
 			</a>
-			<div class="dropdown-menu dropright" style="overflow-y: auto; height: 600px; margin: 6px 0 0 -17px; border-radius: 0px;">
+			<div class="dropdown-menu dropright" style="overflow-y: auto; height: 590px; margin: 6px 0 0 -17px; border-radius: 0px;">
 				<h6 style="text-align: center;">Categorías</h6>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#">Entretenimiento</a>
