@@ -66,11 +66,11 @@ values (3,'7DS52AF');
 
 --Insertar Usuarios--
 Insert into TBL_USUARIOS (CODIGO_USUARIO, CODIGO_TIPO_USUARIO, CODIGO_LUGAR, CODIGO_GENERO, CODIGO_CODIGO, NOMBRE, APELLIDO, CORREO_ELECTRONICO, CONTRASENA, TELEFONO, FECHA_NACIMIENTO, FECHA_REGISTRO, CIUDAD)
-values (1,2,1,1,1,'Carlos','Ramos','carlos9@gmail.com','contrasena123',50495441898,TO_DATE('06-05-1994', 'DD-MM-YYYY'), sysdate, '');
+values (1,2,1,1,1,'Carlos','Ramos','carlos9@gmail.com','contrasena123',50495441898,TO_DATE('06-05-1994', 'DD-MM-YYYY'), sysdate, 'Tegucigalpa');
 Insert into TBL_USUARIOS (CODIGO_USUARIO, CODIGO_TIPO_USUARIO, CODIGO_LUGAR, CODIGO_GENERO, CODIGO_CODIGO, NOMBRE, APELLIDO, CORREO_ELECTRONICO, CONTRASENA, TELEFONO, FECHA_NACIMIENTO, FECHA_REGISTRO, CIUDAD)
-values (2,2,5,2,2,'Gloria','Mendez','gloria2020@gmail.com','Gloria2020',50498745236,TO_DATE('01-06-1990', 'DD-MM-YYYY'), sysdate, '');
+values (2,2,5,2,2,'Gloria','Mendez','gloria2020@gmail.com','Gloria2020',50498745236,TO_DATE('01-06-1990', 'DD-MM-YYYY'), sysdate, 'San Pedro Sula');
 Insert into TBL_USUARIOS (CODIGO_USUARIO, CODIGO_TIPO_USUARIO, CODIGO_LUGAR, CODIGO_GENERO, CODIGO_CODIGO, NOMBRE, APELLIDO, CORREO_ELECTRONICO, CONTRASENA, TELEFONO, FECHA_NACIMIENTO, FECHA_REGISTRO, CIUDAD)
-values (3,2,9,1,3,'Pedro','Maradiaga','maradiaga.pedro2020@gmail.com','Pedro2',50489654123,TO_DATE('20-10-1998', 'DD-MM-YYYY'), sysdate, '');
+values (3,2,9,1,3,'Pedro','Maradiaga','maradiaga.pedro2020@gmail.com','Pedro2',50489654123,TO_DATE('20-10-1998', 'DD-MM-YYYY'), sysdate, 'Copan');
 
 
 --Insertar categorias--
