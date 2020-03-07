@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="32DD7E98-1DB9-E85F-0502-D453666B232E" containerWithKeyObject="208202CD-63EB-3477-2E20-9DD20B8EFEDF" localFKIndex="5BC96E2B-D1B0-2798-8A03-8F9BADBE24D5" name="TBL_RANKING_TBL_COMPRADO_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:19:13 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_COMPRADORES</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>D9D95658-3F4C-2FD4-DCE8-E64875264F12</referredTableID>
+<keyObject>ADC921E2-28C2-F98E-B65A-6CFA43D19229</keyObject>
+<referredKeyID>ADC921E2-28C2-F98E-B65A-6CFA43D19229</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_USUARIO_COMPRADOR</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

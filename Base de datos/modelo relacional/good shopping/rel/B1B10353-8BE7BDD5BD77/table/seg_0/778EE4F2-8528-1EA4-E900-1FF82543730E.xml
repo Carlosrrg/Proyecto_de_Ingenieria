@@ -46,6 +46,50 @@
 <colAssociation fkAssociation="CDFB00FC-A123-BD59-E208-6DDEFFA66FF5" referredColumn="D437C4E3-9DE2-812E-88BE-00B4B6231E47"/>
 </associations>
 </Column>
+<Column name="CODIGO_PUBLICACION_PRODUCTO" id="77463866-E66C-CD24-6000-5E59EE6F476A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:49:46 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="61CF5CBB-A8C8-CB49-8E84-69D7AEF5DC74" referredColumn="76A66DC4-274B-F176-C944-12B95B0B3589"/>
+</associations>
+</Column>
+<Column name="CODIGO_USUARIO_VENDEDOR" id="B1049ECA-6A2F-6705-F7D0-ECBDEE789581">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:08:50 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DC2D6E40-C3B1-A083-801F-BC3596EE1313" referredColumn="EAFC73AA-3377-1E1B-F28E-976116D607A8"/>
+</associations>
+</Column>
+<Column name="CODIGO_MOTIVO_REPORTE" id="CD82A747-CD2E-57AA-5374-296169548A5A">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:11:00 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2EDDDF85-0303-7833-58A8-6E2A655CC8EC" referredColumn="B45DEA45-9E4C-7BCD-6700-2C7AABDED200"/>
+</associations>
+</Column>
 <Column name="FECHA_EMITIO" id="1D613E28-4C84-372F-EE34-CAC0CBD71C0E">
 <createdBy>ronme</createdBy>
 <createdTime>2020-03-05 04:26:42 UTC</createdTime>
@@ -56,7 +100,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="COMENTARIOS_REPORTE" id="327084E7-D3B2-56ED-C4CE-615F8B9C47C1">
+<Column name="COMENTARIO_REPORTE" id="327084E7-D3B2-56ED-C4CE-615F8B9C47C1">
 <createdBy>ronme</createdBy>
 <createdTime>2020-03-05 04:26:42 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
@@ -99,6 +143,36 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="C402BED5-3A6F-EF4F-FE73-A27410AD9717"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F2D90A6D-64D8-F603-FAF8-DAC21599AC4C" name="TBL_REPOR_TBL_PUBLICAC_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:49:46 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77463866-E66C-CD24-6000-5E59EE6F476A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="78705108-806B-58BC-B716-97A15851EA8E" name="TBL_REPORTES_TBL_VENDEDO_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:08:50 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B1049ECA-6A2F-6705-F7D0-ECBDEE789581"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B4466BDE-07B4-361C-D70B-9F52C01AB5F1" name="TBL_REPOR_TBL_MOTI_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:11:00 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CD82A747-CD2E-57AA-5374-296169548A5A"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

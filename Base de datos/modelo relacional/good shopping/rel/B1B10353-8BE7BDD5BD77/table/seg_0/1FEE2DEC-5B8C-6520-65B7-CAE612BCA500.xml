@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A8B80561-3590-F5A3-A662-DAEDF0E6FF45" name="TBL_CODIGOS">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 23:27:35 UTC</createdTime>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1FEE2DEC-5B8C-6520-65B7-CAE612BCA500" name="TBL_MOTIVO_REPORTE">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:09:32 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
-<ordsAlias>table_41</ordsAlias>
+<ordsAlias>table_40</ordsAlias>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="CODIGO_CODIGO" id="F11E8690-D2BC-194E-9500-C51C81FACB55">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 23:29:07 UTC</createdTime>
+<Column name="CODIGO_MOTIVO_REPORTE" id="B45DEA45-9E4C-7BCD-6700-2C7AABDED200">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:10:50 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
@@ -18,28 +18,28 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="CODIGO" id="10C3E38F-270D-30F5-7321-213A5644219F">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 23:29:07 UTC</createdTime>
+<Column name="NOMBRE_MOTIVO_REPORTE" id="E503A204-506F-7242-2DD0-B3A6A7C5625B">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:10:50 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100</dataTypeSize>
-<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="7B5340C8-99EE-82CF-7C8A-ED7F0DFBCDA3" name="TBL_CODIGOS_PK">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 23:29:07 UTC</createdTime>
+<ind_PK_UK id="0AFC36F0-407C-CE08-8645-BB6FD544C576" name="TBL_MOTIVO_REPORTE_PK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:10:50 UTC</createdTime>
 <ownerDesignName>good shopping</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="F11E8690-D2BC-194E-9500-C51C81FACB55"/>
+<colUsage columnID="B45DEA45-9E4C-7BCD-6700-2C7AABDED200"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

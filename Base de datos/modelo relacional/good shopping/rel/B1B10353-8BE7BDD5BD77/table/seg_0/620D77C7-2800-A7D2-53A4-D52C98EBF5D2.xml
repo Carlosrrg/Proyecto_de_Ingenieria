@@ -21,16 +21,6 @@
 <colAssociation fkAssociation="8498AE6B-AC39-0CAC-F959-3B6C2D42FFA3" referredColumn="0C321793-1387-303B-D835-E66DF6BC3FB4"/>
 </associations>
 </Column>
-<Column name="CODIGO_VENDEDOR" id="23B3858E-1BAC-6394-E852-4366C28325F5">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 04:26:42 UTC</createdTime>
-<ownerDesignName>good shopping</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
 <Column name="CODIGO_TIPO_VENDEDOR" id="F4930308-E8E3-44F5-B996-0A3260538A8E">
 <createdBy>ronme</createdBy>
 <createdTime>2020-03-05 04:26:42 UTC</createdTime>

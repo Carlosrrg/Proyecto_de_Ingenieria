@@ -58,6 +58,20 @@
 <colAssociation fkAssociation="1F29A0C5-0240-41DF-EE7C-EDEABDAA582A" referredColumn="2384CC7F-BDAA-A7DA-3AA1-FDF674E230A2"/>
 </associations>
 </Column>
+<Column name="CODIGO_CODIGO" id="B993AA1D-909F-6CEA-6560-D2888E132BFC">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:15:25 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="31098A78-59D7-7D9B-AE5B-396791EAD328" referredColumn="F11E8690-D2BC-194E-9500-C51C81FACB55"/>
+</associations>
+</Column>
 <Column name="NOMBRE" id="A5153134-4390-708E-C318-ED10991AF66B">
 <createdBy>ronme</createdBy>
 <createdTime>2020-03-05 04:26:42 UTC</createdTime>
@@ -185,6 +199,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="9B52553D-491E-3F57-0AED-998767318D5B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="30A6D343-7D79-406A-4FC6-694EEA741FA6" name="TBL_USUARIOS_TBL_CODIGOS_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:15:25 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B993AA1D-909F-6CEA-6560-D2888E132BFC"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

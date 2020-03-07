@@ -21,16 +21,6 @@
 <colAssociation fkAssociation="7F9F8B85-9E1F-E619-37B4-C4AF46CD1861" referredColumn="0C321793-1387-303B-D835-E66DF6BC3FB4"/>
 </associations>
 </Column>
-<Column name="CODIGO_COMPRADOR" id="9ABD1C26-E62F-CBFF-2EC7-60B0A6E93869">
-<createdBy>ronme</createdBy>
-<createdTime>2020-03-05 04:26:42 UTC</createdTime>
-<ownerDesignName>good shopping</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="ADC921E2-28C2-F98E-B65A-6CFA43D19229" name="TBL_USUARIO_COMPRADOR_PK">

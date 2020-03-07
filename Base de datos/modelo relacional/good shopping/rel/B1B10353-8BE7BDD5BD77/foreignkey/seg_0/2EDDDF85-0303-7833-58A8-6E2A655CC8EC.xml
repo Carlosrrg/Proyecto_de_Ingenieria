@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2EDDDF85-0303-7833-58A8-6E2A655CC8EC" containerWithKeyObject="778EE4F2-8528-1EA4-E900-1FF82543730E" localFKIndex="B4466BDE-07B4-361C-D70B-9F52C01AB5F1" name="TBL_REPOR_TBL_MOTI_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 23:11:00 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<referredTableLongName>TBL_MOTIVO_REPORTE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>1FEE2DEC-5B8C-6520-65B7-CAE612BCA500</referredTableID>
+<keyObject>0AFC36F0-407C-CE08-8645-BB6FD544C576</keyObject>
+<referredKeyID>0AFC36F0-407C-CE08-8645-BB6FD544C576</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>CODIGO_MOTIVO_REPORTE</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="208202CD-63EB-3477-2E20-9DD20B8EFEDF" name="TBL_RANKING">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:18:29 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<ordsAlias>table_38</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CODIGO_USUARIO_COMPRADOR" id="FADA6A23-7E7C-2A87-CDB7-CD6135352D79">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:19:13 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="32DD7E98-1DB9-E85F-0502-D453666B232E" referredColumn="5845CE34-C20A-182A-CDB6-47C294E4FDDC"/>
+</associations>
+</Column>
+<Column name="CODIGO_USUARIO_VENDEDOR" id="A550707E-A555-F4FB-6FF1-D5779E3C66B9">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:19:18 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E746163D-AD26-5E5D-C992-E7197F8CE229" referredColumn="EAFC73AA-3377-1E1B-F28E-976116D607A8"/>
+</associations>
+</Column>
+<Column name="NUMERO_ESTRELLAS" id="DE3F1F22-6307-BAFB-E5C4-F221EB395609">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:20:28 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_RANKING" id="C6A1E8C2-0AA5-6FE2-5E56-5CE52338879F">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:20:28 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5BC96E2B-D1B0-2798-8A03-8F9BADBE24D5" name="TBL_RANKING_TBL_COMPRADO_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:19:13 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FADA6A23-7E7C-2A87-CDB7-CD6135352D79"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F6C0494C-E70E-A197-A827-33AB336A4748" name="TBL_RANKING_TBL_VENDEDO_FK">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-03-06 22:19:18 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A550707E-A555-F4FB-6FF1-D5779E3C66B9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
