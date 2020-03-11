@@ -20,15 +20,12 @@ CREATE OR REPLACE PROCEDURE P_AGREGAR_NUEVO_USUARIO (
             P_CODIGO_TIPO_USUARIO IN INTEGER,
             P_CODIGO_LUGAR IN INTEGER,
             P_CODIGO_GENERO IN INTEGER,
-            P_CODIGO_CODIGO IN INTEGER,
             P_NOMBRE IN VARCHAR2,
             P_APELLIDO IN VARCHAR2,
             P_CORREO_ELECTRONICO IN VARCHAR2,
             P_CONTRASENA IN VARCHAR2,
             P_TELEFONO IN NUMBER,
             P_FECHA_NACIMIENTO IN DATE,
-            P_FECHA_REGISTRO IN DATE,
-            P_CIUDAD IN VARCHAR2,
             P_CODIGO_USUARIO out integer
 )AS
 BEGIN
@@ -38,29 +35,23 @@ BEGIN
             CODIGO_TIPO_USUARIO,
             CODIGO_LUGAR,
             CODIGO_GENERO,
-            CODIGO_CODIGO,
             NOMBRE,
             APELLIDO,
             CORREO_ELECTRONICO,
             CONTRASENA,
             TELEFONO,
-            FECHA_NACIMIENTO,
-            FECHA_REGISTRO,
-            CIUDAD
+            FECHA_NACIMIENTO
     ) VALUES (
             P_CODIGO_USUARIO,
             P_CODIGO_TIPO_USUARIO,
             P_CODIGO_LUGAR,
             P_CODIGO_GENERO,
-            P_CODIGO_CODIGO,
             P_NOMBRE,
             P_APELLIDO,
             P_CORREO_ELECTRONICO,
             P_CONTRASENA,
             P_TELEFONO,
-            P_FECHA_NACIMIENTO,
-            P_FECHA_REGISTRO,
-            P_CIUDAD
+            P_FECHA_NACIMIENTO
     );
 END;
 
@@ -71,6 +62,6 @@ SET SERVEROUTPUT ON;
 DECLARE
     V_CODIGO_USUARIO INTEGER;
 BEGIN
-    P_AGREGAR_NUEVO_USUARIO (2, 8, 1, 1, 'Ronald', 'Arrazola', 'ronald@gmail.com', 'contrasena1234567', 70489654741, TO_DATE('12-05-1970', 'DD-MM-YYYY'), SYSDATE, 'Tegucigalpa', V_CODIGO_USUARIO);
+    P_AGREGAR_NUEVO_USUARIO (2, 8, 1, 'Ronald', 'Arrazola', 'ronald@gmail.com', 'contrasena1234567', 70489654741, TO_DATE('12-05-1970', 'DD-MM-YYYY'), V_CODIGO_USUARIO);
     DBMS_OUTPUT.PUT_LINE('CODIGO_USUARIO_AGREGADO: '||V_CODIGO_USUARIO);
 END;

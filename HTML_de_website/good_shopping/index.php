@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Goodshopping</title>
+    <title>Good Shopping</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="icon" type="image/jpg" href="img/logo2.png">
     <link rel="stylesheet" href="css/mensaje_error.css">
 </head>
-<body style ="margin:0; padding:0; display: flex; min-height: 100vh; flex-wrap: wrap;">
+<body>
 	<?php
         include_once("class/conexion_copy.php");
         session_start();
         $conexion = new Conexion();
     ?>
 	<!--Barra-->
-	<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276; width: 100%; height:5%;">
+	<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276;">
 		<!-- centrar horizontalmente mx-auto -->
 		<!-- ml-auto: meter margen por la izquierda -->
 		<!-- mr-auto: meter margen por la derecha -->
@@ -26,7 +26,7 @@
 			<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 				<img src="recursos/imagenes/Menu.png" width=20>
 			</a>
-			<div class="dropdown-menu dropright" style="overflow-y: auto; height: 590px; margin: 6px 0 0 -17px; border-radius: 0px;">
+			<div class="dropdown-menu dropright" style="align-content: initial; margin: 6px 0 0 -17px; border-radius: 0px;">
 				<h6 style="text-align: center;">Categorías</h6>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#">Entretenimiento</a>
@@ -63,45 +63,71 @@
 		<a href="#" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="img/logo.png" width=50 height="40"></a>
 
 		<!--gestion de sesión -->
-		<div class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>
-			<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">
-				<a class="dropdown-item dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Iniciar Sesión</a>
-				
-				<!--formulario para iniciar sesión -->
-				<div class="dropdown-menu" style="margin: -82px 0 0 -80px;">
-					<div class="px-4 py-3">
-						<div class="form-group">
-							<label for="txt-correo">Correo Electrónico</label>
-							<input type="email" class="form-control" id="txt-correo" name="txt-correo" placeholder="email@example.com">
-						</div>
-						<div class="form-group">
-							<label for="txt-contrasena">Contraseña</label>
-							<input type="password" class="form-control" id="txt-contrasena" name="txt-contrasena" placeholder="Contraseña">
-						</div>
-						<div class="form-group">
-							<div class="form-check">
-							<input type="checkbox" class="form-check-input" id="dropdownCheck">
-							<label class="form-check-label" for="dropdownCheck">
-								Recordar
-							</label>
-							</div>
-						</div>
-						<button type="submit" id="btn_iniciar" name="btn_iniciar" class="btn btn-primary">Iniciar Sesión</button>
-					</div>
-						<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>
-						<!--<div id="mostrar_error_login2" class="error_login">Correo o Contraseña incorrectos</div>-->
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Restablecer Contraseña</a>
-				</div>
-				<a class="dropdown-item" href="modulo_registro.html">Registrarse</a>
-			</div>
-		</div>
+		<?php
+			if(!isset($_SESSION['codigo_usuario_sesion'])){
+                //echo "seccion cerrada";
+		        echo'<div class="nav-item dropdown">';
+					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
+					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+						echo'<a class="dropdown-item dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Iniciar Sesión</a>';
+						
+						//<!--formulario para iniciar sesión -->
+						echo'<div class="dropdown-menu" style="margin: -82px 0 0 -80px;">';
+							echo'<div class="px-4 py-3">';
+								echo'<div class="form-group">';
+									echo'<label for="txt-correo">Correo Electrónico</label>';
+									echo'<input type="email" class="form-control" id="txt-correo" name="txt-correo" placeholder="email@example.com">';
+								echo'</div>';
+								echo'<div class="form-group">';
+									echo'<label for="txt-contrasena">Contraseña</label>';
+									echo'<input type="password" class="form-control" id="txt-contrasena" name="txt-contrasena" placeholder="Contraseña">';
+								echo'</div>';
+								echo'<div class="form-group">';
+									echo'<div class="form-check">';
+									echo'<input type="checkbox" class="form-check-input" id="dropdownCheck">';
+									echo'<label class="form-check-label" for="dropdownCheck">
+										Recordar
+									</label>';
+									echo'</div>';
+								echo'</div>';
+								echo'<button type="submit" id="btn_iniciar" name="btn_iniciar" class="btn btn-primary">Iniciar Sesión</button>';
+							echo'</div>';
+								echo'<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>';
+								//<!--<div id="mostrar_error_login2" class="error_login">Correo o Contraseña incorrectos</div>-->
+								echo'<div class="dropdown-divider"></div>';
+								echo'<a class="dropdown-item" href="#">Restablecer Contraseña</a>';
+						echo'</div>';
+						echo'<a class="dropdown-item" href="modulo_registro.html">Registrarse</a>';
+					echo'</div>';
+				echo'</div>';
+			}
+			else{
+				$usuario = $_SESSION['codigo_usuario_sesion'];
+			    //echo "seccion iniciada por: " . $usuario;
+			    echo'<div class="nav-item dropdown">';
+					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
+							$conexion->establecerConexion();
+							$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE
+																					FROM TBL_USUARIOS
+																					WHERE CODIGO_USUARIO = '$usuario'");
+							oci_execute($resultado_usuario);
+							while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+							 	echo $fila["NOMBRE"];
+							}
+					echo'</a>';
+					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+						echo'<a class="dropdown-item" href="#">Ver Perfil</a>';
+						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar</a>';
+					echo'</div>';
+				echo'</div>';
+			} 
+		?>
+		
 	</nav>
 	
 	<!--Barra de busqueda-->
 	<br>
-	<div class="container barra" style="padding-top:30px;">
+	<div class="container">
 		<div class="input-group mb-3">
 			<input id="txt-barraBusqueda" name="txt-barraBusqueda" type="text" class="form-control" placeholder="¿Qué estas buscando?">
 			<div class="input-group-append">
@@ -409,83 +435,85 @@
 	</div>
 
 	<!--Pie de página-->
-	<footer style="background: #fff; margin-top:0px; width:100%;">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
-					<br>
-					<h6>Goodshopping</h6>
-					<a href="#" style="color: black;">
-						<span>
-							Acerca de nosotros
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Contáctanos
-						</span>
-					</a>
-				</div>
+	<div class="clearfix">
+		<footer class="footer" style="background: #fff;">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
+						<br>
+						<h6>Goodshopping</h6>
+						<a href="#" style="color: black;">
+							<span>
+								Acerca de nosotros
+							</span>
+						</a>
+						<br>
+						<a href="#" style="color: black;">
+							<span>
+								Contáctanos
+							</span>
+						</a>
+					</div>
+		
+					<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
+						<br>
+						<h6>Destacados</h6>
+						<a href="#" style="color: black;">
+							<span>
+								Región
+							</span>
+						</a>
+						<br>
+						<a href="#" style="color: black;">
+							<span>
+								Categoría
+							</span>
+						</a>
+						<br>
+						<a href="#" style="color: black;">
+							<span>
+								Vendedor
+							</span>
+						</a>
+					</div>
 	
-				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
-					<br>
-					<h6>Destacados</h6>
-					<a href="#" style="color: black;">
-						<span>
-							Región
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Categoría
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Vendedor
-						</span>
-					</a>
+					<div class="col-xs-3 col-mx-3" style="padding-left:40px; padding-right: 10px;">
+						<br>
+						<h6>Terminos y condiciones</h6>
+						<a href="#" style="color: black;">
+							<span>
+								Condiciones de servicio
+							</span>
+						</a>
+						<br>
+						<a href="#" style="color: black;">
+							<span>
+								Políticas de privacidad
+							</span>
+						</a>
+					</div>
+	
+					<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
+						<br>
+						<h6>Ayuda</h6>
+						<a href="#" style="color: black;">
+							<span>
+								Soporte técnico
+							</span>
+						</a>
+					</div>
+	
+					<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
+						<br>
+						<h6>Siguenos en</h6>
+						<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
+						<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
+						<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
+					</div>
 				</div>
-
-				<div class="col-xs-3 col-mx-3" style="padding-left:40px; padding-right: 10px;">
-					<br>
-					<h6>Terminos y condiciones</h6>
-					<a href="#" style="color: black;">
-						<span>
-							Condiciones de servicio
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Políticas de privacidad
-						</span>
-					</a>
-				</div>
-
-				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
-					<br>
-					<h6>Ayuda</h6>
-					<a href="#" style="color: black;">
-						<span>
-							Soporte técnico
-						</span>
-					</a>
-				</div>
-
-				<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
-					<br>
-					<h6>Siguenos en</h6>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
-				</div>
-			</div>
-		</div>		
-	</footer>
+			</div>		
+		</footer>
+	</div>
 	
 	<!--Agregando bootstrap al archivo html-->
 	<script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
@@ -494,10 +522,10 @@
 </body>
 </html>
 <?php
-  if(!isset($_SESSION['codigo_usuario_sesion'])){
-                                                                         
-  }
-  else{
-    $conexion->cerrarConexion();
-  } 
+  	if(!isset($_SESSION['codigo_usuario_sesion'])){
+                                                             
+  	}
+  	else{
+  		$conexion->cerrarConexion();
+  	}
 ?>
