@@ -1,0 +1,200 @@
+body {
+	margin:0;
+	padding:0;
+    background-color: #F5F5F5;
+	overflow-x: hidden;
+}
+
+/* ---------------------------------------------------
+    Estilos para colores de las listas desplegables
+----------------------------------------------------- */
+.dropdown a{
+	color: #000 !important;
+}
+
+.dropdown-menu a{
+	color: #000 !important;
+}
+
+.dropdown-menu a:hover{
+	 background: #014464!important;
+	 background: linear-gradient(left, #0272a7, #013953);
+	 background: -moz-linear-gradient(left, #0272a7, #013953)!important;
+	 background: -webkit-gradient(linear, 100% 100%, 0% 0%, from(#72a276), to(#72a276))!important;
+	 color: #f8f9fa !important;
+	 -webkit-transition: all 0.2s ease-in-out;
+	 -moz-transition: all 0.2s ease-in-out;
+	 transition: all 0.2s ease-in-out; 
+}
+
+.scrollMenu {
+	max-height: 550px;
+	overflow-y: auto;
+}
+
+/* ---------------------------------------------------
+    Estilos para botones de la pagina de inicio
+----------------------------------------------------- */
+.button {
+	background:#ffffff;
+	color:#000000;
+	display:inline-block;
+	font-size:1.25em;
+	margin:	8px;
+	padding:4% 0px;
+	text-align:center;
+	width:90%;
+	text-decoration:none;
+	box-shadow:0px 1px 0px #373c3c;
+}
+
+.button span {
+	margin-right:15px;
+}
+
+.button.radius {
+	border-radius:10px;
+}
+
+.button:hover{
+	background:#72a276;
+	text-decoration:none;
+	color:#fff;
+	box-shadow:0px 0px 0px;
+}
+
+/* ---------------------------------------------------
+    Estilos para la barra lateral 
+----------------------------------------------------- */
+#sidebar-wrapper {
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+  min-height:80vh;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+/* ---------------------------------------------------
+    Boton para deplegar la barra lateral 
+----------------------------------------------------- */
+
+.sidebar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+	position: fixed;
+	z-index: 100;
+}
+
+#menu-toggle {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#menu-toggle span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #000;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    transition-delay: 0.2s;
+}
+
+#menu-toggle span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+}
+#menu-toggle span:nth-of-type(2) {
+    opacity: 0;
+}
+#menu-toggle span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+#menu-toggle.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+	background-color:transparent;
+}
+
+/* ---------------------------------------------------------
+    Boton para desplegar la barra en dispositivos pequeños
+-----------------------------------------------------------*/
+@media (max-width: 768px) {
+    #menu-toggle span:first-of-type{
+		opacity: 0;
+	}
+    #menu-toggle span:nth-of-type(2){
+		background-color: transparent;
+		opacity: 1;
+		margin-top:10px;
+	}
+    #menu-toggle span:last-of-type {
+        transform: none;
+        opacity: 0;
+        margin: 5px auto;
+    }
+    #menu-toggle.active span {
+        margin: 0 auto;
+    }
+    #menu-toggle.active span:first-of-type {
+		background-color: #000;
+		opacity: 1;
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    #menu-toggle.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+    #menu-toggle.active span:last-of-type {
+		background-color: #000;
+		opacity: 1;
+        transform: rotate(-45deg) translate(1px, -1px);
+    }
+
+}
+
+/* ---------------------------------------------------
+    Estilos para el Carousel 
+----------------------------------------------------- */
+.carousel {
+	left:0;
+	top:0;
+	width:300px;
+	height:300px;
+	text-align: center;
+}

@@ -10,7 +10,7 @@
     <link rel="icon" type="image/jpg" href="img/logo2.png">
     <link rel="stylesheet" href="css/mensaje_error.css">
 </head>
-<body style ="margin:0; padding:0; display: flex; min-height: 100vh; flex-wrap: wrap;">
+<body style ="margin:0; padding:0; display: flex; min-height: 100vh; flex-wrap: wrap; background-color: #F5F5F5;">
 	<?php
         include_once("class/conexion_copy.php");
         session_start();
@@ -68,7 +68,7 @@
                 //echo "seccion cerrada";
 		        echo'<div class="nav-item dropdown">';
 					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
-					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -60px;">';
 						echo'<a class="dropdown-item dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Iniciar Sesión</a>';
 						
 						//<!--formulario para iniciar sesión -->
@@ -90,7 +90,7 @@
 									</label>';
 									echo'</div>';
 								echo'</div>';
-								echo'<button type="submit" id="btn_iniciar" name="btn_iniciar" class="btn btn-primary">Iniciar Sesión</button>';
+								echo'<button type="submit" id="btn_iniciar" name="btn_iniciar" class="btn btn-success">Iniciar Sesión</button>';
 							echo'</div>';
 								echo'<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>';
 								//<!--<div id="mostrar_error_login2" class="error_login">Correo o Contraseña incorrectos</div>-->
@@ -141,7 +141,7 @@
 	<!--Grupo de botones de departamentos Small boxes (Stat box) -->
 	<br>
 	<div class="box box-success" style = "padding-top:0%; padding-left:7%; padding-right:7%; padding-bottom: 5%;">
-		<div class="row" style="background: #d3d0cb; border-top-left-radius:10px; border-top-right-radius:10px;">
+		<div class="row" style="background: #E3E3E3; border-top-left-radius:10px; border-top-right-radius:10px;">
 			<div class="col-lg-12">
 					<br>
 					<center>
@@ -154,7 +154,7 @@
 				</center>
 			</div>
 		</div>
-		<div class="row" style="background: #d3d0cb;">
+		<div class="row" style="background: #E3E3E3;">
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
@@ -430,7 +430,7 @@
 				</div>
 			</div>
 			<!--Linea inferior-->
-			<div class="row" style="padding-top:3%; background: #d3d0cb; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+			<div class="row" style="padding-top:3%; background: #E3E3E3; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
 			</div>
 	</div>
 
