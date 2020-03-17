@@ -46,10 +46,12 @@
 		}
 
 		if($mensaje==0){
+			$codigo_recuperacion = rand(1,3);
+			//echo "codigo_recuperacion: ".$codigo_recuperacion;
 			$ingresar_usuario = $conexion->ejecutarInstruccion("DECLARE
 																    V_CODIGO_USUARIO INTEGER;
 																BEGIN
-																    P_AGREGAR_NUEVO_USUARIO (2, $ubicacion, 3, '$nombre', '$apellido', '$correo', '$contrasena', $telefono, TO_DATE('$dia-$mes-$anio', 'DD-MM-YYYY'), V_CODIGO_USUARIO);
+																P_AGREGAR_NUEVO_USUARIO (2, $ubicacion, 3, $codigo_recuperacion, '$nombre', '$apellido', '$correo', '$contrasena', $telefono, TO_DATE('$dia-$mes-$anio', 'DD-MM-YYYY'), SYSDATE, NULL, V_CODIGO_USUARIO);
 																END;");
 			oci_execute($ingresar_usuario);
 			$mensaje = 2;
