@@ -63,11 +63,10 @@
 
 				$ingresar_tienda = $conexion->ejecutarInstruccion(
 						"DECLARE
-						    V_CODIGO_TIENDA INTEGER;
+							V_CODIGO_TIENDA INTEGER;
 						BEGIN
-						    P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', $rtn, V_CODIGO_TIENDA);
-						END;"
-				);
+							P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', '$rtn', V_CODIGO_TIENDA);
+						END;");
 				oci_execute($ingresar_tienda);
 
 				$ingresar_vendedor = $conexion->ejecutarInstruccion(
@@ -90,9 +89,39 @@
 				oci_execute($ingresar_comprador);
 			}
 
+			$mensaje = "Datos ingresados con éxito!\n";
 
+			//FUNCION PARA ENVIAR CORREO DE CONFIRMACION DE REGISTRO
+			if (!empty($_POST)) {
+				$email_subject = "Registro éxitoso a Good Shopping!";
+				$email_message = "Detalles del registro:\n\n";
+				$email_message .= " - Nombre: " . $nombre . "\n";
+				$email_message .= " - Apellido: " . $apellido . "\n";
+				$email_message .= " - Correo: " . $correo . "\n";
+				$email_message .= " - Teléfono: " . $telefono . "\n";
+				$email_message .= " - Fecha de nacimiento: " . $dia . "/" . $mes . "/" . $anio . "\n\n";
+				if ($vendedor == 2) {
+					$email_message .= "Se registro como: Vendedor Empresarial\n";
+					$email_message .= " - Nombre de la tienda: " . $nombre_tienda . "\n";
+					$email_message .= " - RTN: " . $rtn . "\n\n";
+				}else{
+					$email_message .= "Se registro como: Vendedor Individual\n\n";
+				}
+				$email_message .= "¡Se ha registrado con éxito a Good Shopping!";
 
-			$mensaje = 2;
+				$header = "From: " . $correo . "  \r\n";
+				$header .= "X-Mailer: PHP/" . phpversion() . "  \r\n";
+				$header .= "Mime-Version: 1.0 \r\n";
+				$header .= "Content-Type:  text/plain";
+
+				if (mail($correo,$email_subject,$email_message,$header)) {
+					$mensaje .= "Se envío correo de registro a " . $correo . "\n";
+				}else{
+					$mensaje .= "Error al enviar correo\n";
+				}
+			}
+			//FIN DE FUNCION PARA ENVIAR CORREO
+
 		}
 		echo $mensaje;
 

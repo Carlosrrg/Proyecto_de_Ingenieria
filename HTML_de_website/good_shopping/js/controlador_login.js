@@ -156,7 +156,7 @@ $(document).ready(function(){
 																	//dataType:"json",
 																	success:function(respuesta1){
 																		//$("#prueba").html(respuesta);
-																		//alert(respuesta1);
+																		alert(respuesta1);
 																		if(respuesta1 == 1){
 																			alert("Lo sentimos, el correo ingresado ya existe, intente con uno nuevo...");
 																			$("#txt-correo").val("");
