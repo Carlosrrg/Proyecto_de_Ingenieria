@@ -84,7 +84,7 @@
                                                   <div id="confirmar"></div>
                                                   <li class="">
                                                       <label class="sr-only required" for="register-displayname">
-                                                        Telefono
+                                                        Teléfono
                                                       </label>
                                                       <input type="number" id="txt-telefono" name="signup_form[displayname]" required="required" autocapitalize="off" autocorrect="off" autocomplete="off" maxlength="30" placeholder="Telefono">
                                                       <div id="mensaje6" class="errores">Numero telefonico invalido</div>
@@ -148,6 +148,36 @@
                                                            <div id="mensaje10" class="errores">Dia no válido</div>
                                                            <div id="mensaje11" class="errores">Año no válido</div>
                                                       </div>
+                                                  </li>
+
+                                                  <li>
+                                                    <label for="register-age" class="">
+                                                      Tipo de vendedor
+                                                    </label>
+                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                      <label style="text-transform: none;" class="btn btn-secondary btn-sm active col-lg-6">
+                                                        <input type="radio" name="opcion-tienda" id="rb-individual" value="1" checked> Individual
+                                                      </label>
+                                                      <label style="text-transform: none;" class="btn btn-secondary btn-sm col-lg-6">
+                                                        <input type="radio" name="opcion-tienda" id="rb-empresarial" value="2"> Empresarial
+                                                      </label>
+                                                    </div>
+                                                  </li>
+
+                                                  <li id="tienda1">
+                                                    <label class="sr-only required" for="register-displayname">
+                                                        Nombre de la tienda
+                                                      </label>
+                                                      <input type="text" id="txt-nombre-tienda" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Nombre de tienda">
+                                                      <div id="mensaje13" class="errores">Ingrese nombre de la tienda</div>
+                                                  </li>
+
+                                                  <li id="tienda2">
+                                                    <label class="sr-only required" for="register-displayname">
+                                                        RTN
+                                                      </label>
+                                                      <input type="number" id="txt-rtn" name="signup_form[displayname]" required="required" maxlength="14" placeholder="RTN">
+                                                      <div id="mensaje14" class="errores">RTN inválido</div>
                                                   </li>
                                                     
                                                   <li class="li-terms-notick">

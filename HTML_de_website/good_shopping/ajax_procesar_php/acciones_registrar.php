@@ -14,6 +14,8 @@
 	$dia = $_POST["txt-dia"];
 	$mes = $_POST["slc-mes"];
 	$anio = $_POST["txt-anio"];
+	$vendedor = $_POST["rb-vendedor"];
+
 
 	//$valores = $nombre.$apellido.$correo.$contrasena.$telefono.$ubicacion.$dia.$mes.$anio;
 	//echo $valores;
@@ -54,6 +56,42 @@
 																P_AGREGAR_NUEVO_USUARIO (2, $ubicacion, 3, $codigo_recuperacion, '$nombre', '$apellido', '$correo', '$contrasena', $telefono, TO_DATE('$dia-$mes-$anio', 'DD-MM-YYYY'), SYSDATE, NULL, V_CODIGO_USUARIO);
 																END;");
 			oci_execute($ingresar_usuario);
+
+			if ($vendedor==2) {
+				$nombre_tienda = $_POST["txt-nombre-tienda"];
+				$rtn = $_POST["txt-rtn"];
+
+				$ingresar_tienda = $conexion->ejecutarInstruccion(
+						"DECLARE
+						    V_CODIGO_TIENDA INTEGER;
+						BEGIN
+						    P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', $rtn, V_CODIGO_TIENDA);
+						END;"
+				);
+				oci_execute($ingresar_tienda);
+
+				$ingresar_vendedor = $conexion->ejecutarInstruccion(
+						"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
+						SELECT * FROM 
+						(SELECT CODIGO_USUARIO,$vendedor FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC),
+						(SELECT CODIGO_TIENDA FROM TBL_TIENDAS WHERE ROWNUM=1 ORDER BY CODIGO_TIENDA DESC)");
+				oci_execute($ingresar_vendedor);
+
+			}else{
+				$ingresar_vendedor = $conexion->ejecutarInstruccion(
+						"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
+						SELECT CODIGO_USUARIO,$vendedor,NULL FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC");
+				oci_execute($ingresar_vendedor);
+
+				$ingresar_comprador = $conexion->ejecutarInstruccion(
+							"INSERT INTO TBL_COMPRADORES (CODIGO_USUARIO_COMPRADOR)
+							SELECT CODIGO_USUARIO FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC"
+				);
+				oci_execute($ingresar_comprador);
+			}
+
+
+
 			$mensaje = 2;
 		}
 		echo $mensaje;

@@ -190,6 +190,7 @@ CREATE TABLE tbl_tienda_x_tbl_publicacion (
 CREATE TABLE tbl_tiendas (
     codigo_tienda             INTEGER NOT NULL,
     nombre_tienda             VARCHAR2(200) NOT NULL,
+    RTN                       NUMBER(14, 0) NOT NULL,
     telefono_tienda           NUMBER,
     correo_tienda             VARCHAR2(200),
     direccion_fisica_tienda   VARCHAR2(500),

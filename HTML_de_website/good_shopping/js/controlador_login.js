@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	$("#tienda1").hide();
+	$("#tienda2").hide();
 	$("#btn_registrarse").click(function(){
 		var nombre = $("#txt-nombre").val();
 		var apellido = $("#txt-apellido").val();
@@ -10,6 +12,9 @@ $(document).ready(function(){
 		var dia = $("#txt-dia").val(); 
 		var mes = $("#slc-mes").val();
 		var anio = $("#txt-anio").val();
+		var vendedor = $('input[name="opcion-tienda"]:checked').val();
+		var nombre_tienda = $("#txt-nombre-tienda").val();
+		var rtn = $("#txt-rtn").val();
 
 		var acepta = $("input:checkbox[name=aceptar]:checked");
 
@@ -25,6 +30,8 @@ $(document).ready(function(){
 			$("#mensaje6").fadeIn();
 			$("#mensaje7").fadeIn();
 			$("#mensaje8").fadeIn();
+			$("#mensaje13").fadeIn();
+			$("#mensaje14").fadeIn();
 		}
 		else{
 			$("#mensaje1").fadeOut()
@@ -35,6 +42,8 @@ $(document).ready(function(){
 			$("#mensaje6").fadeOut()
 			$("#mensaje7").fadeOut()
 			$("#mensaje8").fadeOut()
+			$("#mensaje13").fadeOut()
+			$("#mensaje14").fadeOut()
 			if (nombre == "") {
 				$("#mensaje1").fadeIn();
 				return false;
@@ -115,9 +124,31 @@ $(document).ready(function(){
 																				"&slc-ubicacion="+ubicacion+
 																				"&txt-dia="+dia+
 																				"&slc-mes="+mes+
-																				"&txt-anio="+anio;
-															//alert(parametros);
+																				"&txt-anio="+anio+
+																				"&rb-vendedor="+vendedor;
 
+															if (vendedor==2) {
+																if (nombre_tienda == "") {
+																	$("#mensaje13").fadeIn();
+																	return false;
+																}
+																else{
+																	$("#mensaje13").fadeOut();
+																	if (rtn == "" || rtn.length != 14) {
+																		$("#mensaje14").fadeIn();
+																		return false;
+																	}
+																	else{
+																		$("#mensaje14").fadeOut();
+
+																		parametros = 	parametros+
+																						"&txt-nombre-tienda="+nombre_tienda+
+																						"&txt-rtn="+rtn;
+																	}
+																}
+															}
+															//alert(parametros);
+															
 															$.ajax({
 																	url:"ajax_procesar_php/acciones_registrar.php",
 																	data:parametros,
@@ -191,4 +222,16 @@ $(document).ready(function(){
 			});	
 		}
 	});
+
+	
+	$("#rb-individual").click(function() {
+		$("#tienda1").hide();
+		$("#tienda2").hide();
+	});
+
+	$("#rb-empresarial").click(function() {
+		$("#tienda1").show();
+		$("#tienda2").show();
+	});
+
 });
