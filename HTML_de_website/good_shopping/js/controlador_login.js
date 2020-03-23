@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	$("#tienda1").hide();
 	$("#tienda2").hide();
+	$("#correo-enviado").hide();
+	$("#cargando").hide();
+	$("#r-cargando").hide();
 	$("#btn_registrarse").click(function(){
 		var nombre = $("#txt-nombre").val();
 		var apellido = $("#txt-apellido").val();
@@ -147,6 +150,9 @@ $(document).ready(function(){
 																	}
 																}
 															}
+
+															$("#r-cargando").show();
+															$("#btn_registrarse").prop('disabled', true);
 															//alert(parametros);
 															
 															$.ajax({
@@ -157,6 +163,8 @@ $(document).ready(function(){
 																	success:function(respuesta1){
 																		//$("#prueba").html(respuesta);
 																		//alert(respuesta1);
+																		$("#r-cargando").hide();
+																		$("#btn_registrarse").prop('disabled', false);
 																		if(respuesta1 == 0){
 																			alert("Lo sentimos, el correo ingresado ya existe o no es valido, porfavor intente con uno nuevo...");
 																			$("#txt-correo").val("");
@@ -228,6 +236,107 @@ $(document).ready(function(){
 	$("#rb-empresarial").click(function() {
 		$("#tienda1").show();
 		$("#tienda2").show();
+	});
+
+	$("#btn_codigo").click(function() {
+		var correo = $("#txt-correo-restablecer").val();
+		if (correo=="") {
+			$("#mensaje15").fadeIn();
+			return false;
+		}else{
+			$("#mensaje15").fadeOut();
+			$("#cargando").show();
+			var parametros = 	"&boton=1&txt-correo="+correo;
+			//alert(parametros);
+
+			$.ajax({
+				url:"ajax_procesar_php/acciones_restablecer.php",
+				data:parametros,
+				method:"POST",
+				success:function(respuesta){
+					//alert(respuesta);
+					if(respuesta == 0){
+						$("#mensaje16").fadeIn();
+						$("#cargando").hide();
+					}else{
+						$("#mensaje16").fadeOut();
+						$("#cargando").hide();
+						$("#correo-enviado").show();
+						$("#btn_cambio_contrasena").prop('disabled', false);
+						//$("#btn_cambio_contrasena")
+						$("#btn_codigo").text('Reenviar código');
+						//alert("codigo de usuario: "+respuesta);
+					}
+				}
+			});	
+		}
+	});
+
+	$("#mensaje21").hide();
+	$("#btn_cambio_contrasena").click(function() {
+		var correo = $("#txt-correo-restablecer").val();
+		var codigo = $("#txt-codigo").val();
+		var contrasena = $("#txt-contrasena-nueva").val();
+		var confirmar_contrasena = $("#txt-contrasena-nueva-c").val();
+		if (correo=="") {
+			$("#mensaje15").fadeIn();
+			return false;
+		}else{
+			$("#mensaje15").fadeOut();
+			if (codigo=="") {
+				$("#mensaje17").fadeIn();
+				return false;
+			}else{
+				$("#mensaje17").fadeOut();
+				$("#mensaje18").fadeOut();
+				if (contrasena=="") {
+					$("#mensaje19").fadeIn();
+					return false;
+				}else{
+					$("#mensaje19").fadeOut();
+					if (contrasena!=confirmar_contrasena) {
+						$("#mensaje20").fadeIn();
+						return false;
+					}else{
+						$("#mensaje20").fadeOut();
+
+						var parametros = 	"&boton=2&txt-correo="+correo+
+											"&txt-codigo="+codigo+
+											"&txt-contrasena="+contrasena;
+						//alert(parametros);
+
+						$.ajax({
+							url:"ajax_procesar_php/acciones_restablecer.php",
+							data:parametros,
+							method:"POST",
+							success:function(respuesta){
+								//alert(respuesta);
+								if(respuesta == 0){
+									//el correo no existe
+									$("#mensaje16").fadeIn();
+								}
+								if(respuesta == 1){
+									//el codigo ingresado es invalido
+									$("#mensaje18").fadeIn();
+								}
+								if(respuesta == 2){
+									//exito al restablecer
+									$("#btn_codigo").prop('disabled', true);
+									$("#btn_cambio_contrasena").prop('disabled', true);
+									$("#mensaje21").show();
+									window.setTimeout(function() { window.location="index.php"; }, 3000);
+								}
+								else{
+									$("#mensaje16").fadeOut();
+									$("#correo-enviado").show();
+								}
+							}
+						});	
+
+					}
+				}
+			}
+		}
 	});
 
 });
