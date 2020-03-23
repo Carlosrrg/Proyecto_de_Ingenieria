@@ -89,7 +89,7 @@
 				oci_execute($ingresar_comprador);
 			}
 
-			$mensaje = "Datos ingresados con éxito!\n";
+			$mensaje = "Se registro de forma exitosa! Inicie sesión.\n";
 
 			//FUNCION PARA ENVIAR CORREO DE CONFIRMACION DE REGISTRO
 			if (!empty($_POST)) {

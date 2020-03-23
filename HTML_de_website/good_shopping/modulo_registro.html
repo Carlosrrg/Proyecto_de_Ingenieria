@@ -12,6 +12,7 @@
     
     
       <link rel="canonical" href="#">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
       <link rel="stylesheet" href="css/inicio_session.css">
       <link rel="stylesheet" href="css/mensaje_error.css">
   </head>
@@ -25,7 +26,7 @@
                   <div class="l-signup-header">
                       <div class="container">
                           <div class="">
-                              <a class="" href="#">
+                              <a class="" href="index.php">
                                 <center><img src="img/logo.png"></center>
                               </a>
                           </div>
@@ -154,7 +155,8 @@
                                                     <label for="register-age" class="">
                                                       Tipo de vendedor
                                                     </label>
-                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <center>
+                                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                       <label style="text-transform: none;" class="btn btn-secondary btn-sm active col-lg-6">
                                                         <input type="radio" name="opcion-tienda" id="rb-individual" value="1" checked> Individual
                                                       </label>
@@ -162,6 +164,7 @@
                                                         <input type="radio" name="opcion-tienda" id="rb-empresarial" value="2"> Empresarial
                                                       </label>
                                                     </div>
+                                                    </center>
                                                   </li>
 
                                                   <li id="tienda1">
@@ -196,6 +199,11 @@
                                           <button id="btn_registrarse" type="submit" class="btn btn-green btn-block">
                                             Registrarse
                                           </button> 
+                                          <center>
+                                            <div class="spinner-border text-success" role="status" id="r-cargando">
+                                              <span class="sr-only">Loading...</span>
+                                            </div>
+                                          </center>
                                       </div>
                                       <p class="primary">
                                         ¿Ya tienes una cuenta?
