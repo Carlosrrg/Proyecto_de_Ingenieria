@@ -1,6 +1,8 @@
 <?php
 	include_once("../class/conexion_copy.php");
 
+	session_start();
+
 	$conexion = new Conexion();
 	$conexion->establecerConexion();
 
@@ -20,7 +22,7 @@
 	//$valores = $nombre.$apellido.$correo.$contrasena.$telefono.$ubicacion.$dia.$mes.$anio;
 	//echo $valores;
 	
-	$mensaje = 0;
+	$mensaje = 1;
 
 
 		if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
@@ -35,7 +37,7 @@
 		    }
 		    for ($i=0; $i < count($correos_bd); $i++) { 
 		    	if ($correo == $correos_bd[$i]) {
-		    		$mensaje = 1;
+		    		$mensaje = 0;
 		    		break;
 		    	}
 		    	/*else{
@@ -44,10 +46,10 @@
 		    }
 		}
 		else{
-			$mensaje = 3;
+			$mensaje = 0;
 		}
 
-		if($mensaje==0){
+		if($mensaje==1){
 			$codigo_recuperacion = rand(1,3);
 			//echo "codigo_recuperacion: ".$codigo_recuperacion;
 			$ingresar_usuario = $conexion->ejecutarInstruccion("DECLARE
@@ -62,34 +64,35 @@
 				$rtn = $_POST["txt-rtn"];
 
 				$ingresar_tienda = $conexion->ejecutarInstruccion(
-						"DECLARE
-							V_CODIGO_TIENDA INTEGER;
-						BEGIN
-							P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', '$rtn', V_CODIGO_TIENDA);
-						END;");
+																	"DECLARE
+																		V_CODIGO_TIENDA INTEGER;
+																	BEGIN
+																		P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', '$rtn', V_CODIGO_TIENDA);
+																	END;
+																	COMMIT;");
 				oci_execute($ingresar_tienda);
 
 				$ingresar_vendedor = $conexion->ejecutarInstruccion(
-						"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
-						SELECT * FROM 
-						(SELECT CODIGO_USUARIO,$vendedor FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC),
-						(SELECT CODIGO_TIENDA FROM TBL_TIENDAS WHERE ROWNUM=1 ORDER BY CODIGO_TIENDA DESC)");
+																	"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
+																	SELECT * FROM 
+																	(SELECT CODIGO_USUARIO,$vendedor FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC),
+																	(SELECT CODIGO_TIENDA FROM TBL_TIENDAS WHERE ROWNUM=1 ORDER BY CODIGO_TIENDA DESC)");
 				oci_execute($ingresar_vendedor);
 
 			}else{
 				$ingresar_vendedor = $conexion->ejecutarInstruccion(
-						"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
-						SELECT CODIGO_USUARIO,$vendedor,NULL FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC");
+																	"INSERT INTO TBL_VENDEDORES (CODIGO_USUARIO_VENDEDOR, CODIGO_TIPO_VENDEDOR, CODIGO_TIENDA)
+																	SELECT CODIGO_USUARIO,$vendedor,NULL FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC");
 				oci_execute($ingresar_vendedor);
 
 				$ingresar_comprador = $conexion->ejecutarInstruccion(
-							"INSERT INTO TBL_COMPRADORES (CODIGO_USUARIO_COMPRADOR)
-							SELECT CODIGO_USUARIO FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC"
+																	"INSERT INTO TBL_COMPRADORES (CODIGO_USUARIO_COMPRADOR)
+																	SELECT CODIGO_USUARIO FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC"
 				);
 				oci_execute($ingresar_comprador);
 			}
 
-			$mensaje = "Se registro de forma exitosa! Inicie sesión.\n";
+			//$mensaje = "Datos ingresados con éxito!\n";
 
 			//FUNCION PARA ENVIAR CORREO DE CONFIRMACION DE REGISTRO
 			if (!empty($_POST)) {
@@ -115,15 +118,31 @@
 				$header .= "Content-Type:  text/plain";
 
 				if (mail($correo,$email_subject,$email_message,$header)) {
-					$mensaje .= "Se envío correo de registro a " . $correo . "\n";
+					//$mensaje .= "Se envío correo de registro a " . $correo . "\n";
+					//$mensaje = 2;
+					$resultado_usuarios = $conexion->ejecutarInstruccion("	SELECT CODIGO_USUARIO
+																			FROM TBL_USUARIOS
+																			WHERE CORREO_ELECTRONICO = '$correo'
+																			AND CONTRASENA = '$contrasena'");
+					oci_execute($resultado_usuarios);
+					while ($fila = $conexion->obtenerFila($resultado_usuarios)) {
+					 	$codigo_usuario = $fila["CODIGO_USUARIO"];
+					}
+					echo $_SESSION['codigo_usuario_sesion'] = $codigo_usuario;
 				}else{
-					$mensaje .= "Error al enviar correo\n";
+					//$mensaje .= "Error al enviar correo\n";
 				}
 			}
 			//FIN DE FUNCION PARA ENVIAR CORREO
 
 		}
-		echo $mensaje;
+		if (!isset($codigo_usuario)) {
+			echo $mensaje;
+		}
+		else{
+			echo $_SESSION['codigo_usuario_sesion'] = $codigo_usuario;
+		}
+		
 
 	$conexion->cerrarConexion();
 ?>

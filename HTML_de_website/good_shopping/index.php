@@ -95,7 +95,7 @@
 								echo'<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>';
 								//<!--<div id="mostrar_error_login2" class="error_login">Correo o Contraseña incorrectos</div>-->
 								echo'<div class="dropdown-divider"></div>';
-								echo'<a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">Restablecer Contraseña</a>';
+								echo'<a class="dropdown-item" href="#">Restablecer Contraseña</a>';
 						echo'</div>';
 						echo'<a class="dropdown-item" href="modulo_registro.html">Registrarse</a>';
 					echo'</div>';
@@ -116,65 +116,14 @@
 							}
 					echo'</a>';
 					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-						echo'<a class="dropdown-item" href="#">Ver Perfil</a>';
-						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar sesión</a>';
+						echo'<a class="dropdown-item" href="EditarTienda.php">Ver Perfil</a>';
+						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';
 				echo'</div>';
 			} 
 		?>
 		
 	</nav>
-
-	<!-- Modal de restablecer contraseña-->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalCenterTitle">Restablece tú contraseña</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <div class="form-group">
-				<label for="txt-correo-restablecer">Ingrese su correo electrónico</label>
-				<input type="email" class="form-control" id="txt-correo-restablecer" name="txt-correo-restablecer" placeholder="email@example.com">
-				<div id="mensaje15" class="errores">Campo obligatorio</div>
-				<div id="mensaje16" class="errores">El correo ingresado no existe</div>
-			</div>
-			<center>
-				<button type="submit" id="btn_codigo" name="btn_codigo" class="btn btn-success">Enviar código</button><br><br>
-				<div class="spinner-border text-success" role="status" id="cargando">
-				  <span class="sr-only">Loading...</span>
-				</div>
-			</center>
-			<div id="correo-enviado">
-				<div class="form-group">
-					<label for="txt-codigo">Ingrese el código que le enviamos a su correo</label>
-					<input type="text" class="form-control" id="txt-codigo" name="txt-codigo" placeholder="Código">
-					<div id="mensaje17" class="errores">Campo obligatorio</div>
-					<div id="mensaje18" class="errores">El código que ingreso es incorrecto</div>
-				</div>
-				<div class="form-group">
-					<label for="txt-contrasena-nueva">Ingrese su nueva contraseña</label>
-					<input type="password" class="form-control" id="txt-contrasena-nueva" name="txt-contrasena-nueva" placeholder="Nueva contraseña">
-					<div id="mensaje19" class="errores">Ingrese una contraseña</div>
-				</div>
-				<div class="form-group">
-					<label for="txt-contrasena-nueva-c">Confirmar contraseña</label>
-					<input type="password" class="form-control" id="txt-contrasena-nueva-c" name="txt-contrasena-nueva-c" placeholder="Nueva contraseña a confirmar">
-					<div id="mensaje20" class="errores">Las contraseñas no coinciden</div>
-				</div>
-			</div>
-			<div id="mensaje21" style="color: green;">Se restablecio la contraseña con éxito. Vuelva a iniciar sesión.</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        <button type="button" id="btn_cambio_contrasena" class="btn btn-success" disabled>Cambiar contraseña</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 	
 	<!--Barra de busqueda-->
 	<br>
@@ -198,7 +147,7 @@
 					<center>
 					<section class="content-header">
 						<span>
-							<h3>Departamentos</h3>					
+							<h3>Departamento</h3>					
 						</span>
 					</section>
 					<br>
