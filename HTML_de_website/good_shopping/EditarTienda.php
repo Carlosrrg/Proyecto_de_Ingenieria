@@ -306,24 +306,57 @@
 			     						//<!--checkbox de servicios ofrecidos-->
 			    } 	
 			    					
-			    					
 
-			    					$servicios = array();
-			    					$cont = 1;
+			    					$codigos_servicios = array();
+			    					$nombres_servicios = array();
+			    					$servicios_usuario = array();
+			    					$contcodigos = 1;
+			    					$contnombres = 1;
+			    					$contusuario = 1;
 
-			     					echo 'Servicios Ofrecidos<br><br>';
-			     						$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT CODIGO_SERVICIO, NOMBRE_SERVICIO
-																								FROM TBL_SERVICIOS");
-										oci_execute($resultado_usuario);
-										while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-											echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$fila["NOMBRE_SERVICIO"].'"';
-													/*if ($fila["CODIGO_SERVICIO"] == $cont) {
-															echo "checked";
-													}*/
-											echo '>'.$fila["NOMBRE_SERVICIO"].'<br>';
-											//$cont++;	
+			     					echo 'Servicios Ofrecidos:<br>';
+
+										$obtener_servicios = $conexion->ejecutarInstruccion("	
+															SELECT CODIGO_SERVICIO,NOMBRE_SERVICIO
+															FROM TBL_SERVICIOS");
+										oci_execute($obtener_servicios);
+										while ($fila = $conexion->obtenerFila($obtener_servicios)) {
+											$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
+										 	$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
 										}
-										echo "<br>";	
+
+
+										$usuario_x_servicios = $conexion->ejecutarInstruccion("	
+			     							SELECT A.CODIGO_USUARIO, D.CODIGO_SERVICIO
+											FROM TBL_USUARIOS A
+											INNER JOIN TBL_VENDEDORES B
+											ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
+											INNER JOIN TBL_VEND_X_TBL_SERV C
+											ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
+											INNER JOIN TBL_SERVICIOS D
+											ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
+											WHERE CODIGO_USUARIO = '$usuario'");
+										oci_execute($usuario_x_servicios);
+										while ($fila = $conexion->obtenerFila($usuario_x_servicios)) {
+											$servicios_usuario[$contusuario++] = $fila["CODIGO_SERVICIO"];
+										}
+
+										for ($i=1; $i <= count($codigos_servicios) ; $i++) { 
+												
+											echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"';
+
+											for ($j=1; $j <= count($servicios_usuario) ; $j++) { 
+												if ($codigos_servicios[$i] == $servicios_usuario[$j]) {
+													echo " checked";
+												}	
+											}
+
+											echo '> '.$nombres_servicios[$i].' <br>';
+															
+											if ($i == count($codigos_servicios)) {
+												echo '<br>';
+											}							
+										}	
 										
 										/*
 										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"> Servicios de construccion <br>';
