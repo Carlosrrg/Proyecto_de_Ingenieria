@@ -68,8 +68,7 @@
 																		V_CODIGO_TIENDA INTEGER;
 																	BEGIN
 																		P_AGREGAR_NUEVA_TIENDA ('$nombre_tienda', '$rtn', V_CODIGO_TIENDA);
-																	END;
-																	COMMIT;");
+																	END;");
 				oci_execute($ingresar_tienda);
 
 				$ingresar_vendedor = $conexion->ejecutarInstruccion(
