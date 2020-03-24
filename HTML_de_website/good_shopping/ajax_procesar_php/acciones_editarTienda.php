@@ -18,7 +18,7 @@
 	$servicio4 = $_POST["txt-servicio4"];
 	$descripcion = $_POST["txt-descripcion"];
 	
-	//echo $nombre_tienda.$correo_tienda.$telefono_tienda.$direccion_tienda.$servicio1.$servicio2.$servicio3.$servicio4.$descripcion.$codigo_usuario;
+	echo $nombre_tienda.$correo_tienda.$telefono_tienda.$direccion_tienda.$servicio1.$servicio2.$servicio3.$servicio4.$descripcion.$codigo_usuario;
 	
 	/*if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
 		$resultado_usuarios = $conexion->ejecutarInstruccion("		UPDATE TBL_USUARIOS

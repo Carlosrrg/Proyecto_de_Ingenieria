@@ -12,6 +12,8 @@
 	<link rel="icon" type="image/jpg" href="recursos/imagenes/Logo.png">
 	<link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+
   </head>
   <body>
   	  <?php
@@ -304,72 +306,30 @@
 			     						//<!--checkbox de servicios ofrecidos-->
 			    } 	
 			    					
-			    					/*
+			    					
+
 			    					$servicios = array();
-			    					$cont = 0;
-			    					$verificado1 = 0;
-			    					$verificado2 = 0;
-			    					$verificado3 = 0;
-			    					$verificado4 = 0;
+			    					$cont = 1;
 
 			     					echo 'Servicios Ofrecidos<br><br>';
-			     						$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, D.CODIGO_SERVICIO, 
-			     																					D.NOMBRE_SERVICIO
-																									FROM TBL_USUARIOS A
-																									INNER JOIN TBL_VENDEDORES B
-																									ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
-																									INNER JOIN TBL_VEND_X_TBL_SERV C
-																									ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
-																									INNER JOIN TBL_SERVICIOS D
-																									ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
-																									WHERE CODIGO_USUARIO = '$usuario'");
+			     						$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT CODIGO_SERVICIO, NOMBRE_SERVICIO
+																								FROM TBL_SERVICIOS");
 										oci_execute($resultado_usuario);
 										while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-											$servicios[$cont++] = $fila["CODIGO_SERVICIO"];		
-										}
-
-										for ($i=0; $i <count($servicios) ; $i++) { 
-											//echo $servicios[$i];
-												if ($verificado1 == 0) {
-													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"';
-													if ($servicios[$i] == 1) {
-														echo "checked";
-														$verificado1 = 1;
-													}
-													echo '> Servicios de construccion <br>';					
-												}							
-													
-												if ($verificado2 == 0) {
-													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Fletes"';
-														if ($servicios[$i] == 2 ) {
+											echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$fila["NOMBRE_SERVICIO"].'"';
+													/*if ($fila["CODIGO_SERVICIO"] == $cont) {
 															echo "checked";
-															$verificado2 = 1;
-														}
-													echo '> Fletes<br>';
-												}
-												else{
-
-												}
-												if ($servicios[$i] == 3) {
-													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Ventas de productos al por mayor" checked> Ventas de productos al por mayor<br>';
-												}
-												else{
-
-												}
-												if ($servicios[$i] == 4) {
-													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos" checked> Ventas solo de productos<br><br>';
-												}
-												else{
-
-												}
+													}*/
+											echo '>'.$fila["NOMBRE_SERVICIO"].'<br>';
+											//$cont++;	
 										}
-										*/
-
-
+										echo "<br>";	
+										
+										/*
 										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"> Servicios de construccion <br>';
 										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Fletes"> Fletes<br>';
 										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas de productos al por mayor"> Ventas de productos al por mayor<br>';
-										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos"> Ventas solo de productos<br><br>';
+										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos"> Ventas solo de productos<br><br>';*/
 
 
 				
@@ -503,8 +463,9 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/controlador_editarTienda.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
+  	<script src="js/bootstrap.min.js"></script>
 		
   <!--Boton para desplegar la barra lateral-->		
   <script type="text/javascript">
@@ -516,12 +477,7 @@
         });
   </script>
 
-
-  	<script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
-	<script src="js/controlador_editarTienda.js"></script>
-	<script src="js/bootstrap.min.js"></script><!--Lanzar archivo Bootstrap.js-->  
-
-			
+	
 </body>
 </html>
 

@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 
         for (var i = selected.length - 1; i >= 0; i--) {
-        	if (selected[i] == "Servicios de construccion") {
+        	if (selected[i] == "Servicios de contruccion") {
         		servicio1 = 1;
         	}
         	if (selected[i] == "Fletes") {
