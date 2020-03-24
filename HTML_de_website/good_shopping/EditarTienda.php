@@ -201,7 +201,7 @@
 							    	echo '<a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>';
 							    	echo '<br>';
 							    }  
-							    echo '<a href="#" class=" list-group-item-action bg-light">Publicar Producto</a>';
+							    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
 						    echo '</div>';
 					    echo '</div>';
 					}
@@ -276,6 +276,7 @@
 			     					echo '<input style="width: 50%;" type="text" id="txt-correo-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["CORREO_TIENDA"])) {
 			     							echo 'placeholder="Correo electronico de la tienda"';
+			     							echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["CORREO_TIENDA"].'"';
@@ -284,6 +285,7 @@
 			     					echo '<input style="width: 50%;" type="text" id="txt-telefono-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     					 	if (!isset($fila["TELEFONO_TIENDA"])) {
 			     							echo 'placeholder="Telefono de la tienda"';
+			     							echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["TELEFONO_TIENDA"].'"';
@@ -292,6 +294,7 @@
 			     					echo '<input style="width: 50%;" type="text" id="txt-direccion-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["DIRECCION_FISICA_TIENDA"])) {
 			     							echo 'placeholder="Direccion fisica de la tienda"';
+			     							echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["DIRECCION_FISICA_TIENDA"].'"';
@@ -299,9 +302,18 @@
 			     					echo '><br><br>';
 			     					echo '<div style= "text-align:left" ></style>';
 			     						//<!--checkbox de servicios ofrecidos-->
-			     						echo 'Servicios Ofrecidos<br><br>';
-			     							$servicios = 0;
-			     							$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, D.CODIGO_SERVICIO, 
+			    } 	
+			    					
+			    					/*
+			    					$servicios = array();
+			    					$cont = 0;
+			    					$verificado1 = 0;
+			    					$verificado2 = 0;
+			    					$verificado3 = 0;
+			    					$verificado4 = 0;
+
+			     					echo 'Servicios Ofrecidos<br><br>';
+			     						$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, D.CODIGO_SERVICIO, 
 			     																					D.NOMBRE_SERVICIO
 																									FROM TBL_USUARIOS A
 																									INNER JOIN TBL_VENDEDORES B
@@ -311,25 +323,67 @@
 																									INNER JOIN TBL_SERVICIOS D
 																									ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
 																									WHERE CODIGO_USUARIO = '$usuario'");
-											oci_execute($resultado_usuario);
-											while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-												if($servicios == 0){
-													echo '<input type="checkbox" id="chk-servicio-construccion" name="chk-servicio-construccion" class="thirdparty" value="true" ';
-													if ($fila["CODIGO_SERVICIO"] == 3) {
-														echo "checked";
-													}
-													else{
+										oci_execute($resultado_usuario);
+										while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+											$servicios[$cont++] = $fila["CODIGO_SERVICIO"];		
+										}
 
+										for ($i=0; $i <count($servicios) ; $i++) { 
+											//echo $servicios[$i];
+												if ($verificado1 == 0) {
+													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"';
+													if ($servicios[$i] == 1) {
+														echo "checked";
+														$verificado1 = 1;
 													}
-													echo '> Servicios de construccion <br>';
-													echo '<input type="checkbox" id="chk-fletes" name="chk-fletes" class="thirdparty" value="true"> Fletes<br>';
-													echo '<input type="checkbox" id="chk-venta-productos-mayor" name="chk-venta-productos-mayor" class="thirdparty" value="true"> Ventas de productos al por mayor<br>';
-													echo '<input type="checkbox" id="chk-venta-productos" name="chk-venta-productos" class="thirdparty" value="true"> Ventas solo de productos<br><br>';
-													$servicios = 1;
+													echo '> Servicios de construccion <br>';					
+												}							
+													
+												if ($verificado2 == 0) {
+													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Fletes"';
+														if ($servicios[$i] == 2 ) {
+															echo "checked";
+															$verificado2 = 1;
+														}
+													echo '> Fletes<br>';
 												}
-											}
-										
-										echo 'Descripcion<br>';
+												else{
+
+												}
+												if ($servicios[$i] == 3) {
+													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Ventas de productos al por mayor" checked> Ventas de productos al por mayor<br>';
+												}
+												else{
+
+												}
+												if ($servicios[$i] == 4) {
+													echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos" checked> Ventas solo de productos<br><br>';
+												}
+												else{
+
+												}
+										}
+										*/
+
+
+										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"> Servicios de construccion <br>';
+										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Fletes"> Fletes<br>';
+										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas de productos al por mayor"> Ventas de productos al por mayor<br>';
+										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos"> Ventas solo de productos<br><br>';
+
+
+				
+				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT B.CODIGO_TIENDA, C.NOMBRE_TIENDA, C.TELEFONO_TIENDA, 
+																		C.CORREO_TIENDA, C.DIRECCION_FISICA_TIENDA, C.DESCRIPCION_TIENDA
+																		FROM TBL_USUARIOS A
+																		INNER JOIN TBL_VENDEDORES B
+																		ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
+																		INNER JOIN TBL_TIENDAS C
+																		ON (B.CODIGO_TIENDA = C.CODIGO_TIENDA)
+																		WHERE A.CODIGO_USUARIO = '$usuario'");
+				oci_execute($resultado_usuario);
+				while ($fila = $conexion->obtenerFila($resultado_usuario)) {							
+									echo 'Descripcion<br>';
 									echo '</div>';
 									echo '<div class="row">';
 											echo '</select>';
@@ -338,6 +392,7 @@
 											echo '<textarea id="txt-descripcion" name="txt-descripcion" style="width: 100%; height: 180px;"';
 												if (!isset($fila["DESCRIPCION_TIENDA"])) {
 					     							echo 'placeholder="Ingrese una descripcion."';
+					     							echo 'value="'.NULL.'"';
 					     						}
 					     						else{
 					     							echo 'value="'.$fila["DESCRIPCION_TIENDA"].'"';
@@ -346,7 +401,7 @@
 
 											echo '<div class="container-fluid" style="padding: 20px">';
 												echo '<span>';
-													echo '<button type="button" class="btn btn-success"> Guardar Cambios</button>';
+													echo '<button type="submit" id="editar_tienda" name="editar_tienda" class="btn btn-success">Guardar Cambios</button>';
 												echo '</span>';
 											echo '</div>';
 									echo '</div>';
@@ -355,7 +410,7 @@
 							echo '</div>';
 						echo '</div>';
 					echo '</div>';
-				}	
+				}
 			}
 		?>
 		
@@ -460,6 +515,12 @@
             });
         });
   </script>
+
+
+  	<script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
+	<script src="js/controlador_editarTienda.js"></script>
+	<script src="js/bootstrap.min.js"></script><!--Lanzar archivo Bootstrap.js-->  
+
 			
 </body>
 </html>
