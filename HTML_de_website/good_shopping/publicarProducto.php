@@ -15,6 +15,11 @@
 
   </head>
   <body>
+  	  <?php
+	        include_once("class/conexion_copy.php");
+	        session_start();
+	        $conexion = new Conexion();
+      ?>
 	  <!--Barra de navegacion superior-->
 	  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276;">
 			<!-- Menú desplegable de categorias -->
@@ -59,64 +64,150 @@
 			<a href="#" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="recursos/imagenes/Logo.png" width=50 height="40"></a>
 
 			<!--gestion de sesión -->
-			<div class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>
-				<div class="dropdown-menu" style="margin: 9px 0 0 -60px;">
-					<a class="dropdown-item" href="modulo_registro.html">Perfil de Usuario</a>
-					<a class="dropdown-item dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cerrar Sesión</a>
-				</div>
-			</div>
+			<?php
+				if(!isset($_SESSION['codigo_usuario_sesion'])){
+					echo '<div class="nav-item dropdown">';
+						echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
+						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+							echo '<a class="dropdown-item" href="index.php">Iniciar Sesión</a>';
+						echo '</div>';
+					echo '</div>';	
+				}
+				else{
+					$usuario = $_SESSION['codigo_usuario_sesion'];
+					echo '<div class="nav-item dropdown">';
+						echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
+								$conexion->establecerConexion();
+								$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE
+																						FROM TBL_USUARIOS
+																						WHERE CODIGO_USUARIO = '$usuario'");
+								oci_execute($resultado_usuario);
+								while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+								 	echo $fila["NOMBRE"];
+								}
+						echo '</a>';
+						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+							echo '<a class="dropdown-item" href="EditarTienda.php">Ver Perfil</a>';
+							echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
+						echo '</div>';
+					echo '</div>';	
+				}
+			?>
+			
 		</nav>
 	<div class="d-flex" id="wrapper">
 	  <!-- Sidebar -->
 
 	    <div class="bg-light border-right" id="sidebar-wrapper">
-		  <div class="col-12 col-lg-12" style="text-align: center">
-			  <!--Imagen del perfil de usuario id:imagenUsuario-->
-			  <img src="recursos/imagenes/ImagenUsuario.png" class="rounded-circle img-fluid" 
-				   id="imagenUsuario" alt="Placeholder image" style="width: 100px; height: 100px; padding:10px; ">
-			  
-			  <!--Etiqueta para el nombre del perfil de usuario-->
-			  <h5>Nombre Usuario</h5>
-			  <!--ETiqueta para el correo electronico-->
-			  <h7>correo@servidor.dominio<h7>
-			  <!--Etiqueta para el numero de telefono-->
-			  <br>
-			  <h7>+504 99999999</h7>
-			  <br>
-			  <div><h6>Seleccione el perfil</h6></div>
-			  <form action="">
-				  <!--Combobox para seleccion de tipo de usuario  id: cmbUsuario-->
-				  <select name="usuario" id="cmbUsuario" style="width:120px;">
-					  <option value="1">Vendedor</option>
-					  <option value="2">Comprador</option>
-				  </select>
-			  </form>
-		  </div>
-		  <br>
-		  
-		  <div class="list-group list-group-flush">
-			<a href="#" class="list-group-item list-group-item-action bg-light">
-				<span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span>
-			</a>
 
-			<a href="#" class="list-group-item list-group-item-action bg-light">
-				<span><h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span>
-			</a>
-		  </div>
-		  
-		  <div class="sidebar-heading">
-			  <span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span>
-		  </div>
-		  <div class="list-group list-group-flush">
-			  <div class="ml-4 col-md-10 col-11 col-lg-10">
-				  <a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>
-				  <br>
-				  <a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>
-				  <br>
-				  <a href="#" class=" list-group-item-action bg-light">Publicar Producto</a>
-			  </div>
-		  </div>
+	    	<?php
+			  	if(!isset($_SESSION['codigo_usuario_sesion'])){
+			  		echo '<div class="col-12 col-lg-12" style="text-align: center">';
+				  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
+					    echo '<img src="recursos/imagenes/ImagenUsuario.png" class="rounded-circle img-fluid" 
+						id="imagenUsuario" alt="Placeholder image" style="width: 100px; height: 100px; padding:10px; ">';
+					  
+					  	//<!--Etiqueta para el nombre del perfil de usuario-->
+					  	echo '<h5>Usuario</h5>';
+						//<!--ETiqueta para el correo electronico-->
+						echo '<h7>correo@servidor.dominio<h7>';
+						//<!--Etiqueta para el numero de telefono-->
+						echo '<br>';
+						echo '<h7>+504 99999999</h7>';
+						echo '<br>';
+						echo '<div><h6>Seleccione el perfil</h6></div>';
+						echo '<form action="">';
+							//<!--Combobox para seleccion de tipo de usuario  id: cmbUsuario-->
+							echo '<select name="usuario" id="cmbUsuario" disabled style="width:120px;">';
+								echo '<option value="1" selected="selected">Vendedor</option>';
+								echo '<option value="2">Comprador</option>';
+							echo '</select>';
+						echo '</form>';
+					echo '</div>';
+		  			echo '<br>';
+
+		  			echo '<div class="list-group list-group-flush">';
+						echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+						echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
+							<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
+				  	echo '</div>';
+				  
+				    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
+				    echo '<div class="list-group list-group-flush">';
+					    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
+						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
+						    echo '<br>';
+						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>';
+						    echo '<br>';
+						    echo '<a href="#" class=" list-group-item-action bg-light">Publicar Producto</a>';
+					    echo '</div>';
+				    echo '</div>';
+			  	}
+			  	else{
+			  		$tipo_vendedor = "";
+					$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO,
+													 						TELEFONO ,CODIGO_TIPO_VENDEDOR
+																			FROM TBL_USUARIOS
+																			INNER JOIN TBL_VENDEDORES
+																			ON (CODIGO_USUARIO = CODIGO_USUARIO_VENDEDOR)
+																			WHERE CODIGO_USUARIO = '$usuario'");
+					oci_execute($resultado_usuario);
+					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+						echo '<div class="col-12 col-lg-12" style="text-align: center">';
+					  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
+						    echo '<img src="recursos/imagenes/ImagenUsuario.png" class="rounded-circle img-fluid" 
+							id="imagenUsuario" alt="Placeholder image" style="width: 100px; height: 100px; padding:10px; ">';
+						  
+						  	//<!--Etiqueta para el nombre del perfil de usuario-->
+						  	echo '<h5>';
+						  		echo $fila["NOMBRE"]." ".$fila["APELLIDO"];
+						  	echo'</h5>';
+							//<!--ETiqueta para el correo electronico-->
+							echo '<h7>';
+								echo $fila["CORREO_ELECTRONICO"];
+							echo '<h7>';
+							//<!--Etiqueta para el numero de telefono-->
+							echo '<br>';
+							echo '<h7>+504 ';
+								echo $fila["TELEFONO"];
+							echo '</h7>';
+							echo '<br>';
+							echo '<div><h6>Seleccione el perfil</h6></div>';
+							echo '<form action="">';
+								//<!--Combobox para seleccion de tipo de usuario  id: cmbUsuario-->
+								echo '<select name="usuario" id="cmbUsuario" style="width:120px;">';
+									echo '<option value="1" selected="selected">Vendedor</option>';
+									echo '<option value="2">Comprador</option>';
+								echo '</select>';
+							echo '</form>';
+						echo '</div>';
+			  			echo '<br>';
+
+			  			echo '<div class="list-group list-group-flush">';
+							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
+								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
+					  	echo '</div>';
+					  	
+					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
+					    echo '<div class="list-group list-group-flush">';
+						    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
+							    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
+							    echo '<br>';
+							    $tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+							    if ($tipo_vendedor == 1) {
+							    	
+							    }
+							    else{
+							    	echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
+							    	echo '<br>';
+							    }  
+							    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
+						    echo '</div>';
+					    echo '</div>';
+					}
+			  	}
+			?>
 	    </div>
 		<!-- /#sidebar-wrapper -->
 		
@@ -136,21 +227,23 @@
 			<div class="container" style="text-align: center; border-bottom: medium">
 				<div><h5 class="col-lg-12" style="padding-top:30px;">Publicar Producto o Servicio</h5></div>
 			</div>
+
+
 			<br>
 			<div class="container-fluid">
 				<div class="row">
-				  <div class="col-lg-5 col-md-6 col-sm-6">
+				  	<div class="col-lg-5 col-md-6 col-sm-6">
 						  <div class="form-group " style="width: 100%; padding: 10px;">
 							  <!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
-							<select name="productos" id="cmb-Producto" style="width:100%; height: 40px;">
+							<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:100%; height: 40px;">
 								<option value="1">Producto</option>
-								  <option value="2">Servicio</option>
-							  </select>
+								<option value="2">Servicio</option>
+							</select>
 						  </div>
 					</div>
 
 					<!--Textbox nombre del producto id: txt-nombreProducto-->
-				  <div class="col-md-6 col-lg-7 col-sm-6">
+				  	<div class="col-md-6 col-lg-7 col-sm-6">
 					  <div class="form-group" style="width: 100%; padding: 10px;">
 						<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">
 					  </div>
@@ -174,32 +267,35 @@
 							<span class="sr-only">Next</span>
 						  </a>
 					  </div>
-					  <button type="button" class="btn btn-dark" style="margin-left:15px"> Subir Fotografias</button>
+					  <button type="submit" id="btn_subir_foto" name="btn_subir_foto" class="btn btn-dark" style="margin-left:15px"> Subir Fotografias</button>
 				  </div>
 				  <div class="col-sm-6 col-md-6 col-lg-7">
 					<div class="form-group" style="width: 100%; padding: 10px;">
 						<label for="radio"><h6>Tipo de moneda:</h6></label>
-						<input type="radio" name="moneda" id="rb-moneda" value="1">Lempiras
-						<input type="radio" name="moneda" id="rb-moneda" value="2">Dolares
+						<input type="radio" name="moneda" id="rbt-moneda" value="1">Lempiras
+						<input type="radio" name="moneda" id="rbt-moneda" value="2">Dolares
 						<input id="txt-precioProducto" name="txt-precioProducto" type="text" class="form-control" placeholder="Precio del Producto">
 						<label for="radio" style="padding-top: 15px;"><h6>Estado del producto:</h6></label>
-						<input type="radio" name="estadoProducto" id="rb-estado" value="1">Nuevo
-						<input type="radio" name="estadoProducto" id="rb-estado" value="2">Usado
+						<input type="radio" name="estadoProducto" id="rbt-estado" value="1">Nuevo
+						<input type="radio" name="estadoProducto" id="rbt-estado" value="2">Usado
 
 						<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
 						<br>
 						<label for="cmb-categoria"><h6>Categoria a la que pertenece</h6></label>
-						<select name="cmb-categoria" id="cmb-categoria" style="width:100%; height: 40px;">
+						<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">
 							<option value="1">Categoria1</option>
 							<option value="2">Categoria2</option>
 						</select>
+						<!--anadir combo box para las sub categorias-->
+
+
 
 						<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto</h6></label>
-						<textarea id="txt-descripcion" name="txt-descripcion" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto."></textarea>
+						<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto."></textarea>
 
 						<div class="container-fluid" style="padding-top: 20px">
 							<span>
-								<button type="button" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>
+								<button type="submit" id="btn_publicar" name="btn_publicar" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>
 							</span>
 						</div>
 					  </div>
@@ -293,6 +389,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		
@@ -308,3 +405,13 @@
 			
 </body>
 </html>
+
+
+<?php
+  	if(!isset($_SESSION['codigo_usuario_sesion'])){
+                                                             
+  	}
+  	else{
+  		$conexion->cerrarConexion();
+  	}
+?>

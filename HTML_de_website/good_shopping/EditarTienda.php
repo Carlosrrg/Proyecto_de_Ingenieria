@@ -13,7 +13,7 @@
 	<link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
-
+    <link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -101,7 +101,7 @@
 
 	    <div class="bg-light border-right" id="sidebar-wrapper">
 		  
-			  <?php
+			<?php
 			  	if(!isset($_SESSION['codigo_usuario_sesion'])){
 			  		echo '<div class="col-12 col-lg-12" style="text-align: center">';
 				  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
@@ -210,7 +210,7 @@
 			  	}
 
 			  	
-			  ?>
+			?>
 	    </div>
 		<!-- /#sidebar-wrapper -->
 		
@@ -245,12 +245,12 @@
 					    //<!-- Baner de la empresa-->	
 						echo '<div class="container" style="text-align: center; border-bottom: medium;padding-top: 2%">';
 							echo '<img src="./img/banner2.jpg" style="padding-bottom: 1%;padding-right: 1%;">';
-							echo '<a href="#" class=" list-group-item-action bg-light">Cambiar baner</a>';
+							echo '<a href="#" class=" list-group-item-action bg-light">Cambiar banner</a>';
 							
 
-							echo '<div><h5 style="padding-right: 14%; padding-top:30px;" class="col-lg-12">Editar Tienda</h5></div>';
+							echo '<div><h4 style="padding-right: 14%; padding-top:30px;" class="col-lg-12">Editar Tienda</h4></div>';
 						echo '</div>';
-						echo '<br>';
+						//echo "<br>";
 						//<!-- logo de la empresa -->
 						echo '<div class="container-fluid">';
 							echo '<div class="row">';
@@ -258,7 +258,7 @@
 									 
 									   echo '<div class="col-md-6 col-lg-5 col-sm-6">';
 								  
-			     					echo '<br><br><br>';
+			     					echo '<br><br>';
 			     					echo '<img src="./img/cuadrada.jpg" style="width: 150%"><br>';     					
 			     				
 									   echo '</div>';
@@ -274,98 +274,101 @@
 								  echo '<div style= "text-align:left" ></style>';
 			     					
 			     					echo '<br><br>';
-			     					echo '<input style="width: 50%;" type="text" id="txt-nombre-tienda" name="signup_form[displayname]" required="required" maxlength="100" value="'.$fila["NOMBRE_TIENDA"].'"><br><br>';
-			     					echo '<input style="width: 50%;" type="text" id="txt-correo-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					echo '<input style="width: 50%;" type="text" class="form-control" id="txt-nombre-tienda" name="signup_form[displayname]" required="required" maxlength="100" value="'.$fila["NOMBRE_TIENDA"].'">';
+			     						echo '<div id="mensaje22" class="errores">Ingrese el nombre de la tienda</div>';
+			     					echo '<br>';
+			     					echo '<input style="width: 50%;" type="text" class="form-control" id="txt-correo-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["CORREO_TIENDA"])) {
 			     							echo 'placeholder="Correo electronico de la tienda"';
-			     							echo 'value="'.NULL.'"';
+			     							//echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["CORREO_TIENDA"].'"';
 			     						}
-			     					echo '><br><br>';
-			     					echo '<input style="width: 50%;" type="text" id="txt-telefono-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					echo '>';
+			     					echo '<div id="mensaje25" class="errores">Ingrese un correo electronico valido</div>';
+			     					echo '<br>';
+			     					echo '<input style="width: 50%;" type="text" class="form-control" id="txt-telefono-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     					 	if (!isset($fila["TELEFONO_TIENDA"])) {
 			     							echo 'placeholder="Telefono de la tienda"';
-			     							echo 'value="'.NULL.'"';
+			     							//echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["TELEFONO_TIENDA"].'"';
 			     						}
-			     					echo '><br><br>';
-			     					echo '<input style="width: 50%;" type="text" id="txt-direccion-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					echo '>';
+			     					echo '<div id="mensaje23" class="errores">Ingrese un numero de telefono</div>';
+			     					echo '<br>';
+			     					echo '<input style="width: 50%;" type="text" class="form-control" id="txt-direccion-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["DIRECCION_FISICA_TIENDA"])) {
 			     							echo 'placeholder="Direccion fisica de la tienda"';
-			     							echo 'value="'.NULL.'"';
+			     							//echo 'value="'.NULL.'"';
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["DIRECCION_FISICA_TIENDA"].'"';
 			     						}
-			     					echo '><br><br>';
+			     					echo '>';
+			     					echo '<div id="mensaje24" class="errores">Ingrese una direccion</div>';
+			     					echo '<br>';
 			     					echo '<div style= "text-align:left" ></style>';
 			     						//<!--checkbox de servicios ofrecidos-->
 			    } 	
 			    					
 
-			    					$codigos_servicios = array();
-			    					$nombres_servicios = array();
-			    					$servicios_usuario = array();
-			    					$contcodigos = 1;
-			    					$contnombres = 1;
-			    					$contusuario = 1;
 
-			     					echo 'Servicios Ofrecidos:<br>';
+			    $codigos_servicios = array();
+			    $nombres_servicios = array();
+			    $servicios_usuario = array();
+			    $contcodigos = 1;
+			    $contnombres = 1;
+			    $contusuario = 1;
 
-										$obtener_servicios = $conexion->ejecutarInstruccion("	
+			    echo 'Servicios Ofrecidos:<br>';
+
+				$obtener_servicios = $conexion->ejecutarInstruccion("	
 															SELECT CODIGO_SERVICIO,NOMBRE_SERVICIO
 															FROM TBL_SERVICIOS");
-										oci_execute($obtener_servicios);
-										while ($fila = $conexion->obtenerFila($obtener_servicios)) {
-											$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
-										 	$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
-										}
+				oci_execute($obtener_servicios);
+				while ($fila = $conexion->obtenerFila($obtener_servicios)) {
+					$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
+					$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
+				}
 
 
-										$usuario_x_servicios = $conexion->ejecutarInstruccion("	
-			     							SELECT A.CODIGO_USUARIO, D.CODIGO_SERVICIO
-											FROM TBL_USUARIOS A
-											INNER JOIN TBL_VENDEDORES B
-											ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
-											INNER JOIN TBL_VEND_X_TBL_SERV C
-											ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
-											INNER JOIN TBL_SERVICIOS D
-											ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
-											WHERE CODIGO_USUARIO = '$usuario'");
-										oci_execute($usuario_x_servicios);
-										while ($fila = $conexion->obtenerFila($usuario_x_servicios)) {
-											$servicios_usuario[$contusuario++] = $fila["CODIGO_SERVICIO"];
-										}
+				$usuario_x_servicios = $conexion->ejecutarInstruccion("	
+										     							SELECT A.CODIGO_USUARIO, D.CODIGO_SERVICIO
+																		FROM TBL_USUARIOS A
+																		INNER JOIN TBL_VENDEDORES B
+																		ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
+																		INNER JOIN TBL_VEND_X_TBL_SERV C
+																		ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
+																		INNER JOIN TBL_SERVICIOS D
+																		ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
+																		WHERE CODIGO_USUARIO = '$usuario'");
+				oci_execute($usuario_x_servicios);
+				while ($fila = $conexion->obtenerFila($usuario_x_servicios)) {
+					$servicios_usuario[$contusuario++] = $fila["CODIGO_SERVICIO"];
+				}
 
-										for ($i=1; $i <= count($codigos_servicios) ; $i++) { 
+				for ($i=1; $i <= count($codigos_servicios) ; $i++) { 
 												
-											echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"';
+					echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"';
 
-											for ($j=1; $j <= count($servicios_usuario) ; $j++) { 
-												if ($codigos_servicios[$i] == $servicios_usuario[$j]) {
-													echo " checked";
-												}	
-											}
+					for ($j=1; $j <= count($servicios_usuario) ; $j++) { 
+						if ($codigos_servicios[$i] == $servicios_usuario[$j]) {
+							echo " checked";
+						}	
+					}
 
-											echo '> '.$nombres_servicios[$i].' <br>';
+					echo '> '.$nombres_servicios[$i].' <br>';
 															
-											if ($i == count($codigos_servicios)) {
-												echo '<br>';
-											}							
-										}	
+					if ($i == count($codigos_servicios)) {
+						echo '<br>';
+					}							
+				}	
 										
-										/*
-										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Servicios de construccion"> Servicios de construccion <br>';
-										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Fletes"> Fletes<br>';
-										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas de productos al por mayor"> Ventas de productos al por mayor<br>';
-										echo '<input type="checkbox" id="chk-servicios" name="chk-servicios[]" class="thirdparty" value="Ventas solo de productos"> Ventas solo de productos<br><br>';*/
 
 
-				
 				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT B.CODIGO_TIENDA, C.NOMBRE_TIENDA, C.TELEFONO_TIENDA, 
 																		C.CORREO_TIENDA, C.DIRECCION_FISICA_TIENDA, C.DESCRIPCION_TIENDA
 																		FROM TBL_USUARIOS A
@@ -382,15 +385,16 @@
 											echo '</select>';
 											//<!-- descripcion-->
 											echo '<label for="txt-descripcion" style="padding-top:15px; "><h6></h6></label>';
-											echo '<textarea id="txt-descripcion" name="txt-descripcion" style="width: 100%; height: 180px;"';
+											echo '<textarea id="txt-descripcion" class="form-control" name="txt-descripcion" style="width: 100%; height: 180px;"';
 												if (!isset($fila["DESCRIPCION_TIENDA"])) {
 					     							echo 'placeholder="Ingrese una descripcion."';
-					     							echo 'value="'.NULL.'"';
+					     							echo '>';
 					     						}
 					     						else{
-					     							echo 'value="'.$fila["DESCRIPCION_TIENDA"].'"';
+					     							echo '>';
+					     							echo $fila["DESCRIPCION_TIENDA"];
 					     						}
-											echo'></textarea>';
+											echo'</textarea>';
 
 											echo '<div class="container-fluid" style="padding: 20px">';
 												echo '<span>';
