@@ -7,10 +7,6 @@ $(document).ready(function(){
 		var direccion_tienda = $("#txt-direccion-tienda").val();
 		var descripcion = $("#txt-descripcion").val();
 
-		var servicio1 = 0;
-		var servicio2 = 0;
-		var servicio3 = 0;
-		var servicio4 = 0;
 		var cont = 0;
 		//var selected = '';
 		var selected = [];      
@@ -21,24 +17,17 @@ $(document).ready(function(){
          		//alert(selected[cont++]);
          		cont++
         });
-        //alert(selected);
 
-        for (var i = selected.length - 1; i >= 0; i--) {
-        	if (selected[i] == 1) {
-        		servicio1 = 1;
-        	}
-        	if (selected[i] == 2) {
-        		servicio2 = 2;
-        	}
-        	if (selected[i] == 3) {
-        		servicio3 = 3;
-        	}
-        	if (selected[i] == 4) {
-        		servicio4 = 4;
+        var servicios = "";
+
+        for (var i = 0; i < selected.length; i++) {
+        	if (i == selected.length-1) {
+        		servicios += selected[i];
+        	}else{
+        		servicios += selected[i]+",";
         	}
         }
 
-        //alert(servicio1+" "+servicio2+" "+servicio3+" "+servicio4);
 		if (nombre_tienda == "") {
 			$("#mensaje22").fadeIn();
 			return false;
@@ -63,17 +52,14 @@ $(document).ready(function(){
 										"&txt-correo-tienda="+correo_tienda+
 										"&txt-telefono-tienda="+telefono_tienda+
 										"&txt-direccion-tienda="+direccion_tienda+
-										"&txt-servicio1="+servicio1+
-										"&txt-servicio2="+servicio2+
-										"&txt-servicio3="+servicio3+
-										"&txt-servicio4="+servicio4+
+										"&slc-servicios="+servicios+
 										"&txt-descripcion="+descripcion;
+					
 					$.ajax({
 						url:"ajax_procesar_php/acciones_editarTienda.php",
 						data:parametros,
 						method:"POST",
 						success:function(respuesta){
-							//alert(respuesta);
 							if (respuesta == 0) {
 								//alert("El correo electronico ingresado es invalido, por favor ingrese uno nuevo...");
 								$("#mensaje25").fadeIn();
@@ -88,7 +74,85 @@ $(document).ready(function(){
 					});	
 				}
 			}
-		}	
+		}
+
+		//SUBE IMAGEN DE LOGO
+		var formData = new FormData();
+        var logo = $('#btn-logo')[0].files[0];
+        if (logo) {
+        	formData.append('logo',logo);
+	        $.ajax({
+	            url: 'ajax_procesar_php/imagen_tienda_logo.php',
+	            type: 'post',
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	            	//alert(response);
+	                if (response != 0) {
+	                    //alert('Imagen subida en '+response);
+	                } else {
+	                    alert('Error al subir logo de tienda');
+	                }
+	            }
+	        });	
+        }
+
+        //SUBE IMAGEN DE BANNER
+		var formData = new FormData();
+        var banner = $('#banner')[0].files[0];
+        if (banner) {
+        	formData.append('banner',banner);
+	        $.ajax({
+	            url: 'ajax_procesar_php/imagen_tienda_banner.php',
+	            type: 'post',
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	            	//alert(response);
+	                if (response != 0) {
+	                    //alert('Imagen subida en '+response);
+	                } else {
+	                    alert('Error al subir banner de tienda');
+	                }
+	            }
+	        });	
+        }
+        
+	});
+
+	//cambiar imagenes de banner y logo
+	$banner = false;
+	$('#btn-banner').on('click', function(e) {
+	     e.preventDefault();
+	    $banner = true;
+	    $('#banner').click();
+	})
+
+
+	$('input[type=file]').change(function() {
+		if ($banner) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+	        	$('#previewbanner img').attr('src', e.target.result);
+	    	};
+	    	reader.readAsDataURL(this.files[0]);
+		 }else{
+		 	var file = (this.files[0].name).toString();
+		    var reader = new FileReader();
+		    
+		    $('#btn-logo').text('');
+		    $('#btn-logo').text(file);
+		    
+		     reader.onload = function (e) {
+		         $('#preview img').attr('src', e.target.result);
+			 }
+		     
+		     reader.readAsDataURL(this.files[0]);
+
+		 }
+	     $banner = false;    
 	});
 
 });

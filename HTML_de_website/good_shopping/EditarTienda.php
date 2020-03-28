@@ -244,26 +244,55 @@
 						//<!--Contenido de la pagina-->
 					    //<!-- Baner de la empresa-->	
 						echo '<div class="container" style="text-align: center; border-bottom: medium;padding-top: 2%">';
-							echo '<img src="./img/banner2.jpg" style="padding-bottom: 1%;padding-right: 1%;">';
-							echo '<a href="#" class=" list-group-item-action bg-light">Cambiar banner</a>';
-							
 
-							echo '<div><h4 style="padding-right: 14%; padding-top:30px;" class="col-lg-12">Editar Tienda</h4></div>';
+						$ruta_imagen_banner = "./img/banner2.jpg";
+
+			     		$obtiene_banner = $conexion->ejecutarInstruccion("	
+							SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A
+							INNER JOIN TBL_IMAGENES B
+							ON A.CODIGO_IMAGEN = B.CODIGO_IMAGEN
+							WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario'
+							AND B.CODIGO_TIPO_IMAGEN = 2");
+						oci_execute($obtiene_banner);
+
+						while ($filabanner = $conexion->obtenerFila($obtiene_banner)) {
+							$ruta_imagen_banner = $filabanner["RUTA_IMAGEN"];
+						} 
+
+							echo '<center><div id="previewbanner"><img src="'.$ruta_imagen_banner.'" style="padding-bottom: 1%;padding-right: 1%;" class="img-fluid"></div></center>';
+							echo '<a id="btn-banner" href="" type="file" class="list-group-item-action bg-light" style="margin-left:650px">Cambiar banner</a>';
+							echo 	'<form id="file-submit" enctype="multipart/form-data" style="display:none">
+									    <input id="banner" name="banner" type="file"/>
+									</form>';
+
+							echo '<div><h5 style="padding-right: 14%; " class="col-lg-12">Editar Tienda</h5></div>';
 						echo '</div>';
-						//echo "<br>";
 						//<!-- logo de la empresa -->
 						echo '<div class="container-fluid">';
 							echo '<div class="row">';
 							  echo '<div class="col-lg-5 col-md-6 col-sm-6">';
 									 
-									   echo '<div class="col-md-6 col-lg-5 col-sm-6">';
+								echo '<div class="col-md-6 col-lg-5 col-sm-6">';
 								  
-			     					echo '<br><br>';
-			     					echo '<img src="./img/cuadrada.jpg" style="width: 150%"><br>';     					
-			     				
+			     					echo '<br>Logo de la empresa';
+
+			     					$ruta_imagen = "./img/cuadrada.jpg";
+
+			     					$obtiene_logo = $conexion->ejecutarInstruccion("	
+										SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A
+										INNER JOIN TBL_IMAGENES B
+										ON A.CODIGO_IMAGEN = B.CODIGO_IMAGEN
+										WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario'
+										AND B.CODIGO_TIPO_IMAGEN = 1");
+									oci_execute($obtiene_logo);
+
+									while ($filalogo = $conexion->obtenerFila($obtiene_logo)) {
+										 $ruta_imagen = $filalogo["RUTA_IMAGEN"];
+									} 
+
+									echo '<div id="preview"><img src="'.$ruta_imagen.'" class="img-fluid img-thumbnail"></div>';   				
 									   echo '</div>';
-								           echo '<button type="button" class="btn btn-dark"> Logo de la Empresa</button>';
-							              
+								           echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading">';
 								       echo '</div>';
 									   
 								//<!--Textbox datos de la tienda-->

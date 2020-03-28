@@ -198,3 +198,47 @@ body {
 	height:300px;
 	text-align: center;
 }
+
+/* ---------------------------------------------------
+    Estilos para las imagenes
+----------------------------------------------------- */
+#preview {
+  width:200px; 
+  height: 200px;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+  margin-bottom:10px;
+}
+
+#previewbanner {
+  width:800px;
+  height: 150px;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+  margin-bottom:10px;
+  align-content: center;
+}
+
+#preview img {
+  position:absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+#previewbanner img {
+  position:absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+}
