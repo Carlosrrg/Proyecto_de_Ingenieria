@@ -138,9 +138,9 @@
 					    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
 						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
 						    echo '<br>';
-						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>';
+						    echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
 						    echo '<br>';
-						    echo '<a href="#" class=" list-group-item-action bg-light">Publicar Producto</a>';
+						    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
 					    echo '</div>';
 				    echo '</div>';
 			  	}

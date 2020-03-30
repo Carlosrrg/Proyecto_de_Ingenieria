@@ -137,9 +137,9 @@
 					    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
 						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
 						    echo '<br>';
-						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>';
+						    echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
 						    echo '<br>';
-						    echo '<a href="#" class=" list-group-item-action bg-light">Publicar Producto</a>';
+						    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
 					    echo '</div>';
 				    echo '</div>';
 			  	}
@@ -212,129 +212,138 @@
 		<!-- /#sidebar-wrapper -->
 		
 
-		<!-- Page Content -->
-		<div id="page-content-wrapper">
-			<!--Boton para desplegar la barra lateral-->
-			<button type="button" id="menu-toggle" class="sidebar-btn">
-				<span></span>
-				<span>
-					<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">
-				</span>
-				<span></span>
-			</button>
+		<?php
+			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para publicar tus productos</div>';
+			}
+			else{
+				//<!-- Page Content -->
+				echo '<div id="page-content-wrapper">';
+					//<!--Boton para desplegar la barra lateral-->
+					echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
+						echo '<span></span>';
+						echo '<span>';
+							echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
+						echo '</span>';
+						echo '<span></span>';
+					echo '</button>';
 
-			<!--Contenido de la pagina-->
-			<div class="container" style="text-align: center; border-bottom: medium">
-				<div><h5 class="col-lg-12" style="padding-top:30px;">Publicar Producto o Servicio</h5></div>
-			</div>
+					//<!--Contenido de la pagina-->
+					echo '<div class="container" style="text-align: center; border-bottom: medium">';
+						echo '<div><h5 class="col-lg-12" style="padding-top:30px;">Publicar Producto o Servicio</h5></div>';
+					echo '</div>';
 
 
-			<br>
-			<div class="container-fluid">
-				<div class="row">
-				  	<div class="col-lg-5 col-md-6 col-sm-6">
-						  <div class="form-group " style="width: 100%; padding: 10px;">
-							  <!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
-							<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:400px; height: 40px;">
-								<option value="1">Producto</option>
-								<option value="2">Servicio</option>
-							</select>
-						  </div>
-					</div>
+					echo '<br>';
+					echo '<div class="container-fluid">';
+						echo '<div class="row">';
+						  	echo '<div class="col-lg-5 col-md-6 col-sm-6">';
+								  echo '<div class="form-group " style="width: 100%; padding: 10px;">';
+									  //<!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
+									echo '<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:400px; height: 40px;">';
+										echo '<option value="1">Producto</option>';
+										echo '<option value="2">Servicio</option>';
+									echo '</select>';
+								  echo '</div>';
+							echo '</div>';
 
-					<!--Textbox nombre del producto id: txt-nombreProducto-->
-				  	<div class="col-md-6 col-lg-7 col-sm-6">
-					  <div class="form-group" style="width: 100%; padding: 10px;">
-						<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">
-						<div id="mensaje1" class="errores">*Nombre del producto obligatorio</div>
-					  </div>
-					</div>
-				</div>
+							//<!--Textbox nombre del producto id: txt-nombreProducto-->
+						  	echo '<div class="col-md-6 col-lg-7 col-sm-6">';
+							  echo '<div class="form-group" style="width: 100%; padding: 10px;">';
+								echo '<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">';
+								echo '<div id="mensaje1" class="errores">*Nombre del producto obligatorio</div>';
+							  echo '</div>';
+							echo '</div>';
+						echo '</div>';
 
-				<div class="row">
+						echo '<div class="row">';
 
-				<!-- CARROUSEL DE IMAGENES -->
-				  <div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">
-					  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height: 200px">
-						  <div class="carousel-inner" id="carousel-inner">
-							<div class="carousel-item active col-lg-1">
-							  <img class="d-block w-0" src="recursos/imagenes/FotografiaP.jpg" style="width: 400px; height: 200px">
-							</div>
-						  </div>
-						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						  </a>
-						  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						  </a>
-					  </div>
-					  <div>
-					  	<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading">
-					  	<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: 0/5</b></div>
-					  	<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div><br>
-					  </div>	  
-				  </div>
+						//<!-- CARROUSEL DE IMAGENES -->
+						  echo '<div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">';
+							  echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height: 200px">';
+								  echo '<div class="carousel-inner" id="carousel-inner">';
+									echo '<div class="carousel-item active col-lg-1">';
+									  echo '<img class="d-block w-0" src="recursos/imagenes/FotografiaP.jpg" style="width: 400px; height: 200px">';
+									echo '</div>';
+								  echo '</div>';
+								  echo '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
+									echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+									echo '<span class="sr-only">Previous</span>';
+								  echo '</a>';
+								  echo '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
+									echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+									echo '<span class="sr-only">Next</span>';
+								  echo '</a>';
+							  echo '</div>';
+							  echo '<div>';
+							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading">';
+							  	echo '<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: 0/5</b></div>';
+							  	echo '<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div><br>';
+							  echo '</div>';	  
+						  echo '</div>';
 
-				  <div class="col-sm-6 col-md-6 col-lg-7">
-					<div class="form-group" style="width: 100%; padding: 10px;">
-						<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>
-						<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>
-						<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>
-						<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio del Producto: ej. 3500">
-						<div id="mensaje2" class="errores">*Precio obligatorio</div><br>
-						<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>
-						<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>
-						<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>
+						  echo '<div class="col-sm-6 col-md-6 col-lg-7">';
+							echo '<div class="form-group" style="width: 100%; padding: 10px;">';
+								echo '<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>';
+								echo '<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>';
+								echo '<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>';
+								echo '<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio del Producto: ej. 3500">';
+								echo '<div id="mensaje2" class="errores">*Precio obligatorio</div><br>';
+								echo '<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>';
+								echo '<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>';
+								echo '<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>';
 
-						<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
-						<br>
-						<label for="cmb-categoria"><h6>Seleccione una Categoría:</h6></label>
-						<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">
+								//<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
+								echo '<br>';
+								echo '<label for="cmb-categoria"><h6>Seleccione una Categoría:</h6></label>';
+								echo '<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">';
 
-						<?php
-						if(!isset($_SESSION['codigo_usuario_sesion'])){
-							echo '<option value="0">Categorias</option>';
-						} else {
-							$conexion->establecerConexion();
-							$codigo_categoria = array();
-						    $nombre_categoria = array();
-						    $contcodigos = 1;
-						    $contnombres = 1;
-							$obtener_categorias = $conexion->ejecutarInstruccion("	
-								SELECT CODIGO_CATEGORIA,NOMBRE_CATEGORIA
-								FROM TBL_CATEGORIAS");
-							oci_execute($obtener_categorias);
-							while ($filacategorias = $conexion->obtenerFila($obtener_categorias)) {
-								 $codigo_categoria[$contcodigos++] = $filacategorias["CODIGO_CATEGORIA"];
-								 $nombre_categoria[$contnombres++] = $filacategorias["NOMBRE_CATEGORIA"];
-							}
+								
+								if(!isset($_SESSION['codigo_usuario_sesion'])){
+									echo '<option value="0">Categorias</option>';
+								} else {
+									$conexion->establecerConexion();
+									$codigo_categoria = array();
+								    $nombre_categoria = array();
+								    $contcodigos = 1;
+								    $contnombres = 1;
+									$obtener_categorias = $conexion->ejecutarInstruccion("	
+										SELECT CODIGO_CATEGORIA,NOMBRE_CATEGORIA
+										FROM TBL_CATEGORIAS");
+									oci_execute($obtener_categorias);
+									while ($filacategorias = $conexion->obtenerFila($obtener_categorias)) {
+										 $codigo_categoria[$contcodigos++] = $filacategorias["CODIGO_CATEGORIA"];
+										 $nombre_categoria[$contnombres++] = $filacategorias["NOMBRE_CATEGORIA"];
+									}
 
-							for ($i=1; $i <= count($codigo_categoria) ; $i++) { 
-								echo '<option value="'.$codigo_categoria[$i].'">'.$nombre_categoria[$i].'</option>';
-							}
-							echo '</select><br><br>';
-						}
-						?>
-						<!--Subcategorias-->
-						<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>
-						<div id="div-subcategorias"></div>
+									for ($i=1; $i <= count($codigo_categoria) ; $i++) { 
+										echo '<option value="'.$codigo_categoria[$i].'">'.$nombre_categoria[$i].'</option>';
+									}
+									echo '</select><br><br>';
+								}
 
-						<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto:</h6></label>
-						<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto. (OPCIONAL)"></textarea>
 
-						<div class="container-fluid" style="padding-top: 20px">
-							<span>
-								<button type="submit" id="btn_publicar" name="btn_publicar" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>
-							</span>
-						</div>
-					  </div>
-					</div>
-				</div>
-			</div>
-		</div>
+								//<!--Subcategorias-->
+								echo '<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>';
+								echo '<div id="div-subcategorias"></div>';
+
+								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto:</h6></label>';
+								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto. (OPCIONAL)"></textarea>';
+
+								echo '<div class="container-fluid" style="padding-top: 20px">';
+									echo '<span>';
+										echo '<button type="submit" id="btn_publicar" name="btn_publicar" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>';
+									echo '</span>';
+								echo '</div>';
+							  echo '</div>';
+							echo '</div>';
+						echo '</div>';
+					echo '</div>';
+				echo '</div>';
+			}
+		?>
 		<!-- /#page-content-wrapper -->
+		
 	</div>
 	<!-- /#wrapper -->
 	  
