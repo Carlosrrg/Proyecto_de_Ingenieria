@@ -12,7 +12,7 @@
     <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-
+	<link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -235,7 +235,7 @@
 				  	<div class="col-lg-5 col-md-6 col-sm-6">
 						  <div class="form-group " style="width: 100%; padding: 10px;">
 							  <!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
-							<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:100%; height: 40px;">
+							<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:400px; height: 40px;">
 								<option value="1">Producto</option>
 								<option value="2">Servicio</option>
 							</select>
@@ -246,16 +246,19 @@
 				  	<div class="col-md-6 col-lg-7 col-sm-6">
 					  <div class="form-group" style="width: 100%; padding: 10px;">
 						<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">
+						<div id="mensaje1" class="errores">*Nombre del producto obligatorio</div>
 					  </div>
 					</div>
 				</div>
 
 				<div class="row">
+
+				<!-- CARROUSEL DE IMAGENES -->
 				  <div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">
-					  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-						  <div class="carousel-inner">
+					  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height: 200px">
+						  <div class="carousel-inner" id="carousel-inner">
 							<div class="carousel-item active col-lg-1">
-							  <img class="d-block w-0" src="recursos/imagenes/FotografiaP.jpg" style="width: 300px; height: 300px">
+							  <img class="d-block w-0" src="recursos/imagenes/FotografiaP.jpg" style="width: 400px; height: 200px">
 							</div>
 						  </div>
 						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -267,31 +270,59 @@
 							<span class="sr-only">Next</span>
 						  </a>
 					  </div>
-					  <button type="submit" id="btn_subir_foto" name="btn_subir_foto" class="btn btn-dark" style="margin-left:15px"> Subir Fotografias</button>
+					  <div>
+					  	<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading">
+					  	<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: 0/5</b></div>
+					  	<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div><br>
+					  </div>	  
 				  </div>
+
 				  <div class="col-sm-6 col-md-6 col-lg-7">
 					<div class="form-group" style="width: 100%; padding: 10px;">
-						<label for="radio"><h6>Tipo de moneda:</h6></label>
-						<input type="radio" name="moneda" id="rbt-moneda" value="1">Lempiras
-						<input type="radio" name="moneda" id="rbt-moneda" value="2">Dolares
-						<input id="txt-precioProducto" name="txt-precioProducto" type="text" class="form-control" placeholder="Precio del Producto">
-						<label for="radio" style="padding-top: 15px;"><h6>Estado del producto:</h6></label>
-						<input type="radio" name="estadoProducto" id="rbt-estado" value="1">Nuevo
-						<input type="radio" name="estadoProducto" id="rbt-estado" value="2">Usado
+						<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>
+						<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>
+						<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>
+						<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio del Producto: ej. 3500">
+						<div id="mensaje2" class="errores">*Precio obligatorio</div><br>
+						<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>
+						<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>
+						<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>
 
 						<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
 						<br>
-						<label for="cmb-categoria"><h6>Categoria a la que pertenece</h6></label>
+						<label for="cmb-categoria"><h6>Seleccione una Categoría:</h6></label>
 						<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">
-							<option value="1">Categoria1</option>
-							<option value="2">Categoria2</option>
-						</select>
-						<!--anadir combo box para las sub categorias-->
 
+						<?php
+						if(!isset($_SESSION['codigo_usuario_sesion'])){
+							echo '<option value="0">Categorias</option>';
+						} else {
+							$conexion->establecerConexion();
+							$codigo_categoria = array();
+						    $nombre_categoria = array();
+						    $contcodigos = 1;
+						    $contnombres = 1;
+							$obtener_categorias = $conexion->ejecutarInstruccion("	
+								SELECT CODIGO_CATEGORIA,NOMBRE_CATEGORIA
+								FROM TBL_CATEGORIAS");
+							oci_execute($obtener_categorias);
+							while ($filacategorias = $conexion->obtenerFila($obtener_categorias)) {
+								 $codigo_categoria[$contcodigos++] = $filacategorias["CODIGO_CATEGORIA"];
+								 $nombre_categoria[$contnombres++] = $filacategorias["NOMBRE_CATEGORIA"];
+							}
 
+							for ($i=1; $i <= count($codigo_categoria) ; $i++) { 
+								echo '<option value="'.$codigo_categoria[$i].'">'.$nombre_categoria[$i].'</option>';
+							}
+							echo '</select><br><br>';
+						}
+						?>
+						<!--Subcategorias-->
+						<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>
+						<div id="div-subcategorias"></div>
 
-						<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto</h6></label>
-						<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto."></textarea>
+						<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto:</h6></label>
+						<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto. (OPCIONAL)"></textarea>
 
 						<div class="container-fluid" style="padding-top: 20px">
 							<span>
@@ -389,7 +420,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/"></script>
+	<script src="js/controlador_publicarProducto.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		
