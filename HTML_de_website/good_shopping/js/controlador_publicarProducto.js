@@ -14,6 +14,8 @@ $(document).ready(function(){
 							"&slc-tipo-publicacion="+tipoP+
 							"&accion=publicar";
 
+		var servicios_seleccionados = 0;
+
 		if (tipoP == 1) {	//Producto
 			var estado = $('input:radio[name=estadoProducto]:checked').val();
 			var categoria = $("#slc-categoria").val();
@@ -47,6 +49,10 @@ $(document).ready(function(){
 	                selected[cont] = $(this).val();
 	         		cont++
 	        });
+
+	        if (selected.length==0) {
+	        	servicios_seleccionados = 1;
+	        }
 
 	        var servicios = "";
 
@@ -88,23 +94,29 @@ $(document).ready(function(){
 					}
 					else{
 						$("#mensaje4").fadeOut();
-						
-						//alert(parametros);
-						
-						$.ajax({
-							url:"ajax_procesar_php/acciones_publicarProducto.php",
-							data:parametros,
-							method:"POST",
-							success:function(respuesta){
-								if (respuesta == 0) {
+						if (servicios_seleccionados == 1) {
+							$("#mensaje5").fadeIn();
+							$('html, body').animate({scrollTop:0}, 'slow');
+							return false;
+						}else {
+							$("#mensaje5").fadeOut();
+							//alert(parametros);
+							
+							$.ajax({
+								url:"ajax_procesar_php/acciones_publicarProducto.php",
+								data:parametros,
+								method:"POST",
+								success:function(respuesta){
+									if (respuesta == 0) {
 
+									}
+									else{
+										alert(respuesta);
+										window.location="publicarProducto.php";
+									}
 								}
-								else{
-									alert(respuesta);
-									window.location="publicarProducto.php";
-								}
-							}
-						});		
+							});	
+						}	
 					}
 				}
 			}
@@ -206,9 +218,11 @@ $(document).ready(function(){
 		if (tipoP == 1) { //De producto
 			$("#div-productos").css("display", "block");
 			$("#div-servicios").css("display", "none");
+			$("#btn_publicar").text("Publicar Producto");
 		} else { //De servicio
 			$("#div-productos").css("display", "none");
 			$("#div-servicios").css("display", "block");
+			$("#btn_publicar").text("Publicar Servicio");
 		}
 	});
 

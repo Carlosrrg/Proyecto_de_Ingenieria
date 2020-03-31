@@ -329,7 +329,8 @@
 								echo '<div id="div-subcategorias"></div>';
 								echo '</div>';//fin del div de productos
 								echo '<div id="div-servicios" style="display:none">';
-								echo '<label><h6>Servicios al que pertenece:</h6></label><br>';
+								echo '<label><h6>Servicios al que pertenece:</h6></label>';
+								echo '<div id="mensaje5" class="errores">*Seleccione al menos un servicio</div><br>';
 								$codigos_servicios = array();
 							    $nombres_servicios = array();
 							    $contcodigos = 1;

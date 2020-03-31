@@ -316,8 +316,9 @@
 			     						}
 			     					echo '>';
 			     					echo '<div id="mensaje25" class="errores">Ingrese un correo electronico valido</div>';
+			     					echo '<div id="mensaje26" class="errores">El correo ya existe.</div>';
 			     					echo '<br>';
-			     					echo '<input style="width: 50%;" type="text" class="form-control" id="txt-telefono-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					echo '<input style="width: 50%;" type="number" class="form-control" id="txt-telefono-tienda" name="signup_form[displayname]" required="required" maxlength="100"';
 			     					 	if (!isset($fila["TELEFONO_TIENDA"])) {
 			     							echo 'placeholder="Telefono de la tienda"';
 			     							//echo 'value="'.NULL.'"';
@@ -427,7 +428,7 @@
 
 											echo '<div class="container-fluid" style="padding: 20px">';
 												echo '<span>';
-													echo '<button type="submit" id="editar_tienda" name="editar_tienda" class="btn btn-success">Guardar Cambios</button>';
+													echo '<button type="submit" id="editar_tienda" name="editar_tienda" class="btn btn-success" disabled>Guardar Cambios</button>';
 												echo '</span>';
 											echo '</div>';
 									echo '</div>';

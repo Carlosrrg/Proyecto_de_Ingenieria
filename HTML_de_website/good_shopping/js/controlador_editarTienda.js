@@ -30,23 +30,27 @@ $(document).ready(function(){
 
 		if (nombre_tienda == "") {
 			$("#mensaje22").fadeIn();
+			$('html, body').animate({scrollTop:0}, 'slow');
 			return false;
 		}
 		else{
 			$("#mensaje22").fadeOut();
-			if (telefono_tienda == "") {
+			if (telefono_tienda == "" || telefono_tienda.length != 8) {
 				$("#mensaje23").fadeIn();
+				$('html, body').animate({scrollTop:0}, 'slow');
 				return false;
 			}
 			else{
 				$("#mensaje23").fadeOut();
 				if (direccion_tienda == "") {
 					$("#mensaje24").fadeIn();
+					$('html, body').animate({scrollTop:0}, 'slow');
 					return false;
 				}
 				else{
 					$("#mensaje24").fadeOut();
 					$("#mensaje25").fadeOut();
+					$("#mensaje26").fadeOut();
 
 					var parametros = 	"&txt-nombre-tienda="+nombre_tienda+
 										"&txt-correo-tienda="+correo_tienda+
@@ -65,9 +69,13 @@ $(document).ready(function(){
 								$("#mensaje25").fadeIn();
 								$("#txt-correo-tienda").val("");
 							}
+							if (respuesta == 2) {
+								$("#mensaje26").fadeIn();
+								$('html, body').animate({scrollTop:0}, 'slow');
+							}
 							else{
 								$("#mensaje25").fadeOut();
-								alert("actualizado con exito...");
+								alert("Actualizado con exito...");
 								window.location="EditarTienda.php";
 							}
 						}
@@ -153,6 +161,16 @@ $(document).ready(function(){
 
 		 }
 	     $banner = false;    
+	});
+
+	$('input').change(function() {
+		$("#editar_tienda").prop('disabled', false);
+	});
+	$('input').keypress(function() {
+		$("#editar_tienda").prop('disabled', false);
+	});
+	$('textarea').keypress(function() {
+		$("#editar_tienda").prop('disabled', false);
 	});
 
 });
