@@ -88,7 +88,7 @@
 								}
 						echo '</a>';
 						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-							echo '<a class="dropdown-item" href="EditarTienda.php">Ver Perfil</a>';
+							echo '<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
 							echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 						echo '</div>';
 					echo '</div>';	
@@ -136,7 +136,7 @@
 				    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
 				    echo '<div class="list-group list-group-flush">';
 					    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-						    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
+						    echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
 						    echo '<br>';
 						    echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
 						    echo '<br>';
@@ -193,14 +193,14 @@
 					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
 					    echo '<div class="list-group list-group-flush">';
 						    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-							    echo '<a href="#" class=" list-group-item-action bg-light">Editar Perfil</a>';
+							    echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
 							    echo '<br>';
 							    $tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 							    if ($tipo_vendedor == 1) {
 							    	
 							    }
 							    else{
-							    	echo '<a href="#" class=" list-group-item-action bg-light">Editar Tienda</a>';
+							    	echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
 							    	echo '<br>';
 							    }  
 							    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';

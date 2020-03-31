@@ -30,7 +30,7 @@
 				<h6 style="text-align: center;">Categorías</h6>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#">Entretenimiento</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Películas & Música</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="#"><label>Películas & Música</label></a>
 				<a class="dropdown-item" style="padding-left: 50px;" href="#">Computadoras & Accesorios</a>
 				<a class="dropdown-item" style="padding-left: 50px;" href="#">Consolas & Videojuegos</a>
 				<a class="dropdown-item" style="padding-left: 50px;" href="#">Celulares & Accesorios</a>
@@ -116,7 +116,7 @@
 							}
 					echo'</a>';
 					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-						echo'<a class="dropdown-item" href="EditarTienda.php">Ver Perfil</a>';
+						echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';
 				echo'</div>';

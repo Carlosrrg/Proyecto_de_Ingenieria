@@ -4,15 +4,16 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Publicar Producto</title>
+    <title>Editar Perfil</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
+	
 	<link rel="icon" type="image/jpg" href="recursos/imagenes/Logo.png">
-    <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
-		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="css/mensaje_error.css">
+	<link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -61,7 +62,7 @@
 			</div>
 
 			<!--logo de la pagina -->
-			<a href="#" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="recursos/imagenes/Logo.png" width=50 height="40"></a>
+			<a href="index.php" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="recursos/imagenes/Logo.png" width=50 height="40"></a>
 
 			<!--gestion de sesión -->
 			<?php
@@ -99,8 +100,8 @@
 	  <!-- Sidebar -->
 
 	    <div class="bg-light border-right" id="sidebar-wrapper">
-
-	    	<?php
+		  
+			<?php
 			  	if(!isset($_SESSION['codigo_usuario_sesion'])){
 			  		echo '<div class="col-12 col-lg-12" style="text-align: center">';
 				  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
@@ -207,143 +208,224 @@
 					    echo '</div>';
 					}
 			  	}
+
+			  	
 			?>
 	    </div>
 		<!-- /#sidebar-wrapper -->
 		
-
 		<?php
 			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para publicar tus productos</div>';
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para editar tu Perfil de Vendedor</div>';
 			}
 			else{
-				//<!-- Page Content -->
-				echo '<div id="page-content-wrapper">';
-					//<!--Boton para desplegar la barra lateral-->
-					echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
-						echo '<span></span>';
-						echo '<span>';
-							echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
-						echo '</span>';
-						echo '<span></span>';
-					echo '</button>';
 
-					//<!--Contenido de la pagina-->
-					echo '<div class="container" style="text-align: center; border-bottom: medium">';
-						echo '<div><h5 class="col-lg-12" style="padding-top:30px;">Publicar Producto o Servicio</h5></div>';
-					echo '</div>';
+				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, A.APELLIDO, A.TELEFONO, A.CIUDAD, B.NOMBRE_LUGAR,
+																		TO_CHAR(A.FECHA_NACIMIENTO,'DD') AS FECHA_DIA,
+																		TO_CHAR(A.FECHA_NACIMIENTO,'MM') AS FECHA_MES,
+																		TO_CHAR(A.FECHA_NACIMIENTO,'YYYY') AS FECHA_ANIO
+																		FROM TBL_USUARIOS A
+																		INNER JOIN TBL_LUGARES B
+																		ON(A.CODIGO_LUGAR = B.CODIGO_LUGAR)
+																		WHERE CODIGO_USUARIO = '$usuario'");
+				oci_execute($resultado_usuario);
+				while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+					//<!-- Page Content -->
+					echo '<div id="page-content-wrapper">';
+						//<!--Boton para desplegar la barra lateral-->
+						echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
+							echo '<span></span>';
+							echo '<span>';
+								echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
+							echo '</span>';
+							echo '<span></span>';
+						echo '</button>';
 
-
-					echo '<br>';
-					echo '<div class="container-fluid">';
-						echo '<div class="row">';
-						  	echo '<div class="col-lg-5 col-md-6 col-sm-6">';
-								  echo '<div class="form-group " style="width: 100%; padding: 10px;">';
-									  //<!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
-									echo '<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:400px; height: 40px;">';
-										echo '<option value="1">Producto</option>';
-										echo '<option value="2">Servicio</option>';
-									echo '</select>';
-								  echo '</div>';
+						//<!--Contenido de la pagina-->
+						echo '<div class="container-fluid">';
+							echo '<div class="row">';
+							  echo '<div class="col-lg-1 col-md-2 col-sm-2">';		 
+								echo '<div class="col-md-2 col-lg-1 col-sm-2">';
+								  
+			     					  				
+								echo '</div>';           
 							echo '</div>';
 
-							//<!--Textbox nombre del producto id: txt-nombreProducto-->
-						  	echo '<div class="col-md-6 col-lg-7 col-sm-6">';
-							  echo '<div class="form-group" style="width: 100%; padding: 10px;">';
-								echo '<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">';
-								echo '<div id="mensaje1" class="errores">*Nombre del producto obligatorio</div>';
-							  echo '</div>';
-							echo '</div>';
-						echo '</div>';
 
-						echo '<div class="row">';
+							echo '<div class="col-md-7 col-lg-8 col-sm-7">';
+								echo '<div style= "text-align:left" >';
 
-						//<!-- CARROUSEL DE IMAGENES -->
-						  echo '<div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">';
-							  echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height: 200px">';
-								  echo '<div class="carousel-inner" id="carousel-inner">';
-									echo '<div class="carousel-item active col-lg-1">';
-									  echo '<img class="d-block w-0" src="recursos/imagenes/FotografiaP.jpg" style="width: 400px; height: 200px">';
+								  	echo '<div style="margin-top: 25px;"><h5 style="padding-left: -20%" class="col-lg-12">Editar mi Perfil de vendedor</h5></div>';
+			     					
+			     					echo '<br>';
+			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-nombre" name="signup_form[displayname]" required="required" maxlength="100"';
+			     						if (!isset($fila["NOMBRE"])) {
+			     							echo 'placeholder="Nombre"';
+			     						}
+			     						else{
+			     							echo 'value="'.$fila["NOMBRE"].'"';
+			     						}
+			     					echo '>';
+			     						echo '<div id="mensaje22" class="errores">Ingrese su nombre</div>';
+			     					echo '<br>';
+			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-apellido" name="signup_form[displayname]" required="required" maxlength="100"';
+			     						if (!isset($fila["APELLIDO"])) {
+			     							echo 'placeholder="Apellido"';
+			     						}
+			     						else{
+			     							echo 'value="'.$fila["APELLIDO"].'"';
+			     						}
+			     					echo '>';
+			     					echo '<div id="mensaje25" class="errores">Ingrese su apellido</div>';
+			     					echo '<br>';
+			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-telefono" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					 	if (!isset($fila["TELEFONO"])) {
+			     							echo 'placeholder="Telefono"';	
+			     						}
+			     						else{
+			     							echo 'value="'.$fila["TELEFONO"].'"';
+			     						}
+			     					echo '>';
+			     					echo '<div id="mensaje23" class="errores">Ingrese su numero de telefono</div>';
+			     					echo '<br>';
+
+			     					echo'<select style="width: 80%;" id="slc-ubicacion" name="slc-ubicacion" required="" class="form-control">';
+				     					$arreglo_ubicacion = array();
+				     					$arreglo_ubicacion_codigo = array();
+				     					$cont = 1;
+				     					$resultado_lugares = $conexion->ejecutarInstruccion("	SELECT CODIGO_LUGAR, NOMBRE_LUGAR
+																								FROM TBL_LUGARES");
+										oci_execute($resultado_lugares);
+										while ($fila2 = $conexion->obtenerFila($resultado_lugares)) {
+											$arreglo_ubicacion_codigo[$cont] = $fila2["CODIGO_LUGAR"];
+											$arreglo_ubicacion[$cont] = $fila2["NOMBRE_LUGAR"];
+											$cont++;
+										}
+
+										for ($i=1; $i < count($arreglo_ubicacion); $i++) { 
+	                                        echo '<option value="'.$arreglo_ubicacion_codigo[$i].'"';
+	                                        	if (isset($fila["NOMBRE_LUGAR"])){
+                                                    if ($fila["NOMBRE_LUGAR"] == $arreglo_ubicacion[$i]) {
+                                                        echo "selected = selected";
+                                                    }
+                                                }
+	                                        echo '>'.$arreglo_ubicacion[$i].'</option>';
+	                                    }
+									echo'</select>';
+
+									echo '<br>';
+			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-ciudad" name="signup_form[displayname]" required="required" maxlength="100"';
+			     					 	if (!isset($fila["CIUDAD"])) {
+			     							echo 'placeholder="Ciudad"';	
+			     						}
+			     						else{
+			     							echo 'value="'.$fila["CIUDAD"].'"';
+			     						}
+			     					echo '>';
+			     					echo '<br>';
+
+		
+			     					$arreglo_mes = array();
+			     					$arreglo_mes[0] = "Seleccione un mes";
+			     					$arreglo_mes[1] = "Enero";
+			     					$arreglo_mes[2] = "Febrero";
+			     					$arreglo_mes[3] = "Marzo";
+			     					$arreglo_mes[4] = "Abril";
+			     					$arreglo_mes[5] = "Mayo";
+			     					$arreglo_mes[6] = "Junio";
+			     					$arreglo_mes[7] = "Juilo";
+			     					$arreglo_mes[8] = "Agosto";
+			     					$arreglo_mes[9] = "Septiembre";
+			     					$arreglo_mes[10] = "Octubre";
+			     					$arreglo_mes[11] = "Noviembre";
+			     					$arreglo_mes[12] = "Diciembre";
+
+									echo'<div class="form-group" style="width: 80%;">';
+                                        echo'<label class="control-label">Fecha de nacimiento</label>';
+                                            echo'<div id="profile_birthdate" class="bootstrap-date row">';
+                                                echo'<div class="col-md-4">';
+                                                    echo'<select id="profile_birthdate_month" name="slc-dia" required="" class="form-control">';
+                                                        for ($i=1; $i < 32; $i++) { 
+                                                            echo '<option value="'.$i.'"';
+                                                                if (isset($fila["FECHA_DIA"])){
+                                                                    if ($fila["FECHA_DIA"] == $i) {
+                                                                        echo "selected = selected";
+                                                                    }
+                                                                }
+                                                            echo '>'.$i.'</option>';
+                                                        }
+                                                    echo'</select>';
+                                                echo'</div>';
+                                                echo'<div class="col-md-4">';
+                                                    echo'<select id="profile_birthdate_day" name="slc-mes" required="" class="form-control">';
+                                                        for ($i=0; $i < 13; $i++) { 
+                                                            echo '<option value="'.$i.'"';
+                                                            	if (isset($fila["FECHA_MES"])){
+                                                                    if ($fila["FECHA_MES"] == $i) {
+                                                                        echo "selected = selected";
+                                                                    }
+                                                                }
+                                                            echo '>'.$arreglo_mes[$i].'</option>';
+                                                        }
+                                                    echo'</select>';
+                                                echo'</div>';
+                                                    echo'<div class="col-md-4">';
+                                                        echo'<select id="profile_birthdate_year" name="slc-anio" required="" class="form-control">';
+                                                            for ($i=1920; $i < 2021; $i++) { 
+                                                                echo '<option value="'.$i.'"';
+                                                                    if (isset($fila["FECHA_ANIO"])){
+                                                                        if ($fila["FECHA_ANIO"] == $i) {
+                                                                            echo "selected = selected";
+                                                                        }
+                                                                    }
+                                                                echo '>'.$i.'</option>';
+                                                            }
+                                                        echo'</select>';
+                                                    echo'</div>';
+                                                echo'</div>';
+                                       		echo'</div>';
 									echo '</div>';
-								  echo '</div>';
-								  echo '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
-									echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-									echo '<span class="sr-only">Previous</span>';
-								  echo '</a>';
-								  echo '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
-									echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-									echo '<span class="sr-only">Next</span>';
-								  echo '</a>';
-							  echo '</div>';
-							  echo '<div>';
-							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading">';
-							  	echo '<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: 0/5</b></div>';
-							  	echo '<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div><br>';
-							  echo '</div>';	  
-						  echo '</div>';
 
-						  echo '<div class="col-sm-6 col-md-6 col-lg-7">';
-							echo '<div class="form-group" style="width: 100%; padding: 10px;">';
-								echo '<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>';
-								echo '<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>';
-								echo '<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>';
-								echo '<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio del Producto: ej. 3500">';
-								echo '<div id="mensaje2" class="errores">*Precio obligatorio</div><br>';
-								echo '<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>';
-								echo '<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>';
-								echo '<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>';
+									echo '<div class="row">';
+											echo '<div class="container-fluid" style="padding: 20px">';
+												echo '<span>';
+													echo '<button type="submit" id="editar_perfil" name="editar_perfil" class="btn btn-success">Guardar Cambios</button>';
+												echo '</span>';
+											echo '</div>';
+									echo '</div>';
 
-								//<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
-								echo '<br>';
-								echo '<label for="cmb-categoria"><h6>Seleccione una Categoría:</h6></label>';
-								echo '<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">';
+				} 
 
+
+									echo "<hr><br>";
+
+									echo '<div style="margin-top: 5px;"><h5 style="padding-left: -20%" class="col-lg-12">Cambiar Contraseña</h5></div>';
+
+									echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Contraseña actual">';
+			     					echo "<br>";
+			     					echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena-nueva" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Nueva contraseña">';
+			     					echo "<br>";
+			     					echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena-confirmar" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Confimar contraseña">';
 								
-								if(!isset($_SESSION['codigo_usuario_sesion'])){
-									echo '<option value="0">Categorias</option>';
-								} else {
-									$conexion->establecerConexion();
-									$codigo_categoria = array();
-								    $nombre_categoria = array();
-								    $contcodigos = 1;
-								    $contnombres = 1;
-									$obtener_categorias = $conexion->ejecutarInstruccion("	
-										SELECT CODIGO_CATEGORIA,NOMBRE_CATEGORIA
-										FROM TBL_CATEGORIAS");
-									oci_execute($obtener_categorias);
-									while ($filacategorias = $conexion->obtenerFila($obtener_categorias)) {
-										 $codigo_categoria[$contcodigos++] = $filacategorias["CODIGO_CATEGORIA"];
-										 $nombre_categoria[$contnombres++] = $filacategorias["NOMBRE_CATEGORIA"];
-									}
+			     					echo '<div class="row">';
+											echo '<div class="container-fluid" style="padding: 20px">';
+												echo '<span>';
+													echo '<button type="submit" id="cambiar_contrasena" name="cambiar_contrasena" class="btn btn-success">Cambiar Contraseña</button>';
+												echo '</span>';
+											echo '</div>';
+									echo '</div>';
 
-									for ($i=1; $i <= count($codigo_categoria) ; $i++) { 
-										echo '<option value="'.$codigo_categoria[$i].'">'.$nombre_categoria[$i].'</option>';
-									}
-									echo '</select><br><br>';
-								}
-
-
-								//<!--Subcategorias-->
-								echo '<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>';
-								echo '<div id="div-subcategorias"></div>';
-
-								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto:</h6></label>';
-								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto. (OPCIONAL)"></textarea>';
-
-								echo '<div class="container-fluid" style="padding-top: 20px">';
-									echo '<span>';
-										echo '<button type="submit" id="btn_publicar" name="btn_publicar" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>';
-									echo '</span>';
 								echo '</div>';
-							  echo '</div>';
 							echo '</div>';
 						echo '</div>';
 					echo '</div>';
-				echo '</div>';
 			}
 		?>
-		<!-- /#page-content-wrapper -->
 		
+
+
+	</div>
+		<!-- /#page-content-wrapper -->
 	</div>
 	<!-- /#wrapper -->
 	  
@@ -429,9 +511,9 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/controlador_publicarProducto.js"></script>
+	<script src="js/"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
+  	<script src="js/bootstrap.min.js"></script>
 		
   <!--Boton para desplegar la barra lateral-->		
   <script type="text/javascript">
@@ -442,10 +524,10 @@
             });
         });
   </script>
-			
+
+	
 </body>
 </html>
-
 
 <?php
   	if(!isset($_SESSION['codigo_usuario_sesion'])){
