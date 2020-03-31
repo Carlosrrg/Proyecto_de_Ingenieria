@@ -1,30 +1,65 @@
 $(document).ready(function(){
 
 	$("#btn_publicar").click(function(){
-
+		var tipoP = $("#slc-tipo-publicacion").val();
 		var nombre_producto = $("#txt-nombreProducto").val();
 		var moneda = $('input:radio[name=moneda]:checked').val();
 		var precio = $("#txt-precioProducto").val();
-		var estado = $('input:radio[name=estadoProducto]:checked').val();
-		var categoria = $("#slc-categoria").val();
 		var descripcion = $("#txt-descripcion").val();
 
-		var cont = 0;
-		var selected = [];      
-        $('input:checkbox:checked').each(function(){
-                selected[cont] = $(this).val();
-         		cont++;
-        });
+		var parametros = 	"&txt-nombre-producto="+nombre_producto+
+							"&rbt-moneda="+moneda+
+							"&txt-precio-producto="+precio+
+							"&txt-descripcion="+descripcion+
+							"&slc-tipo-publicacion="+tipoP+
+							"&accion=publicar";
 
-        var subcategorias = "";
+		if (tipoP == 1) {	//Producto
+			var estado = $('input:radio[name=estadoProducto]:checked').val();
+			var categoria = $("#slc-categoria").val();
 
-        for (var i = 0; i < selected.length; i++) {
-        	if (i == selected.length-1) {
-        		subcategorias += selected[i];
-        	}else{
-        		subcategorias += selected[i]+",";
-        	}
-        }
+			var cont = 0;
+			var selected = [];      
+	        $('input[name="chk-subcategorias[]"]:checked').each(function(){
+	                selected[cont] = $(this).val();
+	         		cont++;
+	        });
+
+	        var subcategorias = "";
+
+	        for (var i = 0; i < selected.length; i++) {
+	        	if (i == selected.length-1) {
+	        		subcategorias += selected[i];
+	        	}else{
+	        		subcategorias += selected[i]+",";
+	        	}
+	        }
+
+	        parametros += 	"&estadoProducto="+estado+
+	        				"&slc-categoria="+categoria+
+	        				"&chk-subcategorias="+subcategorias;
+
+		} else {	//Servicio
+			var cont = 0;
+			var selected = [];     
+			var servicios = ""; 
+	        $('input[name="chk-servicios[]"]:checked').each(function(){
+	                selected[cont] = $(this).val();
+	         		cont++
+	        });
+
+	        var servicios = "";
+
+	        for (var i = 0; i < selected.length; i++) {
+	        	if (i == selected.length-1) {
+	        		servicios += selected[i];
+	        	}else{
+	        		servicios += selected[i]+",";
+	        	}
+	        }
+
+	        parametros +=	"&chk-servicios="+servicios;
+		}
 
 		if (nombre_producto == "") {
 			$("#mensaje1").fadeIn();
@@ -47,35 +82,30 @@ $(document).ready(function(){
 				}
 				else{
 					$("#mensaje3").fadeOut();
+					if (descripcion == "") {
+						$("#mensaje4").fadeIn();
+						return false;
+					}
+					else{
+						$("#mensaje4").fadeOut();
+						
+						//alert(parametros);
+						
+						$.ajax({
+							url:"ajax_procesar_php/acciones_publicarProducto.php",
+							data:parametros,
+							method:"POST",
+							success:function(respuesta){
+								if (respuesta == 0) {
 
-					var parametros = 	"&txt-nombre-producto="+nombre_producto+
-										"&rbt-moneda="+moneda+
-										"&txt-precio-producto="+precio+
-										"&rbt-estado="+estado+
-										"&slc-categoria="+categoria+
-										"&slc-subcategorias="+subcategorias+
-										"&txt-descripcion="+descripcion+
-										"&accion=publicar";
-					//alert(parametros);
-					/*
-					$.ajax({
-						url:"ajax_procesar_php/acciones_editarTienda.php",
-						data:parametros,
-						method:"POST",
-						success:function(respuesta){
-							if (respuesta == 0) {
-								//alert("El correo electronico ingresado es invalido, por favor ingrese uno nuevo...");
-								$("#mensaje25").fadeIn();
-								$("#txt-correo-tienda").val("");
+								}
+								else{
+									alert(respuesta);
+									window.location="publicarProducto.php";
+								}
 							}
-							else{
-								$("#mensaje25").fadeOut();
-								alert("actualizado con exito...");
-								window.location="EditarTienda.php";
-							}
-						}
-					});	*/
-
+						});		
+					}
 				}
 			}
 		}
@@ -126,6 +156,9 @@ $(document).ready(function(){
 			console.log(respuesta);
 			var imprimir = '';
 			for (var i=0; i<respuesta.length; i++){
+				if (respuesta[i].NOMBRE_SUB_CATEGORIA == "Comprar") {
+					respuesta[i].NOMBRE_SUB_CATEGORIA = "Vender";
+				}
 				imprimir += '<label><input type="checkbox" id="chk-subcategorias[]" name="chk-subcategorias[]"'+
 							' class="thirdparty" value="'+respuesta[i].CODIGO_SUB_CATEGORIA+'"> '+
 							respuesta[i].NOMBRE_SUB_CATEGORIA+'</label><br>';
@@ -151,6 +184,9 @@ $(document).ready(function(){
 			console.log(respuesta);
 			var imprimir = '';
 			for (var i=0; i<respuesta.length; i++){
+				if (respuesta[i].NOMBRE_SUB_CATEGORIA == "Comprar") {
+					respuesta[i].NOMBRE_SUB_CATEGORIA = "Vender";
+				}
 				imprimir += '<label><input type="checkbox" id="chk-subcategorias[]" name="chk-subcategorias[]"'+
 							' class="thirdparty" value="'+respuesta[i].CODIGO_SUB_CATEGORIA+'"> '+
 							respuesta[i].NOMBRE_SUB_CATEGORIA+'</label><br>';
@@ -162,6 +198,18 @@ $(document).ready(function(){
 			}
 		});	
 
+	});
+
+	//Tipo de publicación cambie
+	$('#slc-tipo-publicacion').change(function() {	
+		var tipoP = $("#slc-tipo-publicacion").val();
+		if (tipoP == 1) { //De producto
+			$("#div-productos").css("display", "block");
+			$("#div-servicios").css("display", "none");
+		} else { //De servicio
+			$("#div-productos").css("display", "none");
+			$("#div-servicios").css("display", "block");
+		}
 	});
 
 	//Visualiza imagenes

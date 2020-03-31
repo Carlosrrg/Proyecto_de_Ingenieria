@@ -61,7 +61,7 @@
 			</div>
 
 			<!--logo de la pagina -->
-			<a href="#" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="recursos/imagenes/Logo.png" width=50 height="40"></a>
+			<a href="index.php" class="navbar-brand mr-auto" style="background-color: #72a276;"><img src="recursos/imagenes/Logo.png" width=50 height="40"></a>
 
 			<!--gestion de sesión -->
 			<?php
@@ -250,8 +250,8 @@
 							//<!--Textbox nombre del producto id: txt-nombreProducto-->
 						  	echo '<div class="col-md-6 col-lg-7 col-sm-6">';
 							  echo '<div class="form-group" style="width: 100%; padding: 10px;">';
-								echo '<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto">';
-								echo '<div id="mensaje1" class="errores">*Nombre del producto obligatorio</div>';
+								echo '<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto o Servicio">';
+								echo '<div id="mensaje1" class="errores">*Nombre obligatorio</div>';
 							  echo '</div>';
 							echo '</div>';
 						echo '</div>';
@@ -287,8 +287,9 @@
 								echo '<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>';
 								echo '<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>';
 								echo '<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>';
-								echo '<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio del Producto: ej. 3500">';
+								echo '<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio: ej. 3500">';
 								echo '<div id="mensaje2" class="errores">*Precio obligatorio</div><br>';
+								echo '<div id="div-productos" style="display:block">';
 								echo '<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>';
 								echo '<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>';
 								echo '<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>';
@@ -326,9 +327,29 @@
 								//<!--Subcategorias-->
 								echo '<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>';
 								echo '<div id="div-subcategorias"></div>';
+								echo '</div>';//fin del div de productos
+								echo '<div id="div-servicios" style="display:none">';
+								echo '<label><h6>Servicios al que pertenece:</h6></label><br>';
+								$codigos_servicios = array();
+							    $nombres_servicios = array();
+							    $contcodigos = 1;
+							    $contnombres = 1;
 
-								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto:</h6></label>';
-								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripcion detallada de su producto. (OPCIONAL)"></textarea>';
+								$obtener_servicios = $conexion->ejecutarInstruccion("	
+													SELECT CODIGO_SERVICIO,NOMBRE_SERVICIO
+													FROM TBL_SERVICIOS");
+								oci_execute($obtener_servicios);
+								while ($fila = $conexion->obtenerFila($obtener_servicios)) {
+									$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
+									$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
+								}
+								for ($i=1; $i <= count($codigos_servicios) ; $i++) { 		
+									echo '<label><input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"> '.$nombres_servicios[$i].'</label><br>';						
+								}	
+								echo '</div>';//Fin del div de servicios
+								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto o Servicio:</h6></label>';
+								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripción detallada de su producto o servicio."></textarea>
+									  <div id="mensaje4" class="errores">*Se requiere de una descripción.</div>';
 
 								echo '<div class="container-fluid" style="padding-top: 20px">';
 									echo '<span>';

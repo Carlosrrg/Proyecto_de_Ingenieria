@@ -22,15 +22,13 @@
 			END;");
 		oci_execute($anadir_imagen);
 
-		//***************FALTA AGREGAR LA PUBLICACION A LA BASE DE DATOS********************
-		/*
 		$imagen_a_producto = $conexion->ejecutarInstruccion("	
 			INSERT INTO TBL_PROD_X_TBL_IMG (CODIGO_PRODUCTO,CODIGO_IMAGEN)
 			SELECT * FROM 
 			(SELECT CODIGO_PUBLICACION_PRODUCTO FROM TBL_PUBLICACION_PRODUCTOS WHERE ROWNUM=1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC),
 			(SELECT CODIGO_IMAGEN FROM TBL_IMAGENES WHERE ROWNUM=1 ORDER BY CODIGO_IMAGEN DESC)");
 		oci_execute($imagen_a_producto);
-*/
+
 		echo "Imagen guardada";
 
 	} else {
