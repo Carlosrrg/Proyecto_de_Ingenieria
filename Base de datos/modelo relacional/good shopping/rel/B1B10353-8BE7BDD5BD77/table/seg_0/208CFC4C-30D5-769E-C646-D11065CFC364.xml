@@ -29,6 +29,16 @@
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="RTN" id="C53B2331-6D3F-B85D-EA2E-E110995DE0AF">
+<createdBy>Carlos Ramos</createdBy>
+<createdTime>2020-04-01 02:18:15 UTC</createdTime>
+<ownerDesignName>good shopping</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="TELEFONO_TIENDA" id="13C893A6-FCBE-D5FB-2067-997AC8A958D7">
 <createdBy>ronme</createdBy>
 <createdTime>2020-03-05 04:26:42 UTC</createdTime>

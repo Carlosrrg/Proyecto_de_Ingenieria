@@ -32,6 +32,11 @@ CREATE TABLE tbl_codigos (
 
 ALTER TABLE tbl_codigos ADD CONSTRAINT tbl_codigos_pk PRIMARY KEY ( codigo_codigo );
 
+CREATE TABLE tbl_codigos_x_tbl_usuarios (
+    codigo_usuario   INTEGER NOT NULL,
+    codigo_codigo    INTEGER NOT NULL
+);
+
 CREATE TABLE tbl_compradores (
     codigo_usuario_comprador   INTEGER NOT NULL
 );
@@ -53,6 +58,15 @@ CREATE TABLE tbl_estado_publicacion (
 ALTER TABLE tbl_estado_publicacion ADD CONSTRAINT tbl_estado_publicacion_pk PRIMARY KEY ( codigo_estado_publicacion );
 
 CREATE TABLE tbl_favoritos (
+    codigo_favorito            INTEGER NOT NULL,
+    codigo_usuario_comprador   INTEGER NOT NULL,
+    codigo_usuario_vendedor    INTEGER NOT NULL,
+    fecha_agregado             DATE NOT NULL
+);
+
+ALTER TABLE tbl_favoritos ADD CONSTRAINT tbl_favoritos_pk PRIMARY KEY ( codigo_favorito );
+
+CREATE TABLE tbl_favoritosv2 (
     codigo_usuario_comprador   INTEGER NOT NULL,
     codigo_usuario_vendedor    INTEGER NOT NULL,
     fecha_agrego               DATE NOT NULL
@@ -132,6 +146,16 @@ CREATE TABLE tbl_produ_x_tbl_catego (
     codigo_sub_categoria   INTEGER NOT NULL
 );
 
+CREATE TABLE tbl_publi_x_tbl_report (
+    codigo_publicacion_producto   INTEGER NOT NULL,
+    codigo_reporte                INTEGER NOT NULL
+);
+
+CREATE TABLE tbl_public_x_tbl_serv (
+    codigo_publicacion_producto   INTEGER NOT NULL,
+    codigo_servicio               INTEGER NOT NULL
+);
+
 CREATE TABLE tbl_publicacion_productos (
     codigo_publicacion_producto   INTEGER NOT NULL,
     codigo_tipo_publicacion       INTEGER NOT NULL,
@@ -149,6 +173,15 @@ CREATE TABLE tbl_publicacion_productos (
 ALTER TABLE tbl_publicacion_productos ADD CONSTRAINT tbl_productos_pk PRIMARY KEY ( codigo_publicacion_producto );
 
 CREATE TABLE tbl_ranking (
+    codigo_ranking             INTEGER NOT NULL,
+    codigo_usuario_comprador   INTEGER NOT NULL,
+    codigo_usuario_vendedor    INTEGER NOT NULL,
+    numero_estrellas           INTEGER NOT NULL
+);
+
+ALTER TABLE tbl_ranking ADD CONSTRAINT tbl_ranking_pk PRIMARY KEY ( codigo_ranking );
+
+CREATE TABLE tbl_rankingv2 (
     codigo_usuario_comprador   INTEGER NOT NULL,
     codigo_usuario_vendedor    INTEGER NOT NULL,
     numero_estrellas           NUMBER NOT NULL,
@@ -190,7 +223,7 @@ CREATE TABLE tbl_tienda_x_tbl_publicacion (
 CREATE TABLE tbl_tiendas (
     codigo_tienda             INTEGER NOT NULL,
     nombre_tienda             VARCHAR2(200) NOT NULL,
-    RTN                       NUMBER(14, 0) NOT NULL,
+    rtn                       NUMBER NOT NULL,
     telefono_tienda           NUMBER,
     correo_tienda             VARCHAR2(200),
     direccion_fisica_tienda   VARCHAR2(500),
@@ -262,6 +295,11 @@ CREATE TABLE tbl_vend_x_tbl_publi (
     codigo_publicacion_producto   INTEGER NOT NULL
 );
 
+CREATE TABLE tbl_vend_x_tbl_report (
+    codigo_reporte            INTEGER NOT NULL,
+    codigo_usuario_vendedor   INTEGER NOT NULL
+);
+
 CREATE TABLE tbl_vend_x_tbl_serv (
     codigo_usuario_vendedor   INTEGER NOT NULL,
     codigo_servicio           INTEGER NOT NULL
@@ -283,11 +321,27 @@ ALTER TABLE tbl_publicacion_productos
     ADD CONSTRAINT prod_tipo_prod_fk FOREIGN KEY ( codigo_tipo_publicacion )
         REFERENCES tbl_tipo_publicacion ( codigo_tipo_publicacion );
 
+ALTER TABLE tbl_codigos_x_tbl_usuarios
+    ADD CONSTRAINT tbl_c_x_tbl_us_fk FOREIGN KEY ( codigo_usuario )
+        REFERENCES tbl_usuarios ( codigo_usuario );
+
+ALTER TABLE tbl_codigos_x_tbl_usuarios
+    ADD CONSTRAINT tbl_co_x_tbl_us_fk FOREIGN KEY ( codigo_codigo )
+        REFERENCES tbl_codigos ( codigo_codigo );
+
 ALTER TABLE tbl_favoritos
-    ADD CONSTRAINT tbl_favor_tbl_compradores_fk FOREIGN KEY ( codigo_usuario_comprador )
+    ADD CONSTRAINT tbl_fav_tbl_co_fk FOREIGN KEY ( codigo_usuario_comprador )
         REFERENCES tbl_compradores ( codigo_usuario_comprador );
 
 ALTER TABLE tbl_favoritos
+    ADD CONSTRAINT tbl_fav_tbl_ve_fk FOREIGN KEY ( codigo_usuario_vendedor )
+        REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
+
+ALTER TABLE tbl_favoritosv2
+    ADD CONSTRAINT tbl_favor_tbl_compradores_fk FOREIGN KEY ( codigo_usuario_comprador )
+        REFERENCES tbl_compradores ( codigo_usuario_comprador );
+
+ALTER TABLE tbl_favoritosv2
     ADD CONSTRAINT tbl_favor_tbl_vendedores_fk FOREIGN KEY ( codigo_usuario_vendedor )
         REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
 
@@ -351,11 +405,27 @@ ALTER TABLE tbl_adm_eliminaciones
     ADD CONSTRAINT tbl_pub_pr_fk FOREIGN KEY ( codigo_publicacion_producto )
         REFERENCES tbl_publicacion_productos ( codigo_publicacion_producto );
 
+ALTER TABLE tbl_publi_x_tbl_report
+    ADD CONSTRAINT tbl_publi_tbl_rep_fk FOREIGN KEY ( codigo_reporte )
+        REFERENCES tbl_reportes ( codigo_reporte );
+
+ALTER TABLE tbl_public_x_tbl_serv
+    ADD CONSTRAINT tbl_public_x_tbl_serv_fk FOREIGN KEY ( codigo_publicacion_producto )
+        REFERENCES tbl_publicacion_productos ( codigo_publicacion_producto );
+
 ALTER TABLE tbl_ranking
-    ADD CONSTRAINT tbl_ranking_tbl_comprado_fk FOREIGN KEY ( codigo_usuario_comprador )
+    ADD CONSTRAINT tbl_ra_tbl_co_fk FOREIGN KEY ( codigo_usuario_comprador )
         REFERENCES tbl_compradores ( codigo_usuario_comprador );
 
 ALTER TABLE tbl_ranking
+    ADD CONSTRAINT tbl_ra_tbl_ve_fk FOREIGN KEY ( codigo_usuario_vendedor )
+        REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
+
+ALTER TABLE tbl_rankingv2
+    ADD CONSTRAINT tbl_ranking_tbl_comprado_fk FOREIGN KEY ( codigo_usuario_comprador )
+        REFERENCES tbl_compradores ( codigo_usuario_comprador );
+
+ALTER TABLE tbl_rankingv2
     ADD CONSTRAINT tbl_ranking_tbl_vendedo_fk FOREIGN KEY ( codigo_usuario_vendedor )
         REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
 
@@ -366,6 +436,10 @@ ALTER TABLE tbl_reportes
 ALTER TABLE tbl_reportes
     ADD CONSTRAINT tbl_re_tbl_t_re_fk FOREIGN KEY ( codigo_tipo_reporte )
         REFERENCES tbl_tipo_reporte ( codigo_tipo_reporte );
+
+ALTER TABLE tbl_publi_x_tbl_report
+    ADD CONSTRAINT tbl_rep_tbl_pub_pr_fk FOREIGN KEY ( codigo_publicacion_producto )
+        REFERENCES tbl_publicacion_productos ( codigo_publicacion_producto );
 
 ALTER TABLE tbl_reportes
     ADD CONSTRAINT tbl_repor_tbl_moti_fk FOREIGN KEY ( codigo_motivo_reporte )
@@ -381,6 +455,10 @@ ALTER TABLE tbl_reportes
 
 ALTER TABLE tbl_vend_x_tbl_serv
     ADD CONSTRAINT tbl_ser_tbl_ser_fk FOREIGN KEY ( codigo_servicio )
+        REFERENCES tbl_servicios ( codigo_servicio );
+
+ALTER TABLE tbl_public_x_tbl_serv
+    ADD CONSTRAINT tbl_serv_tbl_servicios_fk FOREIGN KEY ( codigo_servicio )
         REFERENCES tbl_servicios ( codigo_servicio );
 
 ALTER TABLE tbl_catego_x_tbl_subcatego
@@ -427,6 +505,10 @@ ALTER TABLE tbl_adm_eliminaciones
     ADD CONSTRAINT tbl_ve_fk FOREIGN KEY ( codigo_usuario_vendedor )
         REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
 
+ALTER TABLE tbl_vend_x_tbl_report
+    ADD CONSTRAINT tbl_ve_tbl_r_tbl_r_fk FOREIGN KEY ( codigo_reporte )
+        REFERENCES tbl_reportes ( codigo_reporte );
+
 ALTER TABLE tbl_vendedores
     ADD CONSTRAINT tbl_ve_tbl_us_fk FOREIGN KEY ( codigo_usuario_vendedor )
         REFERENCES tbl_usuarios ( codigo_usuario );
@@ -437,6 +519,10 @@ ALTER TABLE tbl_vend_x_tbl_img
 
 ALTER TABLE tbl_vend_x_tbl_publi
     ADD CONSTRAINT tbl_ve_x_tbl_pu_tbl_ve_fk FOREIGN KEY ( codigo_usuario_vendedor )
+        REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
+
+ALTER TABLE tbl_vend_x_tbl_report
+    ADD CONSTRAINT tbl_ve_x_tbl_re_tbl_ve_fk FOREIGN KEY ( codigo_usuario_vendedor )
         REFERENCES tbl_vendedores ( codigo_usuario_vendedor );
 
 ALTER TABLE tbl_vendedores
@@ -450,4 +536,3 @@ ALTER TABLE tbl_vend_x_tbl_serv
 ALTER TABLE tbl_vendedores
     ADD CONSTRAINT tbl_vend_tbl_t_v_fk FOREIGN KEY ( codigo_tipo_vendedor )
         REFERENCES tbl_tipo_vendedores ( codigo_tipo_vendedor );
-
