@@ -44,36 +44,66 @@
 				END;");
 			oci_execute($guardar_producto);
 
-			$producto_vendedor = $conexion->ejecutarInstruccion("
-				INSERT INTO TBL_VEND_X_TBL_PUBLI (CODIGO_USUARIO_VENDEDOR,CODIGO_PUBLICACION_PRODUCTO)
-				SELECT '$codigo_usuario',CODIGO_PUBLICACION_PRODUCTO FROM TBL_PUBLICACION_PRODUCTOS WHERE ROWNUM=1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
-			oci_execute($producto_vendedor);
-
-			$obtiene_vendedor = $conexion->ejecutarInstruccion("
-				SELECT CODIGO_TIPO_VENDEDOR,CODIGO_TIENDA FROM TBL_VENDEDORES
-				WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario'");
-			oci_execute($obtiene_vendedor);
-
-			while ($fila = $conexion->obtenerFila($obtiene_vendedor)) {
-				$codigo_tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
-				$codigo_tienda = $fila["CODIGO_TIENDA"];
+			if ($subcategorias!="") {
+				$subcategorias_ind = explode(",", $subcategorias);
+				for ($i=0; $i < count($subcategorias_ind) ; $i++) { 
+					$producto_subcategoria = $conexion->ejecutarInstruccion("	
+						INSERT INTO TBL_PRODU_X_TBL_CATEGO (CODIGO_PRODUCTO,CODIGO_SUB_CATEGORIA)
+						SELECT CODIGO_PUBLICACION_PRODUCTO,'$subcategorias_ind[$i]' FROM TBL_PUBLICACION_PRODUCTOS 
+						WHERE ROWNUM = 1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
+					oci_execute($producto_subcategoria);
+				}
 			}
 
-			if ($codigo_tipo_vendedor == 2) { 	//vendedor empresarial
-				$producto_tienda = $conexion->ejecutarInstruccion("
-					INSERT INTO TBL_TIENDA_X_TBL_PUBLICACION (CODIGO_TIENDA,CODIGO_PUBLICACION_PRODUCTO)
-					SELECT '$codigo_tienda',CODIGO_PUBLICACION_PRODUCTO 
-					FROM TBL_PUBLICACION_PRODUCTOS WHERE ROWNUM=1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
-				oci_execute($producto_tienda);
+		} else {	//De servicio
+			$servicios = $_POST["chk-servicios"];
+
+			$guardar_producto = $conexion->ejecutarInstruccion("
+				DECLARE
+				    V_CODIGO_PUBLICACION_PRODUCTO INTEGER;
+				BEGIN
+				    P_AGREGAR_PRODUCTO_SERVICIO ('$tipo_publicacion', '$moneda', NULL, 5, 1, '$nombre', '$precio', '$descripcion', SYSDATE, 1, V_CODIGO_PUBLICACION_PRODUCTO);
+				END;");
+			oci_execute($guardar_producto);
+
+			if ($servicios!="") {
+				$servicios_ind = explode(",", $servicios);
+				for ($i=0; $i < count($servicios_ind) ; $i++) { 
+					$producto_servicio = $conexion->ejecutarInstruccion("	
+						INSERT INTO TBL_PUBLIC_X_TBL_SERV (CODIGO_PUBLICACION_PRODUCTO,CODIGO_SERVICIO)
+						SELECT CODIGO_PUBLICACION_PRODUCTO,'$servicios_ind[$i]' FROM TBL_PUBLICACION_PRODUCTOS 
+						WHERE ROWNUM = 1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
+					oci_execute($producto_servicio);
+				}
 			}
 
-			echo 'Producto publicado con éxito!';
-
-		} else {	//De servicio ***************No se agregaran los servicios de momento******************
-
-			//***************CODIGO PARA GUARDAR SERVICIO***************************
-			echo 'De momento no se guardan los servicios!';
 		}
+
+		$producto_vendedor = $conexion->ejecutarInstruccion("
+			INSERT INTO TBL_VEND_X_TBL_PUBLI (CODIGO_USUARIO_VENDEDOR,CODIGO_PUBLICACION_PRODUCTO)
+			SELECT '$codigo_usuario',CODIGO_PUBLICACION_PRODUCTO FROM TBL_PUBLICACION_PRODUCTOS 
+			WHERE ROWNUM=1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
+		oci_execute($producto_vendedor);
+
+		$obtiene_vendedor = $conexion->ejecutarInstruccion("
+			SELECT CODIGO_TIPO_VENDEDOR,CODIGO_TIENDA FROM TBL_VENDEDORES
+			WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario'");
+		oci_execute($obtiene_vendedor);
+
+		while ($fila = $conexion->obtenerFila($obtiene_vendedor)) {
+			$codigo_tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+			$codigo_tienda = $fila["CODIGO_TIENDA"];
+		}
+
+		if ($codigo_tipo_vendedor == 2) { 	//vendedor empresarial
+			$producto_tienda = $conexion->ejecutarInstruccion("
+				INSERT INTO TBL_TIENDA_X_TBL_PUBLICACION (CODIGO_TIENDA,CODIGO_PUBLICACION_PRODUCTO)
+				SELECT '$codigo_tienda',CODIGO_PUBLICACION_PRODUCTO 
+				FROM TBL_PUBLICACION_PRODUCTOS WHERE ROWNUM=1 ORDER BY CODIGO_PUBLICACION_PRODUCTO DESC");
+			oci_execute($producto_tienda);
+		}
+
+		echo 'Producto/Servicio guardado!';
 
 	}
 

@@ -107,12 +107,11 @@ $(document).ready(function(){
 								data:parametros,
 								method:"POST",
 								success:function(respuesta){
-									if (respuesta == 0) {
-
-									}
-									else{
+									if (respuesta != 0) {
 										alert(respuesta);
 										window.location="publicarProducto.php";
+									} else {
+										alert("Error al publicar producto o servicio.");
 									}
 								}
 							});	
