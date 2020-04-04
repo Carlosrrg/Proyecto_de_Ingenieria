@@ -266,7 +266,7 @@
 			     							echo 'value="'.$fila["NOMBRE"].'"';
 			     						}
 			     					echo '>';
-			     						echo '<div id="mensaje22" class="errores">Ingrese su nombre</div>';
+			     						echo '<div id="mensaje1" class="errores">Ingrese un nombre</div>';
 			     					echo '<br>';
 			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-apellido" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["APELLIDO"])) {
@@ -276,7 +276,7 @@
 			     							echo 'value="'.$fila["APELLIDO"].'"';
 			     						}
 			     					echo '>';
-			     					echo '<div id="mensaje25" class="errores">Ingrese su apellido</div>';
+			     					echo '<div id="mensaje2" class="errores">Ingrese un apellido</div>';
 			     					echo '<br>';
 			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-telefono" name="signup_form[displayname]" required="required" maxlength="100"';
 			     					 	if (!isset($fila["TELEFONO"])) {
@@ -286,10 +286,10 @@
 			     							echo 'value="'.$fila["TELEFONO"].'"';
 			     						}
 			     					echo '>';
-			     					echo '<div id="mensaje23" class="errores">Ingrese su numero de telefono</div>';
+			     					echo '<div id="mensaje3" class="errores">Ingrese un numero de telefono</div>';
 			     					echo '<br>';
 
-			     					echo'<select style="width: 80%;" id="slc-ubicacion" name="slc-ubicacion" required="" class="form-control">';
+			     					echo'<select style="width: 80%;" id="slc-ubicacion" name="slc-ubicacion" id="slc-ubicacion" required="" class="form-control">';
 				     					$arreglo_ubicacion = array();
 				     					$arreglo_ubicacion_codigo = array();
 				     					$cont = 1;
@@ -302,7 +302,7 @@
 											$cont++;
 										}
 
-										for ($i=1; $i < count($arreglo_ubicacion); $i++) { 
+										for ($i=1; $i <= count($arreglo_ubicacion); $i++) { 
 	                                        echo '<option value="'.$arreglo_ubicacion_codigo[$i].'"';
 	                                        	if (isset($fila["NOMBRE_LUGAR"])){
                                                     if ($fila["NOMBRE_LUGAR"] == $arreglo_ubicacion[$i]) {
@@ -316,17 +316,18 @@
 									echo '<br>';
 			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-ciudad" name="signup_form[displayname]" required="required" maxlength="100"';
 			     					 	if (!isset($fila["CIUDAD"])) {
-			     							echo 'placeholder="Ciudad"';	
+			     							echo 'placeholder="Ciudad de residencia"';	
 			     						}
 			     						else{
 			     							echo 'value="'.$fila["CIUDAD"].'"';
 			     						}
 			     					echo '>';
+			     					echo '<div id="mensaje4" class="errores">Ingrese una ciudad</div>';
 			     					echo '<br>';
 
 		
 			     					$arreglo_mes = array();
-			     					$arreglo_mes[0] = "Seleccione un mes";
+			     					$arreglo_mes[0] = "cero";
 			     					$arreglo_mes[1] = "Enero";
 			     					$arreglo_mes[2] = "Febrero";
 			     					$arreglo_mes[3] = "Marzo";
@@ -344,7 +345,7 @@
                                         echo'<label class="control-label">Fecha de nacimiento</label>';
                                             echo'<div id="profile_birthdate" class="bootstrap-date row">';
                                                 echo'<div class="col-md-4">';
-                                                    echo'<select id="profile_birthdate_month" name="slc-dia" required="" class="form-control">';
+                                                    echo'<select name="slc-dia" id="slc-dia" class="form-control">';
                                                         for ($i=1; $i < 32; $i++) { 
                                                             echo '<option value="'.$i.'"';
                                                                 if (isset($fila["FECHA_DIA"])){
@@ -357,20 +358,25 @@
                                                     echo'</select>';
                                                 echo'</div>';
                                                 echo'<div class="col-md-4">';
-                                                    echo'<select id="profile_birthdate_day" name="slc-mes" required="" class="form-control">';
-                                                        for ($i=0; $i < 13; $i++) { 
-                                                            echo '<option value="'.$i.'"';
-                                                            	if (isset($fila["FECHA_MES"])){
-                                                                    if ($fila["FECHA_MES"] == $i) {
-                                                                        echo "selected = selected";
-                                                                    }
-                                                                }
-                                                            echo '>'.$arreglo_mes[$i].'</option>';
+                                                    echo'<select name="slc-mes" id="slc-mes" class="form-control">';
+                                                        for ($i=0; $i < 13; $i++) {
+                                                        	if ($arreglo_mes[$i] == "cero") {
+                                                        	 	
+                                                        	 }
+                                                        	else{
+	                                                        	echo '<option value="'.$i.'"';
+	                                                            	if (isset($fila["FECHA_MES"])){
+	                                                                    if ($fila["FECHA_MES"] == $i) {
+	                                                                        echo "selected = selected";
+	                                                                    }
+	                                                                }
+	                                                            echo '>'.$arreglo_mes[$i].'</option>';
+                                                        	}   
                                                         }
                                                     echo'</select>';
                                                 echo'</div>';
                                                     echo'<div class="col-md-4">';
-                                                        echo'<select id="profile_birthdate_year" name="slc-anio" required="" class="form-control">';
+                                                        echo'<select name="slc-anio" id="slc-anio" class="form-control">';
                                                             for ($i=1920; $i < 2021; $i++) { 
                                                                 echo '<option value="'.$i.'"';
                                                                     if (isset($fila["FECHA_ANIO"])){
@@ -385,6 +391,7 @@
                                                 echo'</div>';
                                        		echo'</div>';
 									echo '</div>';
+									echo '<div id="mensaje5" class="errores">Año invalido</div>';
 
 									echo '<div class="row">';
 											echo '<div class="container-fluid" style="padding: 20px">';
@@ -401,11 +408,13 @@
 
 									echo '<div style="margin-top: 5px;"><h5 style="padding-left: -20%" class="col-lg-12">Cambiar Contraseña</h5></div>';
 
-									echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Contraseña actual">';
+									echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena-actual" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Contraseña actual">';
 			     					echo "<br>";
 			     					echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena-nueva" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Nueva contraseña">';
 			     					echo "<br>";
 			     					echo '<input style="width: 80%;" type="password" class="form-control" id="txt-contrasena-confirmar" name="signup_form[displayname]" required="required" maxlength="100" placeholder="Confimar contraseña">';
+			     					echo '<div id="mensaje6" class="errores">Las contraseñas no coinciden</div>';
+			     					echo '<div id="mensaje7" class="errores">Por favor rellene los campos requeridos</div>';
 								
 			     					echo '<div class="row">';
 											echo '<div class="container-fluid" style="padding: 20px">';
@@ -511,7 +520,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/"></script>
+	<script src="js/controlador_editarPerfilVendedor.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   	<script src="js/bootstrap.min.js"></script>
 		
