@@ -103,6 +103,9 @@
 			oci_execute($producto_tienda);
 		}
 
+		$resultado = $conexion->ejecutarInstruccion("COMMIT");
+		oci_execute($resultado);
+
 		echo 'Producto/Servicio guardado!';
 
 	}

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Publicar Producto</title>
+    <title>Eliminar Producto</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -214,7 +214,7 @@
 
 		<?php
 			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para publicar tus productos</div>';
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para eliminar Productos y Servicios.</div>';
 			}
 			else{
 				//<!-- Page Content -->
@@ -229,145 +229,43 @@
 					echo '</button>';
 
 					//<!--Contenido de la pagina-->
-					echo '<div class="container" style="text-align: center; border-bottom: medium">';
-						echo '<div><h5 class="col-lg-12" style="padding-top:30px;">Publicar Producto o Servicio</h5></div>';
+					$codigo_publicacion = $_GET["codigo-publicacion"];
+
+					echo '<div class="container" style="padding: 30px;width:80%">';
+						echo '<center><div><h5 class="col-lg-12">Motivos por el cual elimina la publicación</h5></div></center>';
+
+					$obtener_productos = $conexion->ejecutarInstruccion("
+						SELECT NOMBRE_PRODUCTO,LOWER(TO_CHAR(FECHA_PUBLICACION,'DD/MONTH/YYYY')) AS FECHA
+						FROM TBL_PUBLICACION_PRODUCTOS
+						WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+					oci_execute($obtener_productos);
+
+					while ($fila = $conexion->obtenerFila($obtener_productos)) {
+						$nombre_producto = $fila["NOMBRE_PRODUCTO"];
+						$fecha_publicacion = $fila["FECHA"];
+					}
+
+						echo '<p>Nombre: '.$nombre_producto.'</p>';
+
+					$obtiene_motivos = $conexion->ejecutarInstruccion("	
+						SELECT CODIGO_MOTIVO_ELIMINACION,NOMBRE_MOTIVO_ELIMINACION
+						FROM TBL_MOTIVO_ELIMINACION");
+					oci_execute($obtiene_motivos);
+					while ($fila = $conexion->obtenerFila($obtiene_motivos)) {
+						echo '<label><input type="radio" name="motivo" id="rbt-motivo" value="'.$fila["CODIGO_MOTIVO_ELIMINACION"].'"> '.$fila["NOMBRE_MOTIVO_ELIMINACION"].'</label><br>';
+					}
+
+						echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripción detallada del motivo."></textarea>
+							  <div id="mensaje1" class="errores">*Se requiere de una descripción.</div><br>';
+
+						echo '<button type="button" class="btn btn-success float-right">Eliminar</button>';
+
 					echo '</div>';
-
-
-					echo '<br>';
-					echo '<div class="container-fluid">';
-						echo '<div class="row">';
-						  	echo '<div class="col-lg-5 col-md-6 col-sm-6">';
-								  echo '<div class="form-group " style="width: 100%; padding: 10px;">';
-									  //<!--Combobox para seleccion de tipo de producto  id: cmbProducto-->
-									echo '<select name="slc-tipo-publicacion" id="slc-tipo-publicacion" style="width:400px; height: 40px;">';
-										echo '<option value="1">Producto</option>';
-										echo '<option value="2">Servicio</option>';
-									echo '</select>';
-								  echo '</div>';
-							echo '</div>';
-
-							//<!--Textbox nombre del producto id: txt-nombreProducto-->
-						  	echo '<div class="col-md-6 col-lg-7 col-sm-6">';
-							  echo '<div class="form-group" style="width: 100%; padding: 10px;">';
-								echo '<input id="txt-nombreProducto" name="txt-nombreProducto" type="text" class="form-control" placeholder="Nombre del Producto o Servicio">';
-								echo '<div id="mensaje1" class="errores">*Nombre obligatorio</div>';
-							  echo '</div>';
-							echo '</div>';
-						echo '</div>';
-
-						echo '<div class="row">';
-
-						//<!-- CARROUSEL DE IMAGENES -->
-						  echo '<div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">';
-							  echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: 400px; height: 200px">';
-								  echo '<div class="carousel-inner" id="carousel-inner">';
-									echo '<div class="carousel-item active col-lg-1">';
-									  echo '<img class="d-block w-0" src="recursos/imagenes/fotografiaP.png" style="width: 400px; height: 200px">';
-									echo '</div>';
-								  echo '</div>';
-								  echo '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
-									echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-									echo '<span class="sr-only">Previous</span>';
-								  echo '</a>';
-								  echo '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
-									echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-									echo '<span class="sr-only">Next</span>';
-								  echo '</a>';
-							  echo '</div>';
-							  echo '<div>';
-							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading">';
-							  	echo '<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: 0/5</b></div>';
-							  	echo '<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div><br>';
-							  echo '</div>';	  
-						  echo '</div>';
-
-						  echo '<div class="col-sm-6 col-md-6 col-lg-7">';
-							echo '<div class="form-group" style="width: 100%; padding: 10px;">';
-								echo '<label style="margin-right: 57px"><h6>Tipo de moneda:</h6></label>';
-								echo '<label style="margin-right: 20px"><input type="radio" name="moneda" id="rbt-moneda" value="1" checked> Lempiras</label>';
-								echo '<label><input type="radio" name="moneda" id="rbt-moneda" value="2"> Dolares</label>';
-								echo '<input id="txt-precioProducto" name="txt-precioProducto" type="number" class="form-control" placeholder="Precio: ej. 3500">';
-								echo '<div id="mensaje2" class="errores">*Precio obligatorio</div><br>';
-								echo '<div id="div-productos" style="display:block">';
-								echo '<label style="margin-right: 30px"><h6>Estado del producto:</h6></label>';
-								echo '<label style="margin-right: 37px"><input type="radio" name="estadoProducto" id="rbt-estado" value="1" checked> Nuevo</label>';
-								echo '<label><input type="radio" name="estadoProducto" id="rbt-estado" value="2"> Usado</label>';
-
-								//<!--Combobox para seleccion de categoria de producto  id: cmb-categoria-->
-								echo '<br>';
-								echo '<label for="cmb-categoria"><h6>Seleccione una Categoría:</h6></label>';
-								echo '<select name="slc-categoria" id="slc-categoria" style="width:100%; height: 40px;">';
-
-								
-								if(!isset($_SESSION['codigo_usuario_sesion'])){
-									echo '<option value="0">Categorias</option>';
-								} else {
-									$conexion->establecerConexion();
-									$codigo_categoria = array();
-								    $nombre_categoria = array();
-								    $contcodigos = 1;
-								    $contnombres = 1;
-									$obtener_categorias = $conexion->ejecutarInstruccion("	
-										SELECT CODIGO_CATEGORIA,NOMBRE_CATEGORIA
-										FROM TBL_CATEGORIAS");
-									oci_execute($obtener_categorias);
-									while ($filacategorias = $conexion->obtenerFila($obtener_categorias)) {
-										 $codigo_categoria[$contcodigos++] = $filacategorias["CODIGO_CATEGORIA"];
-										 $nombre_categoria[$contnombres++] = $filacategorias["NOMBRE_CATEGORIA"];
-									}
-
-									for ($i=1; $i <= count($codigo_categoria) ; $i++) { 
-										echo '<option value="'.$codigo_categoria[$i].'">'.$nombre_categoria[$i].'</option>';
-									}
-									echo '</select><br><br>';
-								}
-
-
-								//<!--Subcategorias-->
-								echo '<label for="cmb-categoria"><h6>Seleccione Subcategorías:</h6></label><br>';
-								echo '<div id="div-subcategorias"></div>';
-								echo '</div>';//fin del div de productos
-								echo '<div id="div-servicios" style="display:none">';
-								echo '<label><h6>Servicios al que pertenece:</h6></label>';
-								echo '<div id="mensaje5" class="errores">*Seleccione al menos un servicio</div><br>';
-								$codigos_servicios = array();
-							    $nombres_servicios = array();
-							    $contcodigos = 1;
-							    $contnombres = 1;
-
-								$obtener_servicios = $conexion->ejecutarInstruccion("	
-													SELECT CODIGO_SERVICIO,NOMBRE_SERVICIO
-													FROM TBL_SERVICIOS");
-								oci_execute($obtener_servicios);
-								while ($fila = $conexion->obtenerFila($obtener_servicios)) {
-									$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
-									$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
-								}
-								for ($i=1; $i <= count($codigos_servicios) ; $i++) { 		
-									echo '<label><input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"> '.$nombres_servicios[$i].'</label><br>';						
-								}	
-								echo '</div>';//Fin del div de servicios
-								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto o Servicio:</h6></label>';
-								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripción detallada de su producto o servicio."></textarea>
-									  <div id="mensaje4" class="errores">*Se requiere de una descripción.</div>';
-
-								echo '<div class="container-fluid" style="padding-top: 20px">';
-									echo '<span>';
-										echo '<button type="submit" id="btn_publicar" name="btn_publicar" class="btn btn-success" style="margin-left: -15px;"> Publicar Producto</button>';
-									echo '</span>';
-								echo '</div>';
-							  echo '</div>';
-							echo '</div>';
-						echo '</div>';
-					echo '</div>';
-				echo '</div>';
+				echo '</div><br>';					
 			}
-		?>
-		<!-- /#page-content-wrapper -->
-		
-	</div>
-	<!-- /#wrapper -->
+		?>	
+
+		</div>
 	  
 	<!--Pie de página-->
 	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
@@ -451,7 +349,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/controlador_publicarProducto.js"></script>
+	<script src="js/controlador_productos_servicios.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		
