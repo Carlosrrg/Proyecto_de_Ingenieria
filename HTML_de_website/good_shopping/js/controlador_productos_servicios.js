@@ -5,9 +5,10 @@ solicitud = 1 -> Actualiza a vendido
 solicitud = 2 -> Se va a la pantalla de editar producto
 solicitud = 3 -> Se va a la pantalla de eliminar producto
 solicitud = 4 -> Edita la informacion de la publicacion
+solicitud = 5 -> Elimina la publicacion
 */
 $(document).ready(function(){
-
+	//Edita el producto
 	$("#btn_editar").click(function(){
 		var codigo = $("#codigo-publicacion").val();
 		var tipoP = $("#slc-tipo-publicacion").val();
@@ -160,6 +161,31 @@ $(document).ready(function(){
 				}
 			}  
 		} 
+	});
+
+	//Elimina el producto
+	$("#btn-eliminar").click(function(){
+		var codigo = $("#codigo-publicacion").val();
+		var motivo = $("input:radio[name=rbt-motivo]:checked").val();
+		var comentarios = $("#txt-descripcion-motivo").val();
+		//alert(codigo+" "+motivo+" "+comentarios);
+		var parametros = 	"codigo-publicacion="+codigo+
+							"&motivo="+motivo+
+							"&comentarios="+comentarios+
+							"&solicitud=5";
+		$.ajax({
+			url:"ajax_procesar_php/acciones_productos_servicios.php",
+			data:parametros,
+			method:"POST",
+			success:function(respuesta){
+				if (respuesta == 0) {
+					alert("Se ha eliminado el producto/servicio!")
+					window.location="Productos_y_servicios.php";
+				} else {
+					alert("Error al eliminar la publicación."+respuesta);
+				}
+			}
+		});
 	});
 
 	//Cambia el estado del producto a vendido

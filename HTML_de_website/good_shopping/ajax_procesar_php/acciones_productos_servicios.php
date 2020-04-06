@@ -128,7 +128,30 @@
 		oci_execute($resultado);
 
 		echo 0;
+	}
 
+	if ($solicitud == 5) { 		//Eliminacion logica de la publicacion
+		$motivo = $_POST["motivo"];
+		$comentarios = $_POST["comentarios"];
+
+		$agrega_adm_eliminacion = $conexion->ejecutarInstruccion("
+			DECLARE
+			    V_CODIGO_ELIMINACION INTEGER;
+			BEGIN
+			    P_AGREGAR_ADM_ELIMINACION ('$codigo_usuario','$codigo_publicacion','$motivo','$comentarios',SYSDATE,V_CODIGO_ELIMINACION);
+			END;");
+		oci_execute($agrega_adm_eliminacion);
+
+		$actualiza_producto = $conexion->ejecutarInstruccion("
+			UPDATE TBL_PUBLICACION_PRODUCTOS
+			SET CODIGO_ESTADO_PUBLICACION = 3
+			WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+		oci_execute($actualiza_producto);
+
+		$resultado = $conexion->ejecutarInstruccion("COMMIT");
+		oci_execute($resultado);
+
+		echo 0;
 	}
 
 	$conexion->cerrarConexion();

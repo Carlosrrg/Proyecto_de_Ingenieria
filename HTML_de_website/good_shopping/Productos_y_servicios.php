@@ -242,7 +242,8 @@
 						ON A.CODIGO_ESTADO_PUBLICACION = B.CODIGO_ESTADO_PUBLICACION
 						INNER JOIN TBL_VEND_X_TBL_PUBLI C
 						ON A.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO
-						WHERE C.CODIGO_USUARIO_VENDEDOR = '$usuario'");
+						WHERE C.CODIGO_USUARIO_VENDEDOR = '$usuario'
+						ORDER BY A.CODIGO_PUBLICACION_PRODUCTO ASC");
 					oci_execute($obtener_productos);
 
 					while ($fila = $conexion->obtenerFila($obtener_productos)) {

@@ -327,7 +327,7 @@
 							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading" disabled>';
 							  	echo '<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: '.$activo.'/5</b></div>';
 							  	echo '<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div>';
-							  	echo '<button type="submit" id="btn_cambiar_imagenes" class="btn btn-danger" style="margin-left:10px">Eliminar todas las imágenes y agregar nuevas</button>';
+							  	echo '<button type="submit" id="btn_cambiar_imagenes" class="btn btn-danger" style="margin-left:10px">Cambiar imágenes</button>';
 							  echo '</div>';	  
 						  echo '</div>';
 
@@ -480,8 +480,14 @@
 
 								echo '<div class="container-fluid" style="padding-top: 20px">';
 									echo '<span>';
-										echo '<button type="submit" id="btn_editar" name="btn_editar" class="btn btn-success" style="margin-left: -15px;">Editar publicación</button>';
-										echo '<button type="submit" id="btn_cancelar" name="btn_cancelar" class="btn btn-success" style="margin-left:10px">Cancelar</button>';
+
+										echo '<button type="submit" id="btn_editar" name="btn_editar" class="btn btn-success" style="margin-left: -15px;">';
+										if ($tipo_publicacion == 1) {
+											echo 'Editar producto</button>';
+										} else {
+											echo 'Editar servicio</button>';
+										}
+										echo '<button type="submit" id="btn_cancelar" name="btn_cancelar" class="btn btn-danger" style="margin-left:10px">Cancelar</button>';
 									echo '</span>';
 								echo '</div>';
 							  echo '</div>';

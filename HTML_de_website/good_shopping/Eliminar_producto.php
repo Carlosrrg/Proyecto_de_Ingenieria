@@ -232,7 +232,7 @@
 					$codigo_publicacion = $_GET["codigo-publicacion"];
 
 					echo '<div class="container" style="padding: 30px;width:80%">';
-						echo '<center><div><h5 class="col-lg-12">Motivos por el cual elimina la publicación</h5></div></center>';
+						echo '<center><div><h5 class="col-lg-12">Díganos el motivo por el cual elimina su publicación</h5></div></center><br>';
 
 					$obtener_productos = $conexion->ejecutarInstruccion("
 						SELECT NOMBRE_PRODUCTO,LOWER(TO_CHAR(FECHA_PUBLICACION,'DD/MONTH/YYYY')) AS FECHA
@@ -245,20 +245,28 @@
 						$fecha_publicacion = $fila["FECHA"];
 					}
 
-						echo '<p>Nombre: '.$nombre_producto.'</p>';
+						echo '<p><i>Nombre del producto o servicio:</i> '.$nombre_producto.'</p>';
+						echo '<input id="codigo-publicacion" style="display:none" type="text" value="'.$codigo_publicacion.'">';
 
 					$obtiene_motivos = $conexion->ejecutarInstruccion("	
 						SELECT CODIGO_MOTIVO_ELIMINACION,NOMBRE_MOTIVO_ELIMINACION
 						FROM TBL_MOTIVO_ELIMINACION");
 					oci_execute($obtiene_motivos);
+					$i = 1;
 					while ($fila = $conexion->obtenerFila($obtiene_motivos)) {
-						echo '<label><input type="radio" name="motivo" id="rbt-motivo" value="'.$fila["CODIGO_MOTIVO_ELIMINACION"].'"> '.$fila["NOMBRE_MOTIVO_ELIMINACION"].'</label><br>';
+						echo '<label><input type="radio" name="rbt-motivo" id="rbt-motivo" value="'.$fila["CODIGO_MOTIVO_ELIMINACION"].'" ';
+						if ($i == 1) {
+							echo 'checked';
+							$i++;
+						}
+						echo '> '.$fila["NOMBRE_MOTIVO_ELIMINACION"].'</label><br>';
 					}
 
-						echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripción detallada del motivo."></textarea>
-							  <div id="mensaje1" class="errores">*Se requiere de una descripción.</div><br>';
+						echo '<br><label>Desea agregar otros comentarios:</label><br>';
+						echo '<textarea id="txt-descripcion-motivo" class="form-control" style="width: 100%; height: 180px; margin-bottom:10px" placeholder="Opcional"></textarea>';
 
-						echo '<button type="button" class="btn btn-success float-right">Eliminar</button>';
+						echo '<button type="button" id="btn_cancelar" style="margin-left:10px" class="btn btn-danger float-right">Cancelar</button>';
+						echo '<button type="button" id="btn-eliminar" class="btn btn-success float-right">Enviar</button>';
 
 					echo '</div>';
 				echo '</div><br>';					
@@ -268,7 +276,7 @@
 		</div>
 	  
 	<!--Pie de página-->
-	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
+	<footer id="footer" style="background: #fff; margin-top:20px; width:100%;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
