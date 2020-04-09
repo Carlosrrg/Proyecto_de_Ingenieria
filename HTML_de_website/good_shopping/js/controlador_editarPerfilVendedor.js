@@ -11,6 +11,28 @@ $(document).ready(function(){
 		var mes = $("#slc-mes").val();
 		var anio = $("#slc-anio").val();
 
+		var cont = 0;
+		//var selected = '';
+		var selected = [];      
+        $('input:checkbox:checked').each(function(){
+
+            	//selected += $(this).val();
+                selected[cont] = $(this).val();
+         		//alert(selected[cont++]);
+         		cont++
+        });
+
+        var servicios = "";
+
+        for (var i = 0; i < selected.length; i++) {
+        	if (i == selected.length-1) {
+        		servicios += selected[i];
+        	}else{
+        		servicios += selected[i]+",";
+        	}
+        }
+        //alert(servicios);
+
 
 		if (nombre == "") {
 			$("#mensaje1").fadeIn();
@@ -24,7 +46,7 @@ $(document).ready(function(){
 			}
 			else{
 				$("#mensaje2").fadeOut();
-				if (telefono == "") {
+				if (telefono == "" || telefono.length > 8 || telefono.length < 8) {
 					$("#mensaje3").fadeIn();
 					return false;
 				}
@@ -48,6 +70,7 @@ $(document).ready(function(){
 												"&txt-telefono="+telefono+
 												"&slc-ubicacion="+departamento+
 												"&txt-ciudad="+ciudad+
+												"&slc-servicios="+servicios+
 												"&slc-dia="+dia+
 												"&slc-mes="+mes+
 												"&slc-anio="+anio;
@@ -72,7 +95,76 @@ $(document).ready(function(){
 				}
 			}
 		}
+
+
+		//SUBE IMAGEN DE LOGO
+		var formData = new FormData();
+        var logo = $('#btn-logo')[0].files[0];
+        if (logo) {
+        	formData.append('logo',logo);
+	        $.ajax({
+	            url: 'ajax_procesar_php/imagen_vendedor_normal_logo.php',
+	            type: 'post',
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function(response) {
+	            	//alert(response);
+	                if (response != 0) {
+	                    //alert('Imagen subida en '+response);
+	                } else {
+	                    alert('Error al subir logo de tienda');
+	                }
+	            }
+	        });	
+        }
+
 	});
+
+
+	//cambiar imagenes de banner y logo
+	$banner = false;
+	$('#btn-banner').on('click', function(e) {
+	     e.preventDefault();
+	    $banner = true;
+	    $('#banner').click();
+	})
+
+
+	$('input[type=file]').change(function() {
+		if ($banner) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+	        	$('#previewbanner img').attr('src', e.target.result);
+	    	};
+	    	reader.readAsDataURL(this.files[0]);
+		 }else{
+		 	var file = (this.files[0].name).toString();
+		    var reader = new FileReader();
+		    
+		    $('#btn-logo').text('');
+		    $('#btn-logo').text(file);
+		    
+		     reader.onload = function (e) {
+		         $('#preview img').attr('src', e.target.result);
+			 }
+		     
+		     reader.readAsDataURL(this.files[0]);
+
+		 }
+	     $banner = false;    
+	});
+
+	$('input').change(function() {
+		$("#editar_tienda").prop('disabled', false);
+	});
+	$('input').keypress(function() {
+		$("#editar_tienda").prop('disabled', false);
+	});
+	$('textarea').keypress(function() {
+		$("#editar_tienda").prop('disabled', false);
+	});
+	
 
 
 	$("#cambiar_contrasena").click(function(){
@@ -126,6 +218,3 @@ $(document).ready(function(){
 		}
 	});
 });
-
-
-

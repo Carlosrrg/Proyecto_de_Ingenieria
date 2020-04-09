@@ -219,14 +219,16 @@
 				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para editar tu Perfil de Vendedor</div>';
 			}
 			else{
-
-				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, A.APELLIDO, A.TELEFONO, A.CIUDAD, B.NOMBRE_LUGAR,
+				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, A.APELLIDO, A.TELEFONO, A.CIUDAD, B.NOMBRE_LUGAR, 
+																		C.CODIGO_TIPO_VENDEDOR,
 																		TO_CHAR(A.FECHA_NACIMIENTO,'DD') AS FECHA_DIA,
 																		TO_CHAR(A.FECHA_NACIMIENTO,'MM') AS FECHA_MES,
 																		TO_CHAR(A.FECHA_NACIMIENTO,'YYYY') AS FECHA_ANIO
 																		FROM TBL_USUARIOS A
 																		INNER JOIN TBL_LUGARES B
 																		ON(A.CODIGO_LUGAR = B.CODIGO_LUGAR)
+																		INNER JOIN TBL_VENDEDORES C
+																		ON(A.CODIGO_USUARIO= C.CODIGO_USUARIO_VENDEDOR)
 																		WHERE CODIGO_USUARIO = '$usuario'");
 				oci_execute($resultado_usuario);
 				while ($fila = $conexion->obtenerFila($resultado_usuario)) {
@@ -244,12 +246,13 @@
 						//<!--Contenido de la pagina-->
 						echo '<div class="container-fluid">';
 							echo '<div class="row">';
+
 							  echo '<div class="col-lg-1 col-md-2 col-sm-2">';		 
 								echo '<div class="col-md-2 col-lg-1 col-sm-2">';
-								  
-			     					  				
+  				
 								echo '</div>';           
 							echo '</div>';
+							
 
 
 							echo '<div class="col-md-7 col-lg-8 col-sm-7">';
@@ -257,6 +260,29 @@
 
 								  	echo '<div style="margin-top: 25px;"><h5 style="padding-left: -20%" class="col-lg-12">Editar mi Perfil de vendedor</h5></div>';
 			     					
+								  	if ($fila["CODIGO_TIPO_VENDEDOR"] == 1) {
+								  		echo '<hr>';
+								  		echo '<h5>Logo de vendedor</h5>';
+								  		$ruta_imagen = "./img/cuadrada.jpg";
+
+				     					$obtiene_logo = $conexion->ejecutarInstruccion("	
+																SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A
+																INNER JOIN TBL_IMAGENES B
+																ON A.CODIGO_IMAGEN = B.CODIGO_IMAGEN
+																WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario'
+																AND B.CODIGO_TIPO_IMAGEN = 1");
+										oci_execute($obtiene_logo);
+
+										while ($filalogo = $conexion->obtenerFila($obtiene_logo)) {
+											 $ruta_imagen = $filalogo["RUTA_IMAGEN"];
+										} 
+
+										echo '<div id="preview"><img src="'.$ruta_imagen.'" class="img-fluid img-thumbnail"></div>';   			
+									    echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading">';
+									    echo '<br>';
+								  	}
+								  	
+
 			     					echo '<br>';
 			     					echo '<input style="width: 80%;" type="text" class="form-control" id="txt-nombre" name="signup_form[displayname]" required="required" maxlength="100"';
 			     						if (!isset($fila["NOMBRE"])) {
@@ -286,7 +312,7 @@
 			     							echo 'value="'.$fila["TELEFONO"].'"';
 			     						}
 			     					echo '>';
-			     					echo '<div id="mensaje3" class="errores">Ingrese un numero de telefono</div>';
+			     					echo '<div id="mensaje3" class="errores">Ingrese un numero de telefono valido</div>';
 			     					echo '<br>';
 
 			     					echo'<select style="width: 80%;" id="slc-ubicacion" name="slc-ubicacion" id="slc-ubicacion" required="" class="form-control">';
@@ -393,6 +419,61 @@
 									echo '</div>';
 									echo '<div id="mensaje5" class="errores">Año invalido</div>';
 
+
+									if ($fila["CODIGO_TIPO_VENDEDOR"] == 1) {
+								  		$codigos_servicios = array();
+									    $nombres_servicios = array();
+									    $servicios_usuario = array();
+									    $contcodigos = 1;
+									    $contnombres = 1;
+									    $contusuario = 1;
+
+									    echo '<br>Servicios Ofrecidos:<br>';
+
+										$obtener_servicios = $conexion->ejecutarInstruccion("	
+																					SELECT CODIGO_SERVICIO,NOMBRE_SERVICIO
+																					FROM TBL_SERVICIOS");
+										oci_execute($obtener_servicios);
+										while ($fila = $conexion->obtenerFila($obtener_servicios)) {
+											$codigos_servicios[$contcodigos++] = $fila["CODIGO_SERVICIO"];
+											$nombres_servicios[$contnombres++] = $fila["NOMBRE_SERVICIO"];
+										}
+
+
+										$usuario_x_servicios = $conexion->ejecutarInstruccion("	
+																     							SELECT A.CODIGO_USUARIO, D.CODIGO_SERVICIO
+																								FROM TBL_USUARIOS A
+																								INNER JOIN TBL_VENDEDORES B
+																								ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
+																								INNER JOIN TBL_VEND_X_TBL_SERV C
+																								ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
+																								INNER JOIN TBL_SERVICIOS D
+																								ON (C.CODIGO_SERVICIO = D.CODIGO_SERVICIO)
+																								WHERE CODIGO_USUARIO = '$usuario'");
+										oci_execute($usuario_x_servicios);
+										while ($fila = $conexion->obtenerFila($usuario_x_servicios)) {
+											$servicios_usuario[$contusuario++] = $fila["CODIGO_SERVICIO"];
+										}
+
+										for ($i=1; $i <= count($codigos_servicios) ; $i++) { 
+																		
+											echo '<input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$codigos_servicios[$i].'"';
+
+											for ($j=1; $j <= count($servicios_usuario) ; $j++) { 
+												if ($codigos_servicios[$i] == $servicios_usuario[$j]) {
+													echo " checked";
+												}	
+											}
+
+											echo '> '.$nombres_servicios[$i].' <br>';
+																					
+											if ($i == count($codigos_servicios)) {
+												echo '<br>';
+											}							
+										}	
+								  	}
+
+
 									echo '<div class="row">';
 											echo '<div class="container-fluid" style="padding: 20px">';
 												echo '<span>';
@@ -402,7 +483,6 @@
 									echo '</div>';
 
 				} 
-
 
 									echo "<hr><br>";
 
@@ -423,7 +503,6 @@
 												echo '</span>';
 											echo '</div>';
 									echo '</div>';
-
 								echo '</div>';
 							echo '</div>';
 						echo '</div>';

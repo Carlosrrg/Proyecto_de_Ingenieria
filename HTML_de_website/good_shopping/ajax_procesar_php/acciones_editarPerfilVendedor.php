@@ -11,6 +11,7 @@
 	$telefono = $_POST["txt-telefono"];
 	$ubicacion = $_POST["slc-ubicacion"];
 	$ciudad = $_POST["txt-ciudad"];
+	$servicios = $_POST["slc-servicios"];
 	$fecha_dia = $_POST["slc-dia"];
 	$fecha_mes = $_POST["slc-mes"];
 	$fecha_anio = $_POST["slc-anio"];
@@ -34,6 +35,21 @@
 		echo $mensaje;
 	}
 	else{
+
+		$eliminar_servicios = $conexion->ejecutarInstruccion("	DELETE FROM TBL_VEND_X_TBL_SERV
+																WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario'");
+		oci_execute($eliminar_servicios);
+
+		if ($servicios!="") {
+			$servicios_ind = explode(",", $servicios);
+			for ($i=0; $i < count($servicios_ind) ; $i++) { 
+				$anadir_servicio = $conexion->ejecutarInstruccion("	
+										INSERT INTO TBL_VEND_X_TBL_SERV (CODIGO_USUARIO_VENDEDOR, CODIGO_SERVICIO)
+										VALUES ('$codigo_usuario','$servicios_ind[$i]')");
+				oci_execute($anadir_servicio);
+			}
+		}
+
 		$resultado_usuarios_vendedor = $conexion->ejecutarInstruccion("COMMIT");
 		oci_execute($resultado_usuarios_vendedor);
 		echo $mensaje = 1;
