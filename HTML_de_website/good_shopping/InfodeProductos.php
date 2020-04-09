@@ -131,6 +131,10 @@
 					<h5>Nombre del Producto</h5>
 					   <div style="text-align: left" 
 					    style="text-align: left;">
+					    <?php
+							$codigo_publicacion = $_GET["codigo-publicacion"];
+							echo '<br>Codigo publicación: '.$codigo_publicacion;
+						?>
 						<br>Precio: <span style="font-size: 20px;font-weight: bold;">$1234</span>
 						<br><br>Estado del Producto: Nuevo
 						<br><br>Descripcion:

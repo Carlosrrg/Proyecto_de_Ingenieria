@@ -277,7 +277,7 @@
 							if ($codigo_tipo_publicacion[$i]==1 && $nombre_estado[$i]!="Eliminado") {
 								echo '<tr>
 								      <th scope="row">'.$cantidad.'</th>
-								      <td><a href="#" style="color:black">'.$nombre_producto[$i].'</a></td>
+								      <td><a href="infodeProductos.php?codigo-publicacion='.$codigo_publicacion[$i].'" style="color:black">'.$nombre_producto[$i].'</a></td>
 								      <td>'.$fecha_publicacion[$i].'</td>
 								      <td>'.$nombre_estado[$i].'</td>
 								      <td style="padding-left:2px;padding-right: 2px">
@@ -302,7 +302,12 @@
 						}
 
 						echo '</tbody>
-							</table></center>';
+							</table>';
+
+						if ($cantidad == 1) {
+							echo 'No tiene servicios publicados actualmente... Empiece a <a href="publicarProducto.php">Publicar Producto</a><br><br>';
+						}
+						echo '</center>';
 
 						echo '<center><div><h5 class="col-lg-12">Mis Servicios</h5></div>';
 
@@ -325,7 +330,7 @@
 							if ($codigo_tipo_publicacion[$i]==2 && $nombre_estado[$i]!="Eliminado") {
 								echo '<tr>
 								      <th scope="row">'.$cantidad.'</th>
-								      <td><a href="#" style="color:black">'.$nombre_producto[$i].'</a></td>
+								      <td><a href="infodeProductos.php?codigo-publicacion='.$codigo_publicacion[$i].'" style="color:black">'.$nombre_producto[$i].'</a></td>
 								      <td>'.$fecha_publicacion[$i].'</td>
 								      <td>'.$nombre_estado[$i].'</td>
 								      <td style="padding-left:2px;padding-right: 2px">
@@ -350,7 +355,12 @@
 						}
 
 						echo '</tbody>
-							</table></center>';
+							</table>';
+
+						if ($cantidad == 1) {
+							echo 'No tiene servicios publicados actualmente... Empiece a <a href="publicarProducto.php">Publicar Servicio</a><br><br>';
+						}
+						echo '</center>';
 
 					echo '</div>';
 

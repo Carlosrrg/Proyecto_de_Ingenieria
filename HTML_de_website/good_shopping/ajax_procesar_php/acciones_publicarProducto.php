@@ -92,7 +92,9 @@
 
 		while ($fila = $conexion->obtenerFila($obtiene_vendedor)) {
 			$codigo_tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
-			$codigo_tienda = $fila["CODIGO_TIENDA"];
+			if ($codigo_tipo_vendedor == 2) {
+				$codigo_tienda = $fila["CODIGO_TIENDA"];
+			}
 		}
 
 		if ($codigo_tipo_vendedor == 2) { 	//vendedor empresarial
