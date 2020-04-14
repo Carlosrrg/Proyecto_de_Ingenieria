@@ -149,6 +149,7 @@
 						WHERE U.CODIGO_USUARIO = '$codigo_usuario_vendedor'
 					");
 					oci_execute($resultado_usuario);
+					//Imagenes de perfil y banner
 					$imagenesDelPrefil = $conexion->ejecutarInstruccion(
 						"SELECT IMG.CODIGO_TIPO_IMAGEN, IMG.RUTA_IMAGEN FROM TBL_VENDEDORES V
 						 INNER JOIN TBL_VEND_X_TBL_IMG IMGT 
