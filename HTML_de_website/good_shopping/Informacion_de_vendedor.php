@@ -82,7 +82,7 @@
 								echo $fila["NOMBRE"];
 							}
 					echo '</a>';
-					echo '<div class="dropdown-menu" style="margin: 9px 0 0 20px;">';
+					echo '<div class="dropdown-menu"  style="margin: 9px 0 0 -50px;">';
 						echo '<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo '</div>';
@@ -188,21 +188,6 @@
 							echo'<h3 style="color: orange;">';
 							echo $fila["NUMERO_ESTRELLAS"];
 							echo'&#9733;</h3>';
-							echo'<button type="button" id="btn_favoritos" 
-								name="btn_favoritos" class="btn btn-dark">Añadir a favoritos</button><br><br>';
-
-							echo'<h6 style="color: #000;">Calificar este vendedor</h6>';//etiqueta para indicar la seccion de calificar vendedor
-							//Hacer funcionar valoracion por estrellas
-							echo'<form style="margin-bottom:10px;">';
-								echo'<div class="rateyo" id= "rating"';
-									echo'data-rateyo-rating="0"';
-									echo'data-rateyo-num-stars="5"';
-									echo'data-rateyo-full-star= true style="margin: 10px auto"></div>';
-									echo'<h6 class = "result">Tu calificación: 0</h6>';
-								echo'<input type="radio" name="rating" id="rb_rating value="6" checked style="display: none;">';
-							echo'</form>';
-							echo'<button type="button" id="btn_enviar" 
-								name="enviar" class="btn btn-dark">Enviar Valoración</button><br><br>';
 						}else{
 							echo'<div class="container" style="text-align:left;">';
 								echo'<h5>';
@@ -218,9 +203,42 @@
 								echo'<h3 style="color: orange;">';
 								echo $fila["NUMERO_ESTRELLAS"];
 								echo'&#9733;</h3>';
-								
 							echo'</div>';
 						}
+
+						if($codigo_usuario_vendedor != $_SESSION['codigo_usuario_sesion']){
+							//Botón agregar a favoritos 
+							echo'<button type="button" id="btn_favoritos" 
+								name="btn_favoritos" class="btn btn-dark">Añadir a favoritos</button><br><br>';
+
+							$usuario = $_SESSION['codigo_usuario_sesion'];
+							$esTienda = $conexion->ejecutarInstruccion(
+							"SELECT V.CODIGO_TIPO_VENDEDOR FROM TBL_USUARIOS U
+								INNER JOIN TBL_VENDEDORES V 
+									ON V. CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
+								WHERE U.CODIGO_USUARIO = $usuario
+							");
+							oci_execute($esTienda);
+
+							while($obtenerTienda = $conexion->obtenerFila($esTienda)){	
+								if($obtenerTienda["CODIGO_TIPO_VENDEDOR"] != 2){
+									//etiqueta para indicar la seccion de calificar vendedor
+									echo'<h6 style="color: #000;">Calificar este vendedor</h6>';
+									//Hacer funcionar valoracion por estrellas
+									echo'<form style="margin-bottom:10px;">';
+										echo'<div class="rateyo" id= "rating"';
+											echo'data-rateyo-rating="0"';
+											echo'data-rateyo-num-stars="5"';
+											echo'data-rateyo-full-star= true style="margin: 10px auto"></div>';
+											echo'<h6 class = "result">Tu calificación: 0</h6>';
+										echo'<input type="radio" name="rating" id="rb_rating value="6" checked style="display: none;">';
+									echo'</form>';
+									echo'<button type="button" id="btn_enviar" 
+										name="enviar" class="btn btn-dark">Enviar Valoración</button><br><br>';
+								}
+							}
+						}
+
 						echo'</div>';
 
 						//<!--Columna 2-->
