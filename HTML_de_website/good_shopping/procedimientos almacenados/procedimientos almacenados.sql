@@ -339,3 +339,65 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('CODIGO_MENSAJE: '||V_CODIGO_MENSAJE);
 END;
 
+/*PROCEDIMIENTOS DE VALORACION*/
+
+CREATE OR REPLACE FUNCTION obtener_valoracion(
+    p_codigo_usuario_vendedor IN TBL_RANKING.CODIGO_USUARIO_VENDEDOR%TYPE
+)
+RETURN NUMBER 
+IS
+    vn_num_estrellas INTEGER := 0;--se usara para sumar todas las valoraciones recibidad
+    vn_num_valoraciones INTEGER := 0;--se usara para obtener el numero de personas que han valorado
+BEGIN
+  SELECT NVL(SUM(NUMERO_ESTRELLAS), 0), COUNT(CODIGO_USUARIO_COMPRADOR) INTO 
+    vn_num_estrellas, vn_num_valoraciones 
+  FROM TBL_RANKING
+  WHERE CODIGO_USUARIO_VENDEDOR = p_codigo_usuario_vendedor;
+  
+  --Verificando que no ocurra una divicion por cero
+  IF vn_num_valoraciones = 0 THEN
+    --Indica que nadie a calificado al vendedor con una estrella
+    RETURN 0;
+  ELSE
+    --El promedio es la valoracion final del vendedor
+    RETURN vn_num_estrellas/ vn_num_valoraciones;
+  END IF;
+END obtener_valoracion;
+/
+
+CREATE OR REPLACE PROCEDURE SP_CalificarVendedor(
+    p_codigoVendedor IN TBL_VENDEDORES.CODIGO_USUARIO_VENDEDOR%TYPE,
+    p_codigoComprador IN TBL_COMPRADORES.CODIGO_USUARIO_COMPRADOR%TYPE,--cOMPRADOR QUE ENVIA LA VALORACION
+    pn_estrellas IN INTEGER
+)
+IS
+    vn_conteo INTEGER := 0;
+BEGIN
+    IF p_codigoVendedor IS NULL AND p_codigoComprador IS NULL AND pn_estrellas IS NULL THEN
+        return;
+    END IF;
+
+    IF pn_estrellas = 0 THEN
+        RETURN;
+    END IF;
+
+    --Verificando que el comprador ya ha puntuado al vendedor anteriormente
+    SELECT COUNT(*) INTO vn_conteo FROM TBL_RANKING
+    WHERE TBL_RANKING.CODIGO_USUARIO_VENDEDOR = p_codigoVendedor 
+    AND TBL_RANKING.CODIGO_USUARIO_COMPRADOR = p_codigoComprador;
+
+    IF vn_conteo > 0 THEN
+        UPDATE TBL_RANKING SET NUMERO_ESTRELLAS = pn_estrellas
+        WHERE CODIGO_USUARIO_VENDEDOR = p_codigoVendedor
+        AND CODIGO_USUARIO_COMPRADOR = p_codigoComprador;
+
+        UPDATE TBL_RANKING SET FECHA_RANKING = SYSDATE
+        WHERE CODIGO_USUARIO_VENDEDOR = p_codigoVendedor
+        AND CODIGO_USUARIO_COMPRADOR = p_codigoComprador;
+    ELSE
+        INSERT INTO TBL_RANKING(CODIGO_USUARIO_COMPRADOR, CODIGO_USUARIO_VENDEDOR, 
+            NUMERO_ESTRELLAS, FECHA_RANKING)
+        VALUES(p_codigoVendedor, p_codigoComprador, pn_estrellas, SYSDATE);
+    END IF;
+END;
+/
