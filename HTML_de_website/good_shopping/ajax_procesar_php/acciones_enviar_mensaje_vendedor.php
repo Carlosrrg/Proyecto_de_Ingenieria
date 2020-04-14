@@ -84,6 +84,14 @@
 				$header .= "Mime-Version: 1.0 \r\n";
 				$header .= "Content-Type:  text/plain";
 
+				if (mail($correo_usuario_vendedor,$email_subject,$email_message,$header)) {
+					//$mensaje .= "Se envío correo de registro a " . $correo . "\n";
+					echo $mensaje = 0;
+				}else{
+					//$mensaje .= "Error al enviar correo\n";
+					echo $mensaje = 1;
+				}
+
 				$ingresar_mensaje = $conexion->ejecutarInstruccion("	DECLARE
 																		    V_CODIGO_MENSAJE INTEGER;
 																		BEGIN
@@ -99,7 +107,7 @@
 				$email_message .= " - Correo de contacto: " . $correo_usuario_vendedor . "\n";
 				$email_message .= " - Telefono de contacto: " . $telefono_usuario_vendedor . "\n";
 				$email_message .= " - Publicacion desde donde se envia el mensaje: " . $nombre_publicacion . "\n";
-				$email_message .= " - Contenido del mensaje: " . $mensaje_enviar . "\n\n";
+				$email_message .= " - Contenido del mensaje que enviastes: " . $mensaje_enviar . "\n\n";
 				$email_message .= "Gracias por usar el servicio de Good Shopping, te esperamos pronto.";
 				$email_message .= " Para mayor informacion contactate con nosotros atraves de nuestras redes sociales o atraves de correo electronico a: goodshopping_suport@gmail.com";
 				
