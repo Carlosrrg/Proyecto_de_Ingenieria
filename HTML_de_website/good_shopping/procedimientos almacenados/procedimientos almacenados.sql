@@ -360,14 +360,15 @@ BEGIN
     RETURN 0;
   ELSE
     --El promedio es la valoracion final del vendedor
-    RETURN vn_num_estrellas/ vn_num_valoraciones;
+    RETURN ROUND(vn_num_estrellas/ vn_num_valoraciones, 1);
   END IF;
 END obtener_valoracion;
 /
 
+--Procedimiento almacenado para getionar la insercion y actualizacion de valoraciones
 CREATE OR REPLACE PROCEDURE SP_CalificarVendedor(
     p_codigoVendedor IN TBL_VENDEDORES.CODIGO_USUARIO_VENDEDOR%TYPE,
-    p_codigoComprador IN TBL_COMPRADORES.CODIGO_USUARIO_COMPRADOR%TYPE,--cOMPRADOR QUE ENVIA LA VALORACION
+    p_codigoComprador IN TBL_COMPRADORES.CODIGO_USUARIO_COMPRADOR%TYPE,
     pn_estrellas IN INTEGER
 )
 IS
@@ -397,7 +398,7 @@ BEGIN
     ELSE
         INSERT INTO TBL_RANKING(CODIGO_USUARIO_COMPRADOR, CODIGO_USUARIO_VENDEDOR, 
             NUMERO_ESTRELLAS, FECHA_RANKING)
-        VALUES(p_codigoVendedor, p_codigoComprador, pn_estrellas, SYSDATE);
+        VALUES(p_codigoComprador, p_codigoVendedor, pn_estrellas, SYSDATE);
     END IF;
 END;
 /
