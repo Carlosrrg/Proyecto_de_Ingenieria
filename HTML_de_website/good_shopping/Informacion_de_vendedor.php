@@ -149,33 +149,30 @@
 						WHERE U.CODIGO_USUARIO = '$codigo_usuario_vendedor'
 					");
 					oci_execute($resultado_usuario);
-
-					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-						$tipoVendedor = $fila["CODIGO_TIPO_VENDEDOR"];
-						if($tipoVendedor == 2){
-							$imagenesDelPrefil = $conexion->ejecutarInstruccion(
-								   "SELECT IMG.CODIGO_TIPO_IMAGEN, IMG.RUTA_IMAGEN FROM TBL_TIENDAS T
-									INNER JOIN TBL_VENDEDORES V ON V.CODIGO_TIENDA = T.CODIGO_TIENDA
-									INNER JOIN TBL_VEND_X_TBL_IMG IMGT 
-										ON IMGT.CODIGO_USUARIO_VENDEDOR = V.CODIGO_USUARIO_VENDEDOR
-									INNER JOIN TBL_IMAGENES IMG ON IMG.CODIGO_IMAGEN = IMGT.CODIGO_IMAGEN
-									WHERE V.CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'
-								  "
-							);
-							oci_execute($imagenesDelPrefil);
-							$imagenPerfil = "";
-							while ($imagen = $conexion->obtenerFila($imagenesDelPrefil)){
-								if($imagen["CODIGO_TIPO_IMAGEN"] == 2){
-									echo'<div class="container" style="text-align: center; border-bottom: medium; margin-top:-20px;
-										height:20vh; overflow:hidden; margin-bottom: 10px;">
-										<img src="'.$imagen["RUTA_IMAGEN"].'" style="padding-bottom: 1%; padding-right: 1%; width:80%;">
-									</div>';
-								}
-								if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
-									$imagenPerfil = $imagen["RUTA_IMAGEN"];
-								}
+					$imagenesDelPrefil = $conexion->ejecutarInstruccion(
+						"SELECT IMG.CODIGO_TIPO_IMAGEN, IMG.RUTA_IMAGEN FROM TBL_VENDEDORES V
+						 INNER JOIN TBL_VEND_X_TBL_IMG IMGT 
+							 ON IMGT.CODIGO_USUARIO_VENDEDOR = V.CODIGO_USUARIO_VENDEDOR 
+						 INNER JOIN TBL_IMAGENES IMG ON IMG.CODIGO_IMAGEN = IMGT.CODIGO_IMAGEN
+						 WHERE V.CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'
+						"
+					);
+					oci_execute($imagenesDelPrefil);
+					$imagenPerfil = "";  
+					while ($imagen = $conexion->obtenerFila($imagenesDelPrefil)){
+						if($imagen["CODIGO_TIPO_IMAGEN"] == 2){
+							echo'<div class="container" style="text-align: center; border-bottom: medium; margin-top:-20px;
+								height:20vh; overflow:hidden; margin-bottom: 10px;">
+								<img src="'.$imagen["RUTA_IMAGEN"].'" style="padding-bottom: 1%; padding-right: 1%; width:80%;">
+							</div>';
+						}else if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
+							if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
+								$imagenPerfil = $imagen["RUTA_IMAGEN"];
 							}
 						}
+					}
+					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+						$tipoVendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 						//<!--Columna 1-->
 						echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-6">';
 						if($tipoVendedor == 1){
