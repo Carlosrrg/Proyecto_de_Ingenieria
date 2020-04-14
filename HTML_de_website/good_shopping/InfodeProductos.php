@@ -226,7 +226,7 @@
 							oci_execute($obtener_vendedor);
 							while ($fila = $conexion->obtenerFila($obtener_vendedor)) {
 								echo '<div style="text-align: center;">';
-					  			echo '<br><br><h5><a href="#">'.$fila["NOMBRE"].' '.$fila["APELLIDO"].'</a></h5>';
+					  			echo '<br><br><h5><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila["CODIGO_USUARIO_VENDEDOR"].'">'.$fila["NOMBRE"].' '.$fila["APELLIDO"].'</a></h5>';
 					  			$codigo_usuario_vendedor = $fila["CODIGO_USUARIO_VENDEDOR"];
 							}
 
