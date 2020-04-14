@@ -128,7 +128,7 @@
 		  			echo '<br>';
 
 		  			echo '<div class="list-group list-group-flush">';
-						echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+						echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
 						echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
 							<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 				  	echo '</div>';
@@ -185,7 +185,7 @@
 			  			echo '<br>';
 
 			  			echo '<div class="list-group list-group-flush">';
-							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+							echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
 							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
 								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 					  	echo '</div>';
