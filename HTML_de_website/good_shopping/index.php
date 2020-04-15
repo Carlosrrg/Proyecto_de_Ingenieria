@@ -107,16 +107,22 @@
 			    echo'<div class="nav-item dropdown">';
 					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
 							$conexion->establecerConexion();
-							$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE
+							$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE,CODIGO_TIPO_USUARIO
 																					FROM TBL_USUARIOS
 																					WHERE CODIGO_USUARIO = '$usuario'");
 							oci_execute($resultado_usuario);
 							while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 							 	echo $fila["NOMBRE"];
+							 	$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
 							}
 					echo'</a>';
 					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-						echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+						if ($tipo_usuario==1) {
+							echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
+						}
+						else {
+							echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+						}
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';
 				echo'</div>';
