@@ -245,7 +245,7 @@
 					    //<!-- Baner de la empresa-->	
 						echo '<div class="container" style="text-align: center; border-bottom: medium;padding-top: 2%">';
 
-						$ruta_imagen_banner = "./img/banner2.jpg";
+						$ruta_imagen_banner = "img/banner.jpg";
 
 			     		$obtiene_banner = $conexion->ejecutarInstruccion("	
 							SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A
@@ -276,7 +276,7 @@
 								  
 			     					echo '<br>Logo de la empresa';
 
-			     					$ruta_imagen = "./img/cuadrada.jpg";
+			     					$ruta_imagen = "img/cuadrada.png";
 
 			     					$obtiene_logo = $conexion->ejecutarInstruccion("	
 										SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A

@@ -263,7 +263,7 @@
 								  	if ($fila["CODIGO_TIPO_VENDEDOR"] == 1) {
 								  		echo '<hr>';
 								  		echo '<h5>Logo de vendedor</h5>';
-								  		$ruta_imagen = "./img/cuadrada.jpg";
+								  		$ruta_imagen = "recursos/imagenes/ImagenUsuario.png";
 
 				     					$obtiene_logo = $conexion->ejecutarInstruccion("	
 																SELECT B.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG A

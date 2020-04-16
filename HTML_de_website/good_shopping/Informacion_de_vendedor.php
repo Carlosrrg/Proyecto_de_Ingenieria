@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Informacion del vendedor</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo2.css">
 	<link rel="stylesheet" href="css/estilo.css">
 	<link rel="icon" type="image/jpg" href="recursos/imagenes/logo.png">
 	<link rel="stylesheet" href="css/jquery.rateyo.min.css"/>
@@ -94,7 +95,7 @@
 	<!--Contenido de la pagina-->
 	<div class="container" style="text-align: center; margin-bottom: 10px;">
 		<div>
-		  <h5 class="col-lg-12" style="padding-top:30px;">Informacion del vendedor </h5>
+		  <h5 class="col-lg-12" style="padding-top:30px;">Informacion del vendedor </h5><hr>
 		</div>
 	</div>
 	<br>
@@ -124,7 +125,7 @@
 					$codigo_usuario_vendedor = $_GET["codigo-usuario"];
 					echo'<input type="text" id="codigoVendedor" value="'.$codigo_usuario_vendedor.'" style="display: none;">';
 					$resultado_usuario = $conexion->ejecutarInstruccion(
-					   "SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO, TELEFONO, L.NOMBRE_LUGAR, 
+					   "SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO, TELEFONO, L.NOMBRE_LUGAR, NVL(CIUDAD,0) CIUDAD,
 							obtener_valoracion(U.CODIGO_USUARIO) NUMERO_ESTRELLAS, V.CODIGO_TIPO_VENDEDOR,
 							T.NOMBRE_TIENDA, T.DESCRIPCION_TIENDA||(
 								SELECT 'Descripcion no disponible' FROM TBL_TIENDAS 
@@ -159,24 +160,29 @@
 						"
 					);
 					oci_execute($imagenesDelPrefil);
-					$imagenPerfil = "";  
+					$imagenPerfil = "recursos/imagenes/ImagenUsuario.png";  
+					$imagenBanner = "img/banner.jpg";
+					$imagenLogo = "img/cuadrada.png";
 					while ($imagen = $conexion->obtenerFila($imagenesDelPrefil)){
 						if($imagen["CODIGO_TIPO_IMAGEN"] == 2){
-							echo'<div class="container" style="text-align: center; border-bottom: medium; margin-top:-20px;
-								height:20vh; overflow:hidden; margin-bottom: 10px;">
-								<img src="'.$imagen["RUTA_IMAGEN"].'" style="padding-bottom: 1%; padding-right: 1%; width:80%;">
-							</div>';
+							$imagenBanner = $imagen["RUTA_IMAGEN"];
 						}else if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
-							if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
-								$imagenPerfil = $imagen["RUTA_IMAGEN"];
-							}
+							$imagenPerfil = $imagen["RUTA_IMAGEN"];
+							$imagenLogo = $imagen["RUTA_IMAGEN"];
 						}
 					}
 					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 						$tipoVendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+						//<!--Banner para empresarial-->
+						if ($tipoVendedor == 2) {
+							echo'<div class="container" style="text-align: center; border-bottom: medium; margin-top:-50px;
+								height:20vh; margin-bottom: 40px;">
+								<center><div id="previewbanner"><img src="'.$imagenBanner.'" style="padding-bottom: 1%;padding-right: 1%;" class="img-fluid"></div></center>
+							</div>';
+						}
 						//<!--Columna 1-->
-						echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-6">';
 						if($tipoVendedor == 1){
+							echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-6">';
 							//<!--Imagen del perfil de usuario id:imagenUsuario-->
 							echo'<img src="'.$imagenPerfil.'" class="rounded-circle img-fluid" id="imagenUsuario" alt="Placeholder image" 
 							style="width: 50%; max-width:200px; max-height:200px; padding:10px;">';
@@ -189,27 +195,35 @@
 							echo $fila["NUMERO_ESTRELLAS"];
 							echo'&#9733;</h3>';
 						}else{
+							echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-7">';
 							echo'<div class="container" style="text-align:left;">';
-								echo'<h5>';
-									echo $fila["NOMBRE_TIENDA"];//nombre de la tienda
-								echo'</h5>';
-								echo'<h5>Descripción:</h5>';
-								echo'<h6 style="-ms-word-break: break-all; word-break: break-all; word-break: break-word; 
-										-webkit-hyphens: auto; -moz-hyphens: auto;-ms-hyphens: auto; hyphens: auto;">';
-										echo $fila["DESCRIPCION_TIENDA"];		
-								echo'</h6>';
+								
+								echo'<div class="row">';
+								echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-4">';
+								//<!--Imagen del perfil de usuario id:imagenUsuario-->
+									echo'<img src="'.$imagenLogo.'" class="rounded-circle img-fluid" id="imagenUsuario" alt="Placeholder image" 
+									style="width: 100%; max-width:200px; max-height:200px; padding:10px;">';
+								echo'</div>';
+								echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-8">';
+									echo'<h3>';
+										echo $fila["NOMBRE_TIENDA"];//nombre de la tienda
+									echo'</h3>';
+									echo'<h5>Descripción:</h5>';
+									echo'<h6 style="-ms-word-break: break-all; word-break: break-all; word-break: break-word; 
+											-webkit-hyphens: auto; -moz-hyphens: auto;-ms-hyphens: auto; hyphens: auto;">';
+											echo $fila["DESCRIPCION_TIENDA"];		
+									echo'</h6>';
 
-								echo'<h5>Calificación de la tienda</h5>';
-								echo'<h3 style="color: orange;">';
-								echo $fila["NUMERO_ESTRELLAS"];
-								echo'&#9733;</h3>';
+									echo'<h5>Calificación de la tienda</h5>';
+									echo'<h3 style="color: orange;">';
+									echo $fila["NUMERO_ESTRELLAS"];
+									echo'&#9733;</h3>';
+									echo'</div>';
+								echo'</div>';
 							echo'</div>';
 						}
 
 						if($codigo_usuario_vendedor != $_SESSION['codigo_usuario_sesion']){
-							//Botón agregar a favoritos 
-							echo'<button type="button" id="btn_favoritos" 
-								name="btn_favoritos" class="btn btn-dark">Añadir a favoritos</button><br><br>';
 
 							$usuario = $_SESSION['codigo_usuario_sesion'];
 							$esTienda = $conexion->ejecutarInstruccion(
@@ -222,6 +236,9 @@
 
 							while($obtenerTienda = $conexion->obtenerFila($esTienda)){	
 								if($obtenerTienda["CODIGO_TIPO_VENDEDOR"] != 2){
+									//Botón agregar a favoritos 
+									echo'<button type="button" id="btn_favoritos" 
+										name="btn_favoritos" class="btn btn-dark">Añadir a favoritos</button><br><br>';
 									//etiqueta para indicar la seccion de calificar vendedor
 									echo'<h6 style="color: #000;">Calificar este vendedor</h6>';
 									//Hacer funcionar valoracion por estrellas
@@ -242,7 +259,7 @@
 						echo'</div>';
 
 						//<!--Columna 2-->
-						echo'<div class="col-sm-6 col-md-6 col-lg-6" style="text-align: left;">';
+						echo'<div class="col-sm-6 col-md-6 col-lg-5" style="text-align: left;">';
 							if($tipoVendedor == 1){
 								echo'<h6>Correo: '; 
 									echo$fila["CORREO_ELECTRONICO"];
@@ -254,9 +271,12 @@
 
 								echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
 									echo $fila['NOMBRE_LUGAR'];
+								if ($fila['CIUDAD']!='0') {
+									echo', '.$fila['CIUDAD'];
+								}
 								echo'</h6>';
 							}else{
-								echo'<h6>Correo: '; 
+								echo'<br><h6>Correo: '; 
 									echo$fila["CORREO_TIENDA"];
 								echo'</h6>';
 				
@@ -265,7 +285,7 @@
 								echo'</h6>';
 
 								echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
-									echo $fila['DIRECCION_FISICA_TIENDA'];
+									echo $fila['NOMBRE_LUGAR'].", ".$fila['DIRECCION_FISICA_TIENDA'];
 								echo'</h6>';
 							}
 
@@ -281,20 +301,26 @@
 							echo'<div class="container">';
 								while ($fila = $conexion->obtenerFila($resultado_servicios)) {
 										echo'<h7>';
-											echo "&#x2600;".$fila["NOMBRE_SERVICIO"]." ";
+											echo "&#x2600;".$fila["NOMBRE_SERVICIO"]."<br>";
 										echo'</h7>';	
+								}
+								if ($conexion->cantidadRegistros($resultado_servicios) == 0) {
+										echo'<h7>';
+											echo "No ofrece ningun servicio<br>";
+										echo'</h7>';
 								}
 							echo'</div><br>';
 							
 							$resultado_productos = $conexion->ejecutarInstruccion(
 							  " SELECT PB.NOMBRE_PRODUCTO, TBL_MONEDA.CODIGO_TIPO_MONEDA, PRECIO, 
-									EPROD.NOMBRE_ESTADO_PRODUCTO, IMG.RUTA_IMAGEN 
+									NVL(EPROD.NOMBRE_ESTADO_PRODUCTO,'Disponible') NOMBRE_ESTADO_PRODUCTO, 
+									IMG.RUTA_IMAGEN, PB.CODIGO_PUBLICACION_PRODUCTO
 								FROM TBL_VENDEDORES V
 								INNER JOIN TBL_VEND_X_TBL_PUBLI VPB 
 									ON VPB.CODIGO_USUARIO_VENDEDOR = V.CODIGO_USUARIO_VENDEDOR
 								INNER JOIN TBL_PUBLICACION_PRODUCTOS PB
 									ON PB.CODIGO_PUBLICACION_PRODUCTO = VPB.CODIGO_PUBLICACION_PRODUCTO
-								INNER JOIN TBL_ESTADO_PRODUCTO EPROD 
+								LEFT JOIN TBL_ESTADO_PRODUCTO EPROD 
 									ON EPROD.CODIGO_ESTADO_PRODUCTO = PB.CODIGO_ESTADO_PRODUCTO
 								INNER JOIN TBL_MONEDA 
 									ON TBL_MONEDA.CODIGO_TIPO_MONEDA = PB.CODIGO_TIPO_MONEDA
@@ -306,24 +332,34 @@
 									ON IMG.CODIGO_IMAGEN = PXIMG.CODIGO_IMAGEN
 								WHERE V.CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor' AND 
 									UPPER(EPB.NOMBRE_ESTADO_PUBLICACION) = UPPER('disponible')
+								ORDER BY PB.CODIGO_PUBLICACION_PRODUCTO
 							");
 							oci_execute($resultado_productos);
 							echo'<h6>Productos</h6>';
 							echo'<div class="card card-scroll col-lg-12 col-md-12" 
-								style="max-height: 300px; overflow:scroll; -webkit-overflow-scrolling:touch; margin-bottom:10px;">';
+								style="max-height: 240px; overflow:scroll; -webkit-overflow-scrolling:touch; margin-bottom:10px;">';
 								echo'<ul class="list-group list-group-flush">';
+								$repetido = 0;
 									while($fila = $conexion->obtenerFila($resultado_productos)){
-										echo'<li class="list-group-item"><img src="'.$fila["RUTA_IMAGEN"].'" width=50 height=50>';
-											echo "\t".$fila["NOMBRE_PRODUCTO"]."\t";
-											if($fila["CODIGO_TIPO_MONEDA"] == 1){
-												echo"\t L. ";
-											}else{
-												echo"\t $. ";
-											}
-											echo $fila["PRECIO"]."\tEstado: ".$fila["NOMBRE_ESTADO_PRODUCTO"];
-										echo'</li>';
+										if ($repetido != $fila["CODIGO_PUBLICACION_PRODUCTO"]) {
+											echo'<li class="list-group-item"><img src="'.$fila["RUTA_IMAGEN"].'" width=50 height=50>';
+												echo "\t<a style='color:black' href='infodeProductos.php?codigo-publicacion=".$fila['CODIGO_PUBLICACION_PRODUCTO']."'>".$fila["NOMBRE_PRODUCTO"]."\t";
+												if($fila["CODIGO_TIPO_MONEDA"] == 1){
+													echo"\t L. ";
+												}else{
+													echo"\t $. ";
+												}
+												echo $fila["PRECIO"]."\tEstado: ".$fila["NOMBRE_ESTADO_PRODUCTO"];
+											echo'</a></li>';
+											$repetido = $fila["CODIGO_PUBLICACION_PRODUCTO"];
+										}
 									}
-								'echo</ul>';
+								if ($conexion->cantidadRegistros($resultado_productos) == 0) {
+										echo'<h7>';
+											echo "No cuenta con productos publicados<br>";
+										echo'</h7>';
+								}
+								echo'</ul>';
 							echo'</div>';
 						echo'</div>';
 					}

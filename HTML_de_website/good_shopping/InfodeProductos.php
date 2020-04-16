@@ -113,12 +113,14 @@
 				    echo'<div class="nav-item dropdown">';
 						echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
 								$conexion->establecerConexion();
-								$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE
-																						FROM TBL_USUARIOS
-																						WHERE CODIGO_USUARIO = '$usuario'");
+								$resultado_usuario = $conexion->ejecutarInstruccion("	
+									SELECT NOMBRE, CODIGO_TIPO_USUARIO
+									FROM TBL_USUARIOS
+									WHERE CODIGO_USUARIO = '$usuario'");
 								oci_execute($resultado_usuario);
 								while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 								 	echo $fila["NOMBRE"];
+								 	$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
 								}
 						echo'</a>';
 						echo'<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
@@ -212,36 +214,34 @@
 					  <?php
 					  		$codigo_usuario_vendedor = " ";
 
-					  		$obtener_vendedor = $conexion->ejecutarInstruccion(" 	SELECT C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, D.CIUDAD, E.NOMBRE_LUGAR
-																					FROM TBL_PUBLICACION_PRODUCTOS A
-																					INNER JOIN TBL_VEND_X_TBL_PUBLI B
-																					ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
-																					INNER JOIN TBL_VENDEDORES C
-																					ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
-																					INNER JOIN TBL_USUARIOS D
-																					ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
-																					INNER JOIN TBL_LUGARES E
-																					ON (D.CODIGO_LUGAR=E.CODIGO_LUGAR)
-																					WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+					  		$obtener_vendedor = $conexion->ejecutarInstruccion(" 	
+					  			SELECT 	C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, D.CIUDAD, 
+					  					E.NOMBRE_LUGAR, C.CODIGO_TIPO_VENDEDOR
+								FROM TBL_PUBLICACION_PRODUCTOS A
+								INNER JOIN TBL_VEND_X_TBL_PUBLI B
+								ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
+								INNER JOIN TBL_VENDEDORES C
+								ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
+								INNER JOIN TBL_USUARIOS D
+								ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
+								INNER JOIN TBL_LUGARES E
+								ON (D.CODIGO_LUGAR=E.CODIGO_LUGAR)
+								WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
 							oci_execute($obtener_vendedor);
 							while ($fila = $conexion->obtenerFila($obtener_vendedor)) {
 								echo '<div style="text-align: center;">';
 					  			echo '<br><br><h5><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila["CODIGO_USUARIO_VENDEDOR"].'">'.$fila["NOMBRE"].' '.$fila["APELLIDO"].'</a></h5>';
 					  			$codigo_usuario_vendedor = $fila["CODIGO_USUARIO_VENDEDOR"];
+					  			$codigo_tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 							}
 
-
-							$numero_usuarios_rankeo = " ";
-					  		$promedio_estrellas = " ";
-
-							$obtener_vendedor_calificacion = $conexion->ejecutarInstruccion(" 	SELECT COUNT(*) AS NUMERO_COMPRADORES, AVG(NUMERO_ESTRELLAS) AS PROMEDIO_ESTRELLAS
-																								FROM TBL_RANKING
-																								WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'");
+							$obtener_vendedor_calificacion = $conexion->ejecutarInstruccion(" 	
+								SELECT obtener_valoracion(CODIGO_USUARIO_VENDEDOR) PROMEDIO_ESTRELLAS
+								FROM TBL_RANKING
+								WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'");
 							oci_execute($obtener_vendedor_calificacion);
 							while ($fila2 = $conexion->obtenerFila($obtener_vendedor_calificacion)) {
-								$numero_usuarios_rankeo = $fila2["NUMERO_COMPRADORES"].'<br>';
 								$promedio_estrellas = intval($fila2["PROMEDIO_ESTRELLAS"]);
-								//echo $promedio_estrellas;
 							}
 
 							echo '<br>Calificacion del Vendedor<br>';
@@ -259,7 +259,11 @@
 					  <button class="btn btn-primary"><a href="https://www.facebook.com/sharer/sharer.php?u="><img src="recursos/imagenes/Facebook.png" width="25"></a></button>
 					  <button class="btn btn-warning"><a href="#"><img src="recursos/imagenes/Instagram.png" width="25"></a></button>
 					  <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button><br><br>
-					  <button type="submit" name="btn_denunciar" id="btn_denunciar" class="btn btn-dark">Denunciar </button>				  	
+					<?php
+						if ($codigo_usuario_vendedor!=$usuario&&$tipo_usuario==2) {
+							echo '<button type="submit" name="btn_denunciar" id="btn_denunciar" class="btn btn-dark">Denunciar </button>';
+						}			
+					?> 
 					  </div>
 				  </div>
 				  
@@ -296,28 +300,35 @@
 							}
 
 
-							$obtener_vendedor = $conexion->ejecutarInstruccion(" 	SELECT C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, D.CIUDAD, E.NOMBRE_LUGAR
-																					FROM TBL_PUBLICACION_PRODUCTOS A
-																					INNER JOIN TBL_VEND_X_TBL_PUBLI B
-																					ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
-																					INNER JOIN TBL_VENDEDORES C
-																					ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
-																					INNER JOIN TBL_USUARIOS D
-																					ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
-																					INNER JOIN TBL_LUGARES E
-																					ON (D.CODIGO_LUGAR=E.CODIGO_LUGAR)
-																					WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+							$obtener_vendedor = $conexion->ejecutarInstruccion(" 	
+								SELECT 	C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, 
+										NVL(D.CIUDAD,0) CIUDAD, E.NOMBRE_LUGAR
+								FROM TBL_PUBLICACION_PRODUCTOS A
+								INNER JOIN TBL_VEND_X_TBL_PUBLI B
+								ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
+								INNER JOIN TBL_VENDEDORES C
+								ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
+								INNER JOIN TBL_USUARIOS D
+								ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
+								INNER JOIN TBL_LUGARES E
+								ON (D.CODIGO_LUGAR=E.CODIGO_LUGAR)
+								WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
 							oci_execute($obtener_vendedor);
 							while ($fila3 = $conexion->obtenerFila($obtener_vendedor)) {
-								echo '<h6><br><br><img src="https://image.flaticon.com/icons/svg/684/684809.svg" style="width: 5%"> Ubicación: '.$fila3["CIUDAD"].', '.$fila3["NOMBRE_LUGAR"].'.</h6>';
+								echo '<h6><br><br><img src="https://image.flaticon.com/icons/svg/684/684809.svg" style="width: 5%"> Ubicación: ';
+								if ($fila3["CIUDAD"]!='0') {
+									echo $fila3["CIUDAD"].', ';
+								}
+								echo $fila3["NOMBRE_LUGAR"].'.</h6>';
 							}
 
 							echo '<br><h6>Categoria:</h6>';
-							$obtener_categoria = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, B.NOMBRE_CATEGORIA
-																					FROM TBL_PUBLICACION_PRODUCTOS A
-																					INNER JOIN TBL_CATEGORIAS B
-																					ON (A.CODIGO_CATEGORIA=B.CODIGO_CATEGORIA)
-																					WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+							$obtener_categoria = $conexion->ejecutarInstruccion(" 	
+								SELECT A.NOMBRE_PRODUCTO, B.NOMBRE_CATEGORIA
+								FROM TBL_PUBLICACION_PRODUCTOS A
+								INNER JOIN TBL_CATEGORIAS B
+								ON (A.CODIGO_CATEGORIA=B.CODIGO_CATEGORIA)
+								WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
 							oci_execute($obtener_categoria);
 							while ($fila4 = $conexion->obtenerFila($obtener_categoria)) {
 								echo $fila4["NOMBRE_CATEGORIA"];
@@ -434,20 +445,22 @@
 							  overflow-y: scroll;
 							}
                         </style>
-    <!--scrollbar mensaje de texto-->                    
-					<label for="txt-descripcion" style="padding-top:15px; "><h6>Mensaje:</h6></label>
+    				<!--scrollbar mensaje de texto-->                    
 					<?php 
 						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
 							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor</div>';
 						}
 						else{
-							echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';
-							echo'<input type="text" name="txt-codigo-p" id="txt-codigo-p" style="display: none;" value="'.$codigo_publicacion.'">';
-							echo'<input type="text" name="txt-idVendedor" id="txt-idVendedor" style="display: none;" value="'.$codigo_usuario_vendedor.'">';
-							echo'<span>';
-								echo'<button type="submit" name="btn_enviar_mensaje" id="btn_enviar_mensaje" class="btn btn-success"> Enviar Mensaje</button>';
-							echo'</span>';	
-							echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
+							if ($codigo_usuario_vendedor!=$usuario) {
+								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Mensaje:</h6></label>';
+								echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';
+								echo'<input type="text" name="txt-codigo-p" id="txt-codigo-p" style="display: none;" value="'.$codigo_publicacion.'">';
+								echo'<input type="text" name="txt-idVendedor" id="txt-idVendedor" style="display: none;" value="'.$codigo_usuario_vendedor.'">';
+								echo'<span>';
+									echo'<button type="submit" name="btn_enviar_mensaje" id="btn_enviar_mensaje" class="btn btn-success"> Enviar Mensaje</button>';
+								echo'</span>';	
+								echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
+							}
 						}
 					?>
 				  </div>
