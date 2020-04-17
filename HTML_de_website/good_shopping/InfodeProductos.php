@@ -260,9 +260,9 @@
 					  <button class="btn btn-warning"><a href="#"><img src="recursos/imagenes/Instagram.png" width="25"></a></button>
 					  <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button><br><br>
 					<?php
-						if ($codigo_usuario_vendedor!=$usuario&&$tipo_usuario==2) {
+						//if ($codigo_usuario_vendedor!=$usuario&&$tipo_usuario==2) {
 							echo '<button type="submit" name="btn_denunciar" id="btn_denunciar" class="btn btn-dark">Denunciar </button>';
-						}			
+						//}			
 					?> 
 					  </div>
 				  </div>
@@ -451,7 +451,7 @@
 							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor</div>';
 						}
 						else{
-							if ($codigo_usuario_vendedor!=$usuario) {
+							//if ($codigo_usuario_vendedor!=$usuario) {
 								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Mensaje:</h6></label>';
 								echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';
 								echo'<input type="text" name="txt-codigo-p" id="txt-codigo-p" style="display: none;" value="'.$codigo_publicacion.'">';
@@ -460,7 +460,7 @@
 									echo'<button type="submit" name="btn_enviar_mensaje" id="btn_enviar_mensaje" class="btn btn-success"> Enviar Mensaje</button>';
 								echo'</span>';	
 								echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
-							}
+							//}
 						}
 					?>
 				  </div>

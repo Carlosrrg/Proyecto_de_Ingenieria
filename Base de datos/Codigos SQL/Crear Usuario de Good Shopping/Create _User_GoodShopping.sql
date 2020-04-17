@@ -15,4 +15,6 @@ GRANT create sequence TO DB_GOOD_SHOPPING;
 GRANT create synonym TO DB_GOOD_SHOPPING;
 GRANT create materialized view TO DB_GOOD_SHOPPING;
 
-
+-----Privilegio de creacion de job-------
+GRANT CREATE JOB TO DB_GOOD_SHOPPING;
+-----------------------------------------
