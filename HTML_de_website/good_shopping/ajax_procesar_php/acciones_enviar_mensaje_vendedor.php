@@ -11,6 +11,7 @@
 	$codigo_publicacion = $_POST["txt-codigo-p"];
 	
 	$codigo_usuario_comprador = $_SESSION['codigo_usuario_sesion'];
+	//$codigo_usuario_comprador = 8;
 
 	$nombre_publicacion = " ";
 	$nombre_usuario_comprador = " ";
@@ -20,6 +21,8 @@
 	$correo_usuario_vendedor = " ";
 	$telefono_usuario_comprador = " ";
 	$telefono_usuario_vendedor = " ";
+
+	$mensaje = " ";
 
 	/*
 		Buenas Usuario_vendedor te saludamos de Good Shopping para recordarte que tienes una notificacion pendiente
@@ -35,6 +38,7 @@
 
 	//echo $mensaje_enviar." ".$codigo_usuario_vendedor." ".$codigo_publicacion."  ".$codigo_usuario_comprador;
 
+
 	$resultado_publicacion = $conexion->ejecutarInstruccion("	SELECT NOMBRE_PRODUCTO
 																FROM TBL_PUBLICACION_PRODUCTOS
 																WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
@@ -43,6 +47,7 @@
 		$nombre_publicacion = $fila["NOMBRE_PRODUCTO"];
 	} 
 
+	
 	$resultado_usuario_comprador = $conexion->ejecutarInstruccion("	SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO, TELEFONO
 																	FROM TBL_USUARIOS
 																	WHERE CODIGO_USUARIO = '$codigo_usuario_comprador'");
@@ -53,6 +58,7 @@
 		$telefono_usuario_comprador = "+504 ".$fila2["TELEFONO"];
 	}
 
+	
 	$resultado_usuario_vendedor = $conexion->ejecutarInstruccion("	SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO, TELEFONO
 																	FROM TBL_USUARIOS
 																	WHERE CODIGO_USUARIO = '$codigo_usuario_vendedor'");
@@ -62,7 +68,6 @@
 		$correo_usuario_vendedor = $fila3["CORREO_ELECTRONICO"];
 		$telefono_usuario_vendedor = "+504 ".$fila3["TELEFONO"];
 	}  
-
 
 
 
@@ -118,7 +123,7 @@
 				$header .= "Content-Type:  text/plain";
 
 
-				if (mail($correo_usuario_vendedor,$email_subject,$email_message,$header)) {
+				if (mail($correo_usuario_comprador,$email_subject,$email_message,$header)) {
 					//$mensaje .= "Se envío correo de registro a " . $correo . "\n";
 					echo $mensaje = 0;
 				}else{

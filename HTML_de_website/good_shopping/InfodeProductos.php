@@ -138,6 +138,7 @@
 			<!--Contenido de la pagina-->
 			<div class="container" style="text-align: center; border-bottom: medium">
 				<?php
+					$tipo_publicacion = " ";
 					$obtener_tipo_publicacion = $conexion->ejecutarInstruccion(" 	SELECT B.NOMBRE_TIPO_PUBLICACION
 																					FROM TBL_PUBLICACION_PRODUCTOS A
 																					INNER JOIN TBL_TIPO_PUBLICACION B
@@ -153,6 +154,7 @@
 								echo 'Servicio';
 							}
 						echo '</h5></div>';
+						$tipo_publicacion = $fila8["NOMBRE_TIPO_PUBLICACION"];
 					}
 				?>
 			</div>
@@ -213,6 +215,7 @@
 					  </style>
 					  <?php
 					  		$codigo_usuario_vendedor = " ";
+					  		$promedio_estrellas = " "; 
 
 					  		$obtener_vendedor = $conexion->ejecutarInstruccion(" 	
 					  			SELECT 	C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, D.CIUDAD, 
@@ -253,15 +256,17 @@
 								echo'"></span>';
 							}
 							echo '<br>';
-					  ?>  
+							//echo '<span class="fa fa-star-half checked "></span>';
+					  ?> 
+					  
 					  	
 					  <br>Compartir<br>
 					  <button class="btn btn-primary"><a href="https://www.facebook.com/sharer/sharer.php?u="><img src="recursos/imagenes/Facebook.png" width="25"></a></button>
-					  <button class="btn btn-warning"><a href="#"><img src="recursos/imagenes/Instagram.png" width="25"></a></button>
+					  <button class="btn btn-danger"><a href="https://pinterest.com/pin/create/button/?media="><img src="recursos/imagenes/pinterest.png" width="25"></a></button>
 					  <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button><br><br>
 					<?php
-						//if ($codigo_usuario_vendedor!=$usuario&&$tipo_usuario==2) {
-							echo '<button type="submit" name="btn_denunciar" id="btn_denunciar" class="btn btn-dark">Denunciar </button>';
+						//if ($codigo_usuario_vendedor != $usuario && $tipo_usuario==2) {
+							echo '<a class="btn btn-dark"href="Denunciar_publicacion.php?codigo-publicacion='.$codigo_publicacion.'&codigo-usuario-sesion='.$usuario.'&codigo-usuario-vendedor='.$codigo_usuario_vendedor.'">Denunciar</a>';
 						//}			
 					?> 
 					  </div>
@@ -273,31 +278,59 @@
 
 				  		<?php
 
-				  			$obtener_valores_producto = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, A.PRECIO, B.NOMBRE_ESTADO_PRODUCTO, A.DESCIPCION, C.NOMBRE_TIPO_MONEDA
+				  			if ($tipo_publicacion == "Producto") {
+				  				$obtener_valores_producto = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, A.PRECIO, B.NOMBRE_ESTADO_PRODUCTO, A.DESCIPCION, C.NOMBRE_TIPO_MONEDA
 																							FROM TBL_PUBLICACION_PRODUCTOS A
 																							INNER JOIN TBL_ESTADO_PRODUCTO B
 																							ON(A.CODIGO_ESTADO_PRODUCTO = B.CODIGO_ESTADO_PRODUCTO)
 																							INNER JOIN TBL_MONEDA C
 																							ON(A.CODIGO_TIPO_MONEDA = C.CODIGO_TIPO_MONEDA)
 																							WHERE CODIGO_PUBLICACION_PRODUCTO='$codigo_publicacion'");
-							oci_execute($obtener_valores_producto);
-							while ($fila = $conexion->obtenerFila($obtener_valores_producto)) {
-								echo '<h4>'.$fila["NOMBRE_PRODUCTO"].'</h4>';
-							   	echo '<div style="text-align: left" 
-							    style="text-align: left;">';
-								echo '<br><h6>Precio:</h6> <span style="font-size: 20px;font-weight: bold;">';
-									if ($fila["NOMBRE_TIPO_MONEDA"] == "Lempiras") {
-										echo 'L. '.$fila["PRECIO"];
-									}
-									else{
-										echo '$. '.$fila["PRECIO"];
-									}
-								echo '</span>';
-								echo '<br><br><h6>Estado del Producto:</h6> '.$fila["NOMBRE_ESTADO_PRODUCTO"];
-								echo '<br><br><h6>Descripcion:</h6>';
-								echo $fila["DESCIPCION"].'.';
+								oci_execute($obtener_valores_producto);
+								while ($fila = $conexion->obtenerFila($obtener_valores_producto)) {
+									echo '<h4>'.$fila["NOMBRE_PRODUCTO"].'</h4>';
+								   	echo '<div style="text-align: left" 
+								    style="text-align: left;">';
+									echo '<br><h6>Precio:</h6> <span style="font-size: 20px;font-weight: bold;">';
+										if ($fila["NOMBRE_TIPO_MONEDA"] == "Lempiras") {
+											echo 'L. '.$fila["PRECIO"];
+										}
+										else{
+											echo '$. '.$fila["PRECIO"];
+										}
+									echo '</span>';
+									echo '<br><br><h6>Estado del Producto:</h6> '.$fila["NOMBRE_ESTADO_PRODUCTO"];
+									echo '<br><br><h6>Descripcion:</h6>';
+									echo $fila["DESCIPCION"].'.';
+								}
 
-							}
+				  			}
+				  			else{
+				  				$obtener_valores_producto = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, A.PRECIO, A.DESCIPCION, B.NOMBRE_TIPO_MONEDA
+																								FROM TBL_PUBLICACION_PRODUCTOS A
+																								INNER JOIN TBL_MONEDA B
+																								ON(A.CODIGO_TIPO_MONEDA = B.CODIGO_TIPO_MONEDA)
+																								WHERE CODIGO_PUBLICACION_PRODUCTO='$codigo_publicacion'");
+								oci_execute($obtener_valores_producto);
+								while ($fila10 = $conexion->obtenerFila($obtener_valores_producto)) {
+									echo '<h4>'.$fila10["NOMBRE_PRODUCTO"].'</h4>';
+								   	echo '<div style="text-align: left" 
+								    style="text-align: left;">';
+									echo '<br><h6>Precio:</h6> <span style="font-size: 20px;font-weight: bold;">';
+										if ($fila10["NOMBRE_TIPO_MONEDA"] == "Lempiras") {
+											echo 'L. '.$fila10["PRECIO"];
+										}
+										else{
+											echo '$. '.$fila10["PRECIO"];
+										}
+									echo '</span>';
+									echo '<br><br><h6>Descripcion:</h6>';
+									echo $fila10["DESCIPCION"].'.';
+								}
+
+				  			}
+
+				  			
 
 
 							$obtener_vendedor = $conexion->ejecutarInstruccion(" 	
@@ -397,7 +430,7 @@
 									      	echo '<th scope="col">Precio</th>';
 									    echo '</tr>';
 								 	echo '</thead>';
-								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, D.NOMBRE, D.APELLIDO, A.PRECIO, G.RUTA_IMAGEN
+								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, A.PRECIO, G.RUTA_IMAGEN
 																								FROM TBL_PUBLICACION_PRODUCTOS A
 																								INNER JOIN TBL_VEND_X_TBL_PUBLI B
 																								ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
@@ -417,8 +450,8 @@
 										 	if ($arreglo_codigo_publicacion[$i] == $fila6["CODIGO_PUBLICACION_PRODUCTO"]) {
 												echo '<tbody>';
 													echo '<tr>'; 
-												      echo '<td><a href="#"><img src="'.$fila6["RUTA_IMAGEN"].'" style="width: 100px; height: 80px"></a></td>';
-												      echo '<td><a href="#">'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</a></td>';
+												      echo '<td><a href="InfodeProductos.php?codigo-publicacion='.$fila6["CODIGO_PUBLICACION_PRODUCTO"].'"><img src="'.$fila6["RUTA_IMAGEN"].'" style="width: 100px; height: 80px"></a></td>';
+												      echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila6["CODIGO_USUARIO_VENDEDOR"].'">'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</a></td>';
 												      echo '<td>'.$fila6["PRECIO"].'</td>';
 												    echo '</tr>';
 												echo '</tbody>';
@@ -463,6 +496,13 @@
 							//}
 						}
 					?>
+					<br><br>
+					<center>
+                        <div class="spinner-border text-success" role="status" id="r-cargando">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </center>
+
 				  </div>
 				</div>
 			</div>
@@ -542,9 +582,9 @@
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
 					<h6>Siguenos en</h6>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
+					 <button class="btn btn-primary"><a href="https://www.facebook.com/sharer/sharer.php?u="><img src="recursos/imagenes/Facebook.png" width="25"></a></button>
+					 <button class="btn btn-danger"><a href="https://pinterest.com/pin/create/button/?media="><img src="recursos/imagenes/pinterest.png" width="25"></a></button>
+					 <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button>
 				</div>
 			</div>
 		</div>		

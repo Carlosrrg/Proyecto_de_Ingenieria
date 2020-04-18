@@ -191,8 +191,6 @@ $(document).ready(function(){
 	});
 
 
-
-
 	$("#btn_iniciar").click(function(){
 
 		var correo = $("#txt-correo").val();
@@ -226,6 +224,42 @@ $(document).ready(function(){
 			});	
 		}
 	});
+
+
+	$("#btn_iniciar2").click(function(){
+
+		var correo = $("#txt-correo").val();
+		var contrasena = $("#txt-contrasena").val();
+
+		if (correo=="" && contrasena=="") {
+			$("#mostrar_error_login").fadeIn();
+			return false;
+		}
+		else{
+			$("#mostrar_error_login").fadeOut()
+			var parametros = 	"&txt-correo="+correo+"&txt-contrasena="+contrasena;
+			//alert(parametros);
+
+			$.ajax({
+				url:"ajax_procesar_php/acciones_login.php",
+				data:parametros,
+				method:"POST",
+				success:function(respuesta){
+					//alert(respuesta);
+					if(respuesta == 0){
+						alert("El usuario ingresado no existe...");
+						$("#txt-correo").val("");
+						$("#txt-contrasena").val("");
+					}
+					else{
+						//alert("El usuario ingresado existe... "+respuesta);
+						window.location="InfodeProductos.php";
+					}
+				}
+			});	
+		}
+	});
+
 
 	
 	$("#rb-individual").click(function() {

@@ -87,6 +87,7 @@ $(document).ready(function(){
 									}
 									else{
 										alert("Datos actualizados con exito...");
+										window.location="Perfil_usuario_empresarial.php";
 									}
 								}
 							});	
@@ -164,7 +165,7 @@ $(document).ready(function(){
 	$('textarea').keypress(function() {
 		$("#editar_tienda").prop('disabled', false);
 	});
-	
+
 
 
 	$("#cambiar_contrasena").click(function(){
