@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eliminar Producto</title>
+    <title>Denunciar Producto</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -219,14 +219,6 @@
 			else{
 				//<!-- Page Content -->
 				echo '<div id="page-content-wrapper">';
-					//<!--Boton para desplegar la barra lateral-->
-					echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
-						echo '<span></span>';
-						echo '<span>';
-							echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
-						echo '</span>';
-						echo '<span></span>';
-					echo '</button>';
 
 					//<!--Contenido de la pagina-->
 					$codigo_publicacion = $_GET["codigo-publicacion"];

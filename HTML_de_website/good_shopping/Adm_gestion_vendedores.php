@@ -287,6 +287,12 @@
 								echo '</tbody>
 									</table>
 								</center>';
+							echo '<div class="col-lg-12">
+								<br>Últimas publicaciones eliminadas:
+								</div><br>';
+							//Lista de publicaciones eliminadas
+							echo '<div id="div-publicaciones-eliminadas" style="width:85%;margin:0 auto;">';
+							echo '</div>';
 						//Fin del contenido principal
 						echo '</div>';
 
