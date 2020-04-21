@@ -20,10 +20,11 @@
         include_once("class/conexion_copy.php");
         session_start();
         $conexion = new Conexion();
-
+        //$codigo_publicacion = 21;
         $codigo_publicacion = $_GET["codigo-publicacion"];
+       
 		//echo '<br>Codigo publicación: '.$codigo_publicacion;
-
+       
     ?>
 	  <!--Barra de navegacion superior-->
 	  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #72a276;">
@@ -71,41 +72,16 @@
 			<!--gestion de sesión -->
 			<?php
 				if(!isset($_SESSION['codigo_usuario_sesion'])){
+					$usuario = 1;
+					$conexion->establecerConexion();
 	                //echo "seccion cerrada";
-			        echo'<div class="nav-item dropdown">';
-						echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
-						echo'<div class="dropdown-menu" style="margin: 9px 0 0 -60px;">';
-							echo'<a class="dropdown-item dropdown" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Iniciar Sesión</a>';
-							
-							//<!--formulario para iniciar sesión -->
-							echo'<div class="dropdown-menu" style="margin: -82px 0 0 -80px;">';
-								echo'<div class="px-4 py-3">';
-									echo'<div class="form-group">';
-										echo'<label for="txt-correo">Correo Electrónico</label>';
-										echo'<input type="email" class="form-control" id="txt-correo" name="txt-correo" placeholder="email@example.com">';
-									echo'</div>';
-									echo'<div class="form-group">';
-										echo'<label for="txt-contrasena">Contraseña</label>';
-										echo'<input type="password" class="form-control" id="txt-contrasena" name="txt-contrasena" placeholder="Contraseña">';
-									echo'</div>';
-									echo'<div class="form-group">';
-										echo'<div class="form-check">';
-										echo'<input type="checkbox" class="form-check-input" id="dropdownCheck">';
-										echo'<label class="form-check-label" for="dropdownCheck">
-											Recordar
-										</label>';
-										echo'</div>';
-									echo'</div>';
-									echo'<button type="submit" id="btn_iniciar2" name="btn_iniciar2" class="btn btn-success">Iniciar Sesión</button>';
-								echo'</div>';
-									echo'<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>';
-									//<!--<div id="mostrar_error_login2" class="error_login">Correo o Contraseña incorrectos</div>-->
-									echo'<div class="dropdown-divider"></div>';
-									echo'<a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">Restablecer Contraseña</a>';
-							echo'</div>';
+			        echo '<div class="nav-item dropdown">';
+						echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
+						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+							echo '<a class="dropdown-item" href="index.php">Iniciar Sesión</a>';
 							echo'<a class="dropdown-item" href="modulo_registro.html">Registrarse</a>';
-						echo'</div>';
-					echo'</div>';
+						echo '</div>';
+					echo '</div>';
 				}
 				else{
 					$usuario = $_SESSION['codigo_usuario_sesion'];
@@ -261,13 +237,28 @@
 					  
 					  	
 					  <br>Compartir<br>
-					  <button class="btn btn-primary"><a href="https://www.facebook.com/sharer/sharer.php?u="><img src="recursos/imagenes/Facebook.png" width="25"></a></button>
-					  <button class="btn btn-danger"><a href="https://pinterest.com/pin/create/button/?media="><img src="recursos/imagenes/pinterest.png" width="25"></a></button>
-					  <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button><br><br>
+					  <a href="https://www.facebook.com/sharer/sharer.php?u=" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
+					  <a href="https://pinterest.com/pin/create/button/?media=" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
+					  <a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a><br><br>
 					<?php
-						//if ($codigo_usuario_vendedor != $usuario && $tipo_usuario==2) {
+						$tipo_usuario_seccion = " ";
+
+						$obtener_tipo_usuario = $conexion->ejecutarInstruccion(" 	SELECT CODIGO_TIPO_VENDEDOR
+																					FROM TBL_VENDEDORES
+																					WHERE CODIGO_USUARIO_VENDEDOR = $usuario");
+						oci_execute($obtener_tipo_usuario);
+						while ($fila12 = $conexion->obtenerFila($obtener_tipo_usuario)) {
+							$tipo_usuario_seccion = $fila12["CODIGO_TIPO_VENDEDOR"];
+						}
+						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
+							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para deninciar este vendedor<br></div>';
+						}
+						else{
+							if ($codigo_usuario_vendedor != $usuario && $tipo_usuario==2 && $tipo_usuario_seccion == 1) {
 							echo '<a class="btn btn-dark"href="Denunciar_publicacion.php?codigo-publicacion='.$codigo_publicacion.'&codigo-usuario-sesion='.$usuario.'&codigo-usuario-vendedor='.$codigo_usuario_vendedor.'">Denunciar</a>';
-						//}			
+							}	
+						}
+								
 					?> 
 					  </div>
 				  </div>
@@ -484,7 +475,7 @@
 							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor</div>';
 						}
 						else{
-							//if ($codigo_usuario_vendedor!=$usuario) {
+							if ($codigo_usuario_vendedor!=$usuario && $tipo_usuario_seccion == 1) {
 								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Mensaje:</h6></label>';
 								echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';
 								echo'<input type="text" name="txt-codigo-p" id="txt-codigo-p" style="display: none;" value="'.$codigo_publicacion.'">';
@@ -493,7 +484,7 @@
 									echo'<button type="submit" name="btn_enviar_mensaje" id="btn_enviar_mensaje" class="btn btn-success"> Enviar Mensaje</button>';
 								echo'</span>';	
 								echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
-							//}
+							}
 						}
 					?>
 					<br><br>
@@ -512,7 +503,7 @@
 	<!-- /#wrapper -->
 	  
 	<!--Pie de página-->
-	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
+	<footer id="footer" style="background: #fff; margin-top:14%; width:100%;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
@@ -582,9 +573,9 @@
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
 					<h6>Siguenos en</h6>
-					 <button class="btn btn-primary"><a href="https://www.facebook.com/sharer/sharer.php?u="><img src="recursos/imagenes/Facebook.png" width="25"></a></button>
-					 <button class="btn btn-danger"><a href="https://pinterest.com/pin/create/button/?media="><img src="recursos/imagenes/pinterest.png" width="25"></a></button>
-					 <button class="btn btn-primary"><a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping"><img src="recursos/imagenes/Twiter.png" width="30"></a></button>
+					<a href="https://www.facebook.com" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
+					<a href="https://pinterest.com" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
+					<a href="https://twitter.com" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>
 				</div>
 			</div>
 		</div>		

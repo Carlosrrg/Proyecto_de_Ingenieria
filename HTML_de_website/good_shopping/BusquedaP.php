@@ -61,12 +61,15 @@
 		<!--gestion de sesión -->
 		<?php
 			if(!isset($_SESSION['codigo_usuario_sesion'])){
-				echo '<div class="nav-item dropdown">';
-					echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
-					echo '<div class="dropdown-menu" style="margin: 9px 0 0 -50px;">';
-						echo '<a class="dropdown-item" href="index.php">Iniciar Sesión</a>';
-					echo '</div>';
-				echo '</div>';	
+					$conexion->establecerConexion();
+	                //echo "seccion cerrada";
+			        echo '<div class="nav-item dropdown">';
+						echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>';
+						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
+							echo '<a class="dropdown-item" href="index.php">Iniciar Sesión</a>';
+							echo'<a class="dropdown-item" href="modulo_registro.html">Registrarse</a>';
+						echo '</div>';
+					echo '</div>';	
 			}
 			else{
 				$usuario = $_SESSION['codigo_usuario_sesion'];
@@ -560,9 +563,9 @@
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
 					<h6>Siguenos en</h6>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
+					<a href="https://www.facebook.com" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
+					<a href="https://pinterest.com" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
+					<a href="https://twitter.com" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>
 				</div>
 			</div>
 	</div>		

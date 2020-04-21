@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Denunciar Producto</title>
+    <title>Notificaciones</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -12,7 +12,6 @@
     <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -214,67 +213,104 @@
 
 		<?php
 			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para hacer tu debida denuncia a nuestros administradores.</div>';
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para ver tus Productos y Servicios.</div>';
 			}
 			else{
 				//<!-- Page Content -->
 				echo '<div id="page-content-wrapper">';
+					//<!--Boton para desplegar la barra lateral-->
+					echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
+						echo '<span></span>';
+						echo '<span>';
+							echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
+						echo '</span>';
+						echo '<span></span>';
+					echo '</button>';
 
-					//<!--Contenido de la pagina-->
-					$codigo_publicacion = $_GET["codigo-publicacion"];
-					//$codigo_usuario_comprador = $_GET["codigo-usuario-sesion"];
-					$codigo_usuario_vendedor = $_GET["codigo-usuario-vendedor"];
-					$codigo_tipo_reporte = 2;
-					//$codigo_publicacion = 21;
+					
 
-					echo '<div class="container" style="padding: 30px;width:80%">';
-						echo '<center><div><h5 class="col-lg-12">Díganos el motivo de su denuncia</h5></div></center><br>';
+					echo '<div class="container" style="padding: 30px">';
+						echo '<center><div><h5 class="col-lg-12">Mis Notificaciones</h5></div>';
 
+						//TABLA DE PRODUCTOS
+						echo '<table class="table" style="width:95%">
+								<thead class="thead-dark">
+							    <tr>
+							      <th scope="col">#</th>
+							      <th scope="col">Cliente</th>
+							      <th scope="col">Contactos</th>
+							      <th scope="col">Fecha de envio</th>
+							      <th scope="col">Mensaje</th>
+							      <th scope="col">Acción</th>
+							    </tr>
+							  </thead>
+							  <tbody>';
 
-					$obtener_productos = $conexion->ejecutarInstruccion("
-												SELECT NOMBRE_PRODUCTO,LOWER(TO_CHAR(FECHA_PUBLICACION,'DD/MONTH/YYYY')) AS FECHA
-												FROM TBL_PUBLICACION_PRODUCTOS
-												WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
-					oci_execute($obtener_productos);
+						
+								echo '<tr>
+								      <th scope="row">1</th>
+								      <td><a href="" style="color:black">Pedro Avila</a></td>
+								      <td>pedro14@gimal.com<br>+504 98563214</td>
+								      <td>12/4/20</td>
+								      <td style="padding-left:2px;padding-right: 2px">';
+								echo '<p>Esta disponible aun el producto?</p>';
+								      		
+								echo  '
+									  </td>
+								      <td style="padding-left:2px;padding-right: 2px">
+								      	<button type="button" onclick="" name="" class="btn btn-success" style="margin:0" >Responder</button>
+								      </td>
+								    </tr>';
+				
 
-					while ($fila = $conexion->obtenerFila($obtener_productos)) {
-						$nombre_producto = $fila["NOMBRE_PRODUCTO"];
-					}
+						echo '</tbody>
+							</table>';
 
-						echo '<p><i>Publicacion a denunciar:</i> '.$nombre_producto.'</p>';
-						echo '<input id="codigo-publicacion" style="display:none" type="text" value="'.$codigo_publicacion.'">';
-						echo '<input id="codigo-tipo-reporte" style="display:none" type="text" value="'.$codigo_tipo_reporte.'">';
-						echo '<input id="codigo-usuario-vendedor" style="display:none" type="text" value="'.$codigo_usuario_vendedor.'">';
+						//if ($cantidad == 1) {
+							//echo 'No tiene servicios mensajes actualmente...';
+						//}
+						echo '</center>';
 
+						
 
-					$obtiene_motivos = $conexion->ejecutarInstruccion("	SELECT CODIGO_MOTIVO_REPORTE, NOMBRE_MOTIVO_REPORTE
-																		FROM TBL_MOTIVO_REPORTE");
-					oci_execute($obtiene_motivos);
-					$i = 1;
-					while ($fila = $conexion->obtenerFila($obtiene_motivos)) {
-						echo '<label><input type="radio" name="rbt-motivo" id="rbt-motivo" value="'.$fila["CODIGO_MOTIVO_REPORTE"].'" ';
-						if ($i == 1) {
-							echo 'checked';
-							$i++;
-						}
-						echo '> '.$fila["NOMBRE_MOTIVO_REPORTE"].'</label><br>';
-					}
+						echo '</tbody>
+							</table>';
 
-						echo '<br><label>Desea agregar otros comentarios:</label><br>';
-						echo '<textarea id="txt-descripcion-comentario" class="form-control" style="width: 100%; height: 180px; margin-bottom:10px" placeholder="Opcional"></textarea>';
-
-						echo '<button type="submit" id="btn_cancelar" style="margin-left:10px" class="btn btn-danger float-right">Cancelar</button>';
-						echo '<button type="submit" id="btn-eliminar" class="btn btn-success float-right">Enviar</button>';
+						
 
 					echo '</div>';
-				echo '</div><br>';					
+
+				echo '</div><br>';
 			}
-		?>	
+		?>
+			<!-- /#Modal de Vendido -->
+			<button type="button" id="btn-vendido" style="display: none" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm"></button>
+
+			<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-sm" role="document">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <center><p>¿Seguro que ya vendió éste producto/servicio?</p></center>
+			        <center>
+			        	<button class="btn btn-success" id="btn-vendido-si">Sí</button>
+			        	<button class="btn btn-danger" id="btn-vendido-no">No</button>
+			        </center>
+			        <button type="button" id="btn-cerrar-vendido" class="close" data-dismiss="modal" aria-label="Close" style="display: none">
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<!-- /#Link a enviar para eliminar producto -->
+			<div id="div-eliminar"></div>
+			<!-- /#Link a enviar para editar producto -->
+			<div id="div-editar"></div>
 
 		</div>
+
 	  
 	<!--Pie de página-->
-	<footer id="footer" style="background: #fff; margin-top:20px; width:100%;">
+	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
@@ -355,7 +391,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/controlador_denuncia_publicaciones.js"></script>
+	<script src="js/"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		

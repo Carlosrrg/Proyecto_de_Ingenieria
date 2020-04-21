@@ -504,10 +504,9 @@
 				<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
 					<br>
 					<h6>Siguenos en</h6>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
-					</div>
+					<a href="https://www.facebook.com" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
+					<a href="https://pinterest.com" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
+					<a href="https://twitter.com" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>
 		</div>		
 	</footer>
 	

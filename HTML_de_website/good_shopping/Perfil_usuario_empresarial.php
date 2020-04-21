@@ -186,7 +186,7 @@
 
 			  			echo '<div class="list-group list-group-flush">';
 							echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
-							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
+							echo '<a href="" class="list-group-item list-group-item-action bg-light"><span>
 								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 					  	echo '</div>';
 					  	
@@ -588,9 +588,9 @@
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
 					<h6>Siguenos en</h6>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></button>
-					<button class="btn btn-warning"><img src="recursos/imagenes/Instagram.png" width="25"></button>
-					<button class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></button>
+					<a href="https://www.facebook.com" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
+					<a href="https://pinterest.com" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
+					<a href="https://twitter.com" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>
 				</div>
 			</div>
 		</div>		
