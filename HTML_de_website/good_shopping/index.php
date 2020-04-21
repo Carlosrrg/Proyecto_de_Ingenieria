@@ -188,7 +188,7 @@
 		<div class="input-group mb-3">
 			<input id="txt-barraBusqueda" name="txt-barraBusqueda" type="text" class="form-control" placeholder="¿Qué estas buscando?">
 			<div class="input-group-append">
-			  <button class="btn btn-outline-secondary" type="button" style="background: #fff;">
+			  <button class="btn btn-outline-secondary" type="button" id="btn-busqueda" style="background: #fff;">
 				<img src="recursos/imagenes/Lupa.png" width="20">
 			</button>
 			</div>
@@ -216,240 +216,189 @@
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-				
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=1" class="button radius">
 							<span>
 								Francisco Morazán
 							</span>
-						</a>
-			
+						</a>	
 					</div>
-					
-				
 				</div>
 				</div><!-- ./col -->
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=7" class="button radius">
 							<span>
 								Cortes
 							</span>
-						</a>
-					
+						</a>	
 					</div>
-				
 				</div>
 				</div><!-- ./col -->
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
-					<div class="inner" style="text-align:center;">
-						
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center;">		
+						<a href="busquedaP.php?pagina=1&lugar=5" class="button radius">
 							<span>
 								Comayagua
 							</span>
 						</a>
-			
-					</div>
-				
+					</div>		
 				</div>
 				</div><!-- ./col -->
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-						
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=3" class="button radius">
 							<span>
 							Choluteca 
 							</span>
 						</a>
-			
 					</div>
-			
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
-					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center;">		
+						<a href="busquedaP.php?pagina=1&lugar=15" class="button radius">
 							<span>
 								Olancho
 							</span>
 						</a>
-
 					</div>
-					
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=2" class="button radius">
 							<span>
 								Atlántida 
 							</span>
 						</a> 
-
 					</div>
-				
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
-					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center;">	
+						<a href="busquedaP.php?pagina=1&lugar=8" class="button radius">
 							<span>
 								El Paraíso
 							</span>
 						</a>    
-
 					</div>
-					
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=11" class="button radius">
 							<span>
 								Islas de la Bahía 
 							</span>
 						</a>  
-
 					</div>
-			
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=6" class="button radius">
 							<span>
 								Copán
 							</span>
 						</a> 
-
 					</div>
-				
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
-					<div class="inner" style="text-align:center">
-					
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center">	
+						<a href="busquedaP.php?pagina=1&lugar=17" class="button radius">
 							<span>
 								Valle
 							</span>
 						</a>  
-
 					</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
-					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center;">	
+						<a href="busquedaP.php?pagina=1&lugar=12" class="button radius">
 							<span>
 								La Paz 
 							</span>
 						</a>
-
 					</div>
-					
-			
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
-					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+					<div class="inner" style="text-align:center;">	
+						<a href="busquedaP.php?pagina=1&lugar=16" class="button radius">
 							<span>
 								Santa Bárbara
 							</span>
 						</a>
-
 					</div>
-			
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=10" class="button radius">
 							<span>
 								Intibucá
 							</span>
 						</a>
-
 					</div>
-					
-				
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=13" class="button radius">
 							<span>
 								Lempira
 							</span>
 						</a>
-
 					</div>
-			
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=18" class="button radius">
 							<span>
 								Yoro
 							</span>
 						</a>
-						
 					</div>
-				
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
 				<div class="small-box">
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=14" class="button radius">
 							<span>
 								Ocotepeque
 							</span>
 						</a> 
-
 					</div>
-					
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9">
@@ -457,32 +406,25 @@
 				</div>
 				<div class="col-lg-3 col-xs-9">
 				<!-- small box -->
-
 				<div class="small-box">
 					<div class="inner" style="text-align:center; border-radius: 50px">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=4" class="button radius">
 							<span>
 								Colón
 							</span>
 						</a>
-
 					</div>
 					<div class="icon">
-					
 					</div>
-				
 				</div>
 				</div>
 				<div class="col-lg-3 col-xs-9" >
 					<div class="inner" style="text-align:center;">
-					
-						<a href="#" class="button radius">
+						<a href="busquedaP.php?pagina=1&lugar=9" class="button radius">
 							<span>
 								Gracias a Dios
 							</span>
 						</a>
-			
 					</div>    
 				</div>
 			</div>

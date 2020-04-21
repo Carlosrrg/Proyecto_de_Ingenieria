@@ -71,3 +71,203 @@ footer {
 	display: flex;
 	align-self: flex-end;
 }
+
+/* ---------------------------------------------------
+    Estilos para botones de radio
+----------------------------------------------------- */
+.btn-secondary {
+	color: #616467;
+	-webkit-box-shadow: 0 0 0 2px #616467 inset;
+    box-shadow: 0 0 0 2px #616467 inset;
+	background-color: transparent;
+}
+
+/* ---------------------------------------------------
+    Estilos para la barra lateral 
+----------------------------------------------------- */
+#sidebar-wrapper {
+   margin-left: -30rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  width: 30rem;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 30rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -30rem;
+  }
+}
+
+/* ---------------------------------------------------
+    Boton para deplegar la barra lateral 
+----------------------------------------------------- */
+
+.sidebar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+	position: fixed;
+	z-index: 100;
+}
+
+#menu-toggle {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+	display:none;
+}
+
+#menu-toggle span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #000;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    transition-delay: 0.2s;
+}
+
+#menu-toggle span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+}
+#menu-toggle span:nth-of-type(2) {
+    opacity: 0;
+}
+#menu-toggle span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+#menu-toggle.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+	background-color:transparent;
+}
+
+/* ---------------------------------------------------------
+    Boton para desplegar la barra en dispositivos pequeños
+-----------------------------------------------------------*/
+@media (max-width: 768px) {
+	#menu-toggle {
+		display: block;
+	}
+    #menu-toggle span:first-of-type{
+		opacity: 0;
+	}
+    #menu-toggle span:nth-of-type(2){
+		background-color: transparent;
+		opacity: 1;
+		margin-top:10px;
+	}
+    #menu-toggle span:last-of-type {
+        transform: none;
+        opacity: 0;
+        margin: 5px auto;
+    }
+    #menu-toggle.active span {
+        margin: 0 auto;
+    }
+    #menu-toggle.active span:first-of-type {
+		background-color: #000;
+		opacity: 1;
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    #menu-toggle.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+    #menu-toggle.active span:last-of-type {
+		background-color: #000;
+		opacity: 1;
+        transform: rotate(-45deg) translate(1px, -1px);
+    }
+	
+	#sidebar-wrapper {
+	   margin-left: -18rem;
+	   width: 18rem;
+	}
+	
+	.mini{
+		width: 17rem;
+		margin-left:25px;
+	}
+}
+
+/* -----------------------------------------------------------
+    Slider para seleccionar el precio en la pagina de busqueda
+-------------------------------------------------------------*/
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  background: #d3d3d3;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%; 
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+#link-productos {
+  color: black;
+}
+
+#link-productos:hover {
+  color: black;
+  text-decoration:none;
+}
+
+a .mini:hover{
+  background: #f8f9fa !important;
+}

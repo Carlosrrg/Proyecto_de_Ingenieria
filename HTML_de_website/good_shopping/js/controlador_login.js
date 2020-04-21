@@ -190,6 +190,10 @@ $(document).ready(function(){
 		}					
 	});
 
+	$("#btn-busqueda").click(function(){
+		var busca = $("#txt-barraBusqueda").val();
+		window.location="BusquedaP.php?pagina=1&busca="+busca+"";
+	});
 
 	$("#btn_iniciar").click(function(){
 
