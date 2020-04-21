@@ -96,7 +96,9 @@ CREATE TABLE tbl_mensajes (
     codigo_usuario_comprador   INTEGER NOT NULL,
     codigo_usuario_vendedor    INTEGER NOT NULL,
     mensaje                    VARCHAR2(500) NOT NULL,
-    fecha_envio                DATE NOT NULL
+    fecha_envio                DATE NOT NULL,
+    codigo_publicacion         INTEGER,
+    nombre_publicacion         VARCHAR2(100)
 );
 
 ALTER TABLE tbl_mensajes ADD CONSTRAINT tbl_mensajes_pk PRIMARY KEY ( codigo_mensaje );
@@ -157,7 +159,8 @@ CREATE TABLE tbl_ranking (
     codigo_usuario_comprador   INTEGER NOT NULL,
     codigo_usuario_vendedor    INTEGER NOT NULL,
     numero_estrellas           NUMBER NOT NULL,
-    fecha_ranking              DATE NOT NULL
+    fecha_ranking              DATE NOT NULL,
+    comentarios                VARCHAR2(500)
 );
 
 CREATE TABLE tbl_reportes (
