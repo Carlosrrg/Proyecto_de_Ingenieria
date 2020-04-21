@@ -194,7 +194,7 @@
 	    echo json_encode($resultado);
 	}
 	if ($accion == 4) {
-		$busqueda = $_POST['busqueda']."%";
+		$busqueda = "%".$_POST['busqueda']."%";
 		$muestra_denuncias = $conexion->ejecutarInstruccion("	
 			SELECT  A.CODIGO_REPORTE,
 			        A.CODIGO_TIPO_REPORTE,

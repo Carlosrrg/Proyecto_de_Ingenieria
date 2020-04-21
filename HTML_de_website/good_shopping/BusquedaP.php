@@ -73,29 +73,30 @@
 			}
 			else{
 				$usuario = $_SESSION['codigo_usuario_sesion'];
-				echo '<div class="nav-item dropdown">';
-					echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
-							$conexion->establecerConexion();
-							$resultado_usuario = $conexion->ejecutarInstruccion("	
-								SELECT NOMBRE,CODIGO_TIPO_USUARIO
-								FROM TBL_USUARIOS
-								WHERE CODIGO_USUARIO = '$usuario'");
-							oci_execute($resultado_usuario);
-							while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-								echo $fila["NOMBRE"];
-								$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
-							}
-					echo '</a>';
-					echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-					if ($tipo_usuario==1) {
-						echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
-					}
-					else {
-						echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
-					}
+				//echo "seccion iniciada por: " . $usuario;
+				$conexion->establecerConexion();
+				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE,CODIGO_TIPO_USUARIO
+																		FROM TBL_USUARIOS
+																		WHERE CODIGO_USUARIO = '$usuario'");
+				oci_execute($resultado_usuario);
+				while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+					echo '<h6 style="padding-top:4px; margin-right:-10px;">'.$fila["NOMBRE"].'</h6>';
+					$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
+				}
+			    echo'<div class="nav-item dropdown">';
+					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
+							
+					echo'</a>';
+					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -110px;">';
+						if ($tipo_usuario==1) {
+							echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
+						}
+						else {
+							echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+						}
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
-					echo '</div>';
-				echo '</div>';	
+					echo'</div>';
+				echo'</div>';
 			}
 		?>
 	</nav>
@@ -147,11 +148,13 @@
 			$parametros .= "&precio_max=".$precio_max;
 		}
 		$subcategorias = "";
-		$sql_subcatego = "";
+		$sql_subcatego1 = "";
+		$sql_subcatego2 = "";
 		if (isset($_GET['subcategorias'])) {
 			$subcategorias = $_GET['subcategorias'];
 			if ($subcategorias!="") {
-				$sql_subcatego = " ";
+				$sql_subcatego1 = "INNER JOIN TBL_PRODU_X_TBL_CATEGO G ON A.CODIGO_PUBLICACION_PRODUCTO=G.CODIGO_PRODUCTO ";
+				$sql_subcatego2 = "AND G.CODIGO_SUB_CATEGORIA IN(".$subcategorias.") ";
 			}
 			$parametros .= "&subcategorias=".$subcategorias;
 		}
@@ -171,20 +174,19 @@
 			$parametros .= "&orden=".$orden;
 		}
 
-
 		$resultado_cantP = $conexion->ejecutarInstruccion(
 			"SELECT  COUNT(*) NUM_PRODUCTOS
 			FROM TBL_PUBLICACION_PRODUCTOS A
-			--INNER JOIN TBL_PRODU_X_TBL_CATEGO B ON A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PRODUCTO --SE DESCOMENTA CUANDO BUSQUEN SUBCATEGORIAS
 			INNER JOIN TBL_VEND_X_TBL_PUBLI C ON A.CODIGO_PUBLICACION_PRODUCTO=C.CODIGO_PUBLICACION_PRODUCTO
-			INNER JOIN TBL_USUARIOS F ON C.CODIGO_USUARIO_VENDEDOR=F.CODIGO_USUARIO
+			INNER JOIN TBL_USUARIOS F ON C.CODIGO_USUARIO_VENDEDOR=F.CODIGO_USUARIO 
+			".$sql_subcatego1."  
 			WHERE A.CODIGO_ESTADO_PUBLICACION = 1
-			AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('$busca%')
+			AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('%$busca%')
 			".$sql_lugar."
 			".$sql_categoria." 
 			".$sql_moneda." 
-			".$sql_precio."
-			--AND B.CODIGO_SUB_CATEGORIA = '4'
+			".$sql_precio." 
+			".$sql_subcatego2." 
 			");
 		oci_execute($resultado_cantP);
 		while ($cantidad = $conexion->obtenerFila($resultado_cantP)) {
@@ -396,20 +398,20 @@
 							FROM TBL_PUBLICACION_PRODUCTOS A
 							INNER JOIN TBL_VEND_X_TBL_PUBLI B ON A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO
 							INNER JOIN TBL_USUARIOS C ON B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO
-							--INNER JOIN TBL_PRODU_X_TBL_CATEGO D ON A.CODIGO_PUBLICACION_PRODUCTO=D.CODIGO_PRODUCTO --SE DESCOMENTA CUANDO BUSQUEN SUBCATEGORIAS
 							INNER JOIN (
 							        SELECT MIN(CODIGO_IMAGEN) CODIGO_IMAGEN, CODIGO_PRODUCTO FROM TBL_PROD_X_TBL_IMG
 							        GROUP BY CODIGO_PRODUCTO
 							        ) D ON A.CODIGO_PUBLICACION_PRODUCTO=D.CODIGO_PRODUCTO
 							INNER JOIN TBL_IMAGENES E ON D.CODIGO_IMAGEN=E.CODIGO_IMAGEN
-							INNER JOIN TBL_LUGARES F ON F.CODIGO_LUGAR=C.CODIGO_LUGAR
+							INNER JOIN TBL_LUGARES F ON F.CODIGO_LUGAR=C.CODIGO_LUGAR 
+							".$sql_subcatego1." 
 							WHERE A.CODIGO_ESTADO_PUBLICACION = 1
-							AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('$busca%')
+							AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('%$busca%')
 							".$sql_lugar."
 							".$sql_categoria." 
 							".$sql_moneda." 
-							".$sql_precio."
-							--AND D.CODIGO_SUB_CATEGORIA = '4'
+							".$sql_precio." 
+							".$sql_subcatego2." 
 							".$sql_orden.")
 						WHERE RN BETWEEN $limiteInferior+1 AND $limiteSuperior"
 					);
@@ -417,31 +419,35 @@
 					
 					//Se imprimiran todos los productos seleccionados
 					$cantidad = 0;
+					$codigo_anterior = 0;
 					while ($fila = $conexion->obtenerFila($busquedaProductos)) {
-						echo'<a href="InfodeProductos.php?codigo-publicacion='.$fila["CODIGO_PUBLICACION_PRODUCTO"].'" id="link-productos"><div class="card mini" style="margin-bottom:10px">
-						  <div class="card-body">	
-							 <div class="row">
-								<div class="col-lg-3">';
-									echo'<img src="'.$fila["RUTA_IMAGEN"].'" style="width:90%; height: 90%;">'; 
-								echo'</div>
-								
-								<div class="col-lg-9">';
-									echo'<h5 class="card-title">'.$fila["NOMBRE_PRODUCTO"].'</h5>';
-									echo'<img src="img/pin.png" width=15 height=15>'.$fila["NOMBRE_LUGAR"];
-									echo'<p class="card-text">'.$fila["DESCIPCION"].'</p>';
-									echo'<h6 style="color:#15B714;">';
-									if ($fila["CODIGO_TIPO_MONEDA"] == 1) {
-										echo 'L. ';
-									} else {
-										echo '$ ';
-									}
-									echo $fila["PRECIO"].'</h6>';
-									echo'<h6>Publicado el  '.$fila["FECHA_PUBLICACION"].'</h6>';
-								echo'</div>
-								
-							</div>
-						  </div>
-						</div></a>';
+						if ($codigo_anterior!=$fila["CODIGO_PUBLICACION_PRODUCTO"]) {
+							echo'<a href="InfodeProductos.php?codigo-publicacion='.$fila["CODIGO_PUBLICACION_PRODUCTO"].'" id="link-productos"><div class="card mini" style="margin-bottom:10px">
+							  <div class="card-body">	
+								 <div class="row">
+									<div class="col-lg-3">';
+										echo'<img src="'.$fila["RUTA_IMAGEN"].'" style="width:90%; height: 90%;">'; 
+									echo'</div>
+									
+									<div class="col-lg-9">';
+										echo'<h5 class="card-title">'.$fila["NOMBRE_PRODUCTO"].'</h5>';
+										echo'<img src="img/pin.png" width=15 height=15>'.$fila["NOMBRE_LUGAR"];
+										echo'<p class="card-text">'.$fila["DESCIPCION"].'</p>';
+										echo'<h6 style="color:#15B714;">';
+										if ($fila["CODIGO_TIPO_MONEDA"] == 1) {
+											echo 'L. ';
+										} else {
+											echo '$ ';
+										}
+										echo $fila["PRECIO"].'</h6>';
+										echo'<h6>Publicado el  '.$fila["FECHA_PUBLICACION"].'</h6>';
+									echo'</div>
+									
+								</div>
+							  </div>
+							</div></a>';
+							$codigo_anterior = $fila["CODIGO_PUBLICACION_PRODUCTO"];
+						}
 						$cantidad++;
 					}
 					if ($cantidad==0) {
@@ -451,7 +457,7 @@
 				
 				<!--Control de paginacion para cambiar de una pagina a otra-->
 				<nav aria-label="Paginacion">
-				  <ul class="pagination">
+				  <ul class="pagination justify-content-center">
 					
 					<!--boton que lleva a una pagina anterior, no es nesesario modificar este componente-->
 				    <li class="page-item
