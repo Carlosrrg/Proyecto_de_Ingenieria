@@ -7,11 +7,10 @@
 	$conexion->establecerConexion();
 
 	$mensaje_enviar = $_POST["txt-mensaje"];
-	$codigo_usuario_vendedor = $_POST["txt-idVendedor"];
+	$codigo_usuario_comprador = $_POST["txt-idComprador"];
 	$codigo_publicacion = $_POST["txt-codigo-p"];
 	
-	$codigo_usuario_comprador = $_SESSION['codigo_usuario_sesion'];
-	//$codigo_usuario_comprador = 8;
+	$codigo_usuario_vendedor = $_SESSION['codigo_usuario_sesion'];
 
 	$nombre_publicacion = " ";
 	$nombre_usuario_comprador = " ";
@@ -24,17 +23,7 @@
 
 	$mensaje = " ";
 
-	/*
-		Buenas Usuario_vendedor te saludamos de Good Shopping para recordarte que tienes una notificacion pendiente
-		
-		De: Usuario_comprador
-		Por la publicacion: nombre_publicacion
-		Recibido: fecha_recibida
-		Mensaje: contenido
-		
-		Gracias por usar el servicio de Good Shopping, te esperamos pronto.
-		para mayor informacion contactate con nosotros atraves de nuestras redes sociales o atraves de correo electronico a: goodshopping_suport@gmail.com 
-	*/
+	
 
 	//echo $mensaje_enviar." ".$codigo_usuario_vendedor." ".$codigo_publicacion."  ".$codigo_usuario_comprador;
 
@@ -72,24 +61,24 @@
 
 
 	if (!empty($_POST)) {
-				//Envio de copia de mensaje a vendedor
+				//Envio de copia de mensaje a Comprador
 				$email_subject = "Saludos de Good Shopping!";
-				$email_message = "Buenas ".$nombre_usuario_vendedor." te saludamos de Good Shopping para recordarte que tienes una notificacion pendiente\n\n";
-				$email_message .= " - De: " . $nombre_usuario_comprador . "\n";
-				$email_message .= " - Correo de contacto: " . $correo_usuario_comprador . "\n";
-				$email_message .= " - Telefono de contacto: " . $telefono_usuario_comprador . "\n";
+				$email_message = "Buenas ".$nombre_usuario_comprador." te saludamos de Good Shopping para recordarte que tienes una notificacion pendiente\n\n";
+				$email_message .= " - De: " . $nombre_usuario_vendedor . "\n";
+				$email_message .= " - Correo de contacto: " . $correo_usuario_vendedor . "\n";
+				$email_message .= " - Telefono de contacto: " . $telefono_usuario_vendedor . "\n";
 				$email_message .= " - Por la publicacion: " . $nombre_publicacion . "\n";
-				$email_message .= " - Contenido del mensaje: " . $mensaje_enviar . "\n\n";
+				$email_message .= " - Contenido del mensaje recibido: " . $mensaje_enviar . "\n\n";
 				$email_message .= "Gracias por usar el servicio de Good Shopping, te esperamos pronto.";
 				$email_message .= " Para mayor informacion contactate con nosotros atraves de nuestras redes sociales o atraves de correo electronico a: goodshopping_suport@gmail.com";
 				
 
-				$header = "From: " . $correo_usuario_vendedor . "  \r\n";
+				$header = "From: " . $correo_usuario_comprador . "  \r\n";
 				$header .= "X-Mailer: PHP/" . phpversion() . "  \r\n";
 				$header .= "Mime-Version: 1.0 \r\n";
 				$header .= "Content-Type:  text/plain";
 
-				if (mail($correo_usuario_vendedor,$email_subject,$email_message,$header)) {
+				if (mail($correo_usuario_comprador,$email_subject,$email_message,$header)) {
 					//$mensaje .= "Se envío correo de registro a " . $correo . "\n";
 					echo $mensaje = 0;
 				}else{
@@ -100,30 +89,30 @@
 				$ingresar_mensaje = $conexion->ejecutarInstruccion("	DECLARE
 																		    V_CODIGO_MENSAJE INTEGER;
 																		BEGIN
-																		    P_AGREGAR_MENSAJES ($codigo_usuario_comprador,$codigo_usuario_vendedor,'$mensaje_enviar',SYSDATE,$codigo_publicacion,'$nombre_publicacion',V_CODIGO_MENSAJE);
+																		    P_AGREGAR_MENSAJES ($codigo_usuario_vendedor,$codigo_usuario_comprador,'$mensaje_enviar',SYSDATE,$codigo_publicacion,'$nombre_publicacion',V_CODIGO_MENSAJE);
 																		    DBMS_OUTPUT.PUT_LINE('CODIGO_MENSAJE: '||V_CODIGO_MENSAJE);
 																		END;");
 				oci_execute($ingresar_mensaje);
 
 				//Envio de copia de mensaje a comprador
 				$email_subject = "Saludos de Good Shopping!";
-				$email_message = "Buenas ".$nombre_usuario_comprador." aqui tienes una copia del mensaje enviado a " .$nombre_usuario_vendedor. ".\n\n";
-				$email_message .= " - Nombre del vendedor: " . $nombre_usuario_vendedor . "\n";
-				$email_message .= " - Correo de contacto: " . $correo_usuario_vendedor . "\n";
-				$email_message .= " - Telefono de contacto: " . $telefono_usuario_vendedor . "\n";
-				$email_message .= " - Publicacion desde donde se envia el mensaje: " . $nombre_publicacion . "\n";
+				$email_message = "Buenas ".$nombre_usuario_vendedor." aqui tienes una copia del mensaje enviado a " .$nombre_usuario_comprador. ".\n\n";
+				$email_message .= " - Nombre del comprador: " . $nombre_usuario_comprador . "\n";
+				$email_message .= " - Correo de contacto: " . $correo_usuario_comprador . "\n";
+				$email_message .= " - Telefono de contacto: " . $telefono_usuario_comprador . "\n";
+				$email_message .= " - Publicacion por la cual se responde el mensaje: " . $nombre_publicacion . "\n";
 				$email_message .= " - Contenido del mensaje que enviastes: " . $mensaje_enviar . "\n\n";
 				$email_message .= "Gracias por usar el servicio de Good Shopping, te esperamos pronto.";
 				$email_message .= " Para mayor informacion contactate con nosotros atraves de nuestras redes sociales o atraves de correo electronico a: goodshopping_suport@gmail.com";
 				
 
-				$header = "From: " . $correo_usuario_comprador . "  \r\n";
+				$header = "From: " . $correo_usuario_vendedor . "  \r\n";
 				$header .= "X-Mailer: PHP/" . phpversion() . "  \r\n";
 				$header .= "Mime-Version: 1.0 \r\n";
 				$header .= "Content-Type:  text/plain";
 
 
-				if (mail($correo_usuario_comprador,$email_subject,$email_message,$header)) {
+				if (mail($correo_usuario_vendedor,$email_subject,$email_message,$header)) {
 					//$mensaje .= "Se envío correo de registro a " . $correo . "\n";
 					echo $mensaje = 0;
 				}else{

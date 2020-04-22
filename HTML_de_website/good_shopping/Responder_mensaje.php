@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Notificaciones</title>
+    <title>Responder Mensaje</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -12,6 +12,8 @@
     <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+	<link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -216,6 +218,7 @@
 				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para ver tus Productos y Servicios.</div>';
 			}
 			else{
+				$codigo_usuario_comprador = " ";
 				//<!-- Page Content -->
 				echo '<div id="page-content-wrapper">';
 					//<!--Boton para desplegar la barra lateral-->
@@ -227,63 +230,55 @@
 						echo '<span></span>';
 					echo '</button>';
 
-					
+					if (isset($_GET["codigo-usuario-comprador"])) {
+						$codigo_usuario_comprador = $_GET["codigo-usuario-comprador"];
+						$codigo_publicacion = $_GET["codigo-publicacion"];
 
-					echo '<div class="container" style="padding: 30px">';
-						echo '<center><div><h5 class="col-lg-12">Mis Notificaciones</h5></div>';
-						echo '<br>';
-						//TABLA DE PRODUCTOS
-						echo '<table class="table" style="width:95%">
-								<thead class="thead-dark">
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">Usuario</th>
-							      <th scope="col">Contactos</th>
-							      <th scope="col">Fecha recibido</th>
-							      <th scope="col">Mensaje</th>
-							      <th scope="col">Publicacion</th>
-							      <th scope="col">Acción</th>
-							    </tr>
-							  </thead>
-							  <tbody>';
+						$resultado_usuario_comprador = $conexion->ejecutarInstruccion("	SELECT NOMBRE, APELLIDO
+																					FROM TBL_USUARIOS
+																					WHERE CODIGO_USUARIO = '$codigo_usuario_comprador'");
+						oci_execute($resultado_usuario_comprador);
+						while ($fila2 = $conexion->obtenerFila($resultado_usuario_comprador)) {
+							echo '<div class="container" style="padding: 30px">';
+								echo '<div><h5 class="col-lg-12">Responder mensaje a: '.$fila2["NOMBRE"].' '.$fila2["APELLIDO"].'</h5></div>';
+						}
+								echo '<br>';
 
-							  	$conteo = 1;
+								//echo $codigo_usuario_comprador;
+								//echo $codigo_publicacion;
+								
 
-							  	$resultado_mensajes = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_MENSAJE, C.CODIGO_USUARIO, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO, A.FECHA_ENVIO, A.MENSAJE, A.CODIGO_PUBLICACION, A.NOMBRE_PUBLICACION
-																						FROM TBL_MENSAJES A
-																						INNER JOIN TBL_COMPRADORES B
-																						ON (A.CODIGO_USUARIO_COMPRADOR = B.CODIGO_USUARIO_COMPRADOR)
-																						INNER JOIN TBL_USUARIOS C
-																						ON (C.CODIGO_USUARIO = B.CODIGO_USUARIO_COMPRADOR)
-																						WHERE CODIGO_USUARIO_VENDEDOR = '$usuario'
-																						ORDER BY (A.CODIGO_MENSAJE)");
-								oci_execute($resultado_mensajes);
-								while ($fila2 = $conexion->obtenerFila($resultado_mensajes)) {
-									echo '<tr>
-									      <th scope="row">'.$conteo.'</th>
-									      <td>'.$fila2["NOMBRE"].' '.$fila2["APELLIDO"].'</td>
-									      <td>'.$fila2["CORREO_ELECTRONICO"].'<br>+504 '.$fila2["TELEFONO"].'</td>
-									      <td>'.$fila2["FECHA_ENVIO"].'</td>
-									      <td style="padding-left:2px;padding-right: 2px">';
-									echo '<p>'.$fila2["MENSAJE"].'</p>';
-									      		
-									echo  '
-										  </td>
-										  <td><a href="infodeProductos.php?codigo-publicacion='.$fila2["CODIGO_PUBLICACION"].'">'.$fila2["NOMBRE_PUBLICACION"].'</a></td>
-									      <td style="padding-left:2px;padding-right: 2px">
-									      	<a class="btn btn-success" href="Responder_mensaje.php?codigo-usuario-comprador='.$fila2["CODIGO_USUARIO"].'&codigo-publicacion='.$fila2["CODIGO_PUBLICACION"].'" style="margin:0" >Responder</a>
-									      </td>
-								    </tr>';
-								    $conteo++;
-								}
+
+								echo '<div style="width: 90%;">';
+									echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
+									echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';
+										echo'<input type="text" name="txt-codigo-p" id="txt-codigo-p" style="display: none;" value="'.$codigo_publicacion.'">';
+										echo'<input type="text" name="txt-idComprador" id="txt-idComprador" style="display: none;" value="'.$codigo_usuario_comprador.'">';	
+									echo'<div align="right">';
+										echo'<button type="submit" name="btn_enviar_mensaje_comprador" id="btn_enviar_mensaje_comprador" class="btn btn-success"> Responder</button><br><br>';
+										echo '<div class="spinner-border text-success" role="status" id="r-cargando">';
+	                            			echo '<span class="sr-only">Loading...</span>';
+	                        			echo '</div>';
+									echo'</div>';
+								echo '</div>';
+								
+							echo '</div>';
+					}
+					else{
+						echo '<div class="container" style="padding: 30px">';
+							echo '<div><h5 class="col-lg-12">Responder mensaje a: </h5></div>';
+							echo '<br>';
+
+							echo '<div style="width: 90%;">';
+								echo'<textarea class="ex1" id="txt-mensaje" name="txt-mensaje" style="width: 100%; height: 180px;" placeholder="Escriba su mensaje aqui"></textarea>';	
+								echo'<div align="right">';
+											echo'<button type="submit" name="btn_enviar_mensaje1" id="btn_enviar_mensaje1" class="btn btn-success" disabled> Enviar Mensaje</button>';
+								echo'</div>';
+							echo '</div>';
+							
+						echo '</div>';
+					}
 						
-						echo '</tbody>
-							</table>';
-						echo '</center>';
-						echo '</tbody>
-							</table>';
-
-					echo '</div>';
 
 				echo '</div><br>';
 			}
@@ -396,7 +391,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/"></script>
+	<script src="js/controlador_enviar_mensaje.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		
