@@ -29,33 +29,33 @@
 			<div class="dropdown-menu dropright" style="overflow-y: auto; height: 590px; margin: 6px 0 0 -17px; border-radius: 0px;">
 				<h6 style="text-align: center;">Categorías</h6>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Entretenimiento</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#"><label>Películas & Música</label></a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Computadoras & Accesorios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Consolas & Videojuegos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Celulares & Accesorios</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=1">Entretenimiento</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=1">Películas & Música</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=2">Computadoras & Accesorios</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=3">Consolas & Videojuegos</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=4">Celulares & Accesorios</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Vehículos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=2">Vehículos</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=5">Comprar</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=6">Rentar</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Inmuebles</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=3">Inmuebles</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=5">Comprar</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=6">Rentar</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Hogar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Muebles</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Electrodomésticos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Jardín & Herramientas</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=4">Hogar</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=7">Muebles</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=8">Electrodomésticos</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=9">Jardín & Herramientas</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Empleos, Negocios & Servicios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Ofertas de empleo</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios a negocios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios al público</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros servicios</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=5">Empleos, Negocios & Servicios</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=10">Ofertas de empleo</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=11">Servicios a negocios</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=12">Servicios al público</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5">Otros servicios</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Otros</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros productos</a>
+				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=6">Otros</a>
+				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=6&subcategorias=13">Otros productos</a>
 			</div>
 		</div>
 
