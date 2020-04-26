@@ -1,3 +1,6 @@
+/* ---------------------------------------------------
+    Configuracion responsiva del body
+----------------------------------------------------- */
 body {
 	background-color: #F5F5F5;
 	margin:0;
@@ -7,6 +10,9 @@ body {
 	flex-wrap: wrap;
 }
 
+/* ---------------------------------------------------
+    Listas desplegables
+----------------------------------------------------- */
 .dropdown a{
 	color: #000 !important;
 }
@@ -26,6 +32,9 @@ body {
 	 transition: all 0.2s ease-in-out; 
 }
 
+/* ---------------------------------------------------
+    Botones de la landing page
+----------------------------------------------------- */
 .button {
 	background:#ffffff;
 	color:#000000;
@@ -66,7 +75,9 @@ body {
 .barra {
 	padding-top:30px;
 }
-
+/* ---------------------------------------------------
+    footer siempre abajo de la pagina
+----------------------------------------------------- */
 footer {
 	display: flex;
 	align-self: flex-end;
@@ -217,6 +228,16 @@ footer {
 		width: 17rem;
 		margin-left:25px;
 	}
+	/*Banner*/
+    #previewbanner {
+		width:90%;
+		height: 150px;
+		overflow: hidden;
+		margin: 10px;
+		position: relative;
+		margin-bottom:10px;	  
+		align-content: center;
+	}
 }
 
 /* -----------------------------------------------------------
@@ -270,4 +291,14 @@ footer {
 
 a .mini:hover{
   background: #f8f9fa !important;
+}
+
+/** ====================
+ * Lista de Comentarios
+ =======================*/
+.comentario{
+	width:8vh;
+	height:8vh;
+	max-height: 80px;
+	max-width: 80px;
 }

@@ -116,9 +116,11 @@
 			//<!--Fila 1-->
 			echo'<div class="row">';
 		
-			//consulta para obtener los datos del usuario en una variable de conexion: resultado_usuario
+			//obtencion del codigo del vendedor enviado desde la anterior pagina
 			$codigo_usuario_vendedor = $_GET["codigo-usuario"];
 			echo'<input type="text" id="codigoVendedor" value="'.$codigo_usuario_vendedor.'" style="display: none;">';
+			
+			//consulta para obtener los datos del usuario en una variable de conexion: resultado_usuario
 			$resultado_usuario = $conexion->ejecutarInstruccion(
 				"SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO, TELEFONO, L.NOMBRE_LUGAR, NVL(CIUDAD,0) CIUDAD,
 					obtener_valoracion(U.CODIGO_USUARIO) NUMERO_ESTRELLAS, V.CODIGO_TIPO_VENDEDOR,
@@ -155,10 +157,13 @@
 				"
 			);
 			oci_execute($imagenesDelPrefil);
+
+			//imagenes por defecto 
 			$imagenPerfil = "recursos/imagenes/ImagenUsuario.png";  
 			$imagenBanner = "img/banner.jpg";
 			$imagenLogo = "img/cuadrada.png";
 			while ($imagen = $conexion->obtenerFila($imagenesDelPrefil)){
+				//En caso que existan imagenes se reemplazan las imagenes por defecto
 				if($imagen["CODIGO_TIPO_IMAGEN"] == 2){
 					$imagenBanner = $imagen["RUTA_IMAGEN"];
 				}else if($imagen["CODIGO_TIPO_IMAGEN"] == 1){
@@ -170,7 +175,7 @@
 				$tipoVendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 				//<!--Banner para empresarial-->
 				if ($tipoVendedor == 2) {
-					echo'<div class="container" style="text-align: center; border-bottom: medium; margin-top:-50px;
+					echo'<div class="container" style="text-align:center; border-bottom:medium; margin-top:-50px;
 						height:20vh; margin-bottom: 40px;">
 						<center><div id="previewbanner"><img src="'.$imagenBanner.'" style="padding-bottom: 1%;padding-right: 1%;" class="img-fluid"></div></center>
 					</div>';
@@ -196,7 +201,7 @@
 						echo'<div class="row">';
 						echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-4">';
 						//<!--Imagen del perfil de usuario id:imagenUsuario-->
-							echo'<img src="'.$imagenLogo.'" class="rounded-circle img-fluid" id="imagenUsuario" alt="Placeholder image" 
+							echo'<img src="'.$imagenLogo.'" class="rounded-circle img-fluid" id="imagenUsuario" 
 							style="width: 100%; max-width:200px; max-height:200px; padding:10px;">';
 						echo'</div>';
 						echo'<div class="col-md-6 col-sm-6 offset-lg-0 col-lg-8">';
@@ -217,12 +222,14 @@
 						echo'</div>';
 					echo'</div>';
 				}
-
+				
+				//si no se ha iniciado sesion no se podra calificar
 				if(!isset($_SESSION['codigo_usuario_sesion'])){
 					echo '<div style="margin-left: 50px; margin-top: 10px">No has iniciado sesión, '." ".
 					' <a href="index.php">Inicia Sesión</a> '." ".
 					' para poder calificar o agregar a favoritos este vendedor</div>';
 				}else if($codigo_usuario_vendedor != $_SESSION['codigo_usuario_sesion']){
+					//Apartado de calificaciones y envio de comentarios
 					$usuario = $_SESSION['codigo_usuario_sesion'];
 					$esTienda = $conexion->ejecutarInstruccion(
 					"SELECT V.CODIGO_TIPO_VENDEDOR FROM TBL_USUARIOS U
@@ -232,7 +239,8 @@
 					");
 					oci_execute($esTienda);
 					
-					while($obtenerTienda = $conexion->obtenerFila($esTienda)){	
+					while($obtenerTienda = $conexion->obtenerFila($esTienda)){
+						//Lastiendas no pueden calificar vendedores	
 						if($obtenerTienda["CODIGO_TIPO_VENDEDOR"] != 2){
 							$resultadoMiValoracion = $esTienda = $conexion->ejecutarInstruccion(
 								"SELECT NUMERO_ESTRELLAS FROM TBL_RANKING
@@ -252,16 +260,49 @@
 							//etiqueta para indicar la seccion de calificar vendedor
 							echo'<h6 style="color: #000;">Calificar este vendedor</h6>';
 							//Hacer funcionar valoracion por estrellas
-							echo'<form style="margin-bottom:10px;">';
+							echo'<form action="" method="post" style="margin-bottom:10px;">';
 								echo'<div class="rateyo" id= "rating"';
 									echo'data-rateyo-rating="'.$miValoracion.'"';
 									echo'data-rateyo-num-stars="5"';
-									echo'data-rateyo-full-star= true style="margin: 10px auto"></div>';
-									echo'<h6 class = "result">Tu calificación: 0</h6>';
-								echo'<input type="radio" name="rating" id="rb_rating value="6" checked style="display: none;">';
+									echo'data-rateyo-full-star= true style="margin: 10px auto; outline: none;">
+									</div>';
+								//	echo'<h6 class = "result">Tu calificación: '.$miValoracion.'</h6>';
+								echo'<input type="radio" name="rating" id="rb_rating" value="'.$miValoracion.'" checked style="display: none;">';
 							echo'</form>';
-							echo'<button type="button" id="btn_enviar" 
-								name="enviar" class="btn btn-dark">Enviar Valoración</button><br><br>';
+
+							if($miValoracion > 0){
+								//<!--boton de modal para comentarios-->
+								echo'<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#mdl_comentarios"
+									style="margin-bottom:10px;">
+										Enviar un comentario
+									</button>';
+							}	
+
+								//<!-- Modal comentarios-->
+							 echo'<div class="modal fade" id="mdl_comentarios" tabindex="-1" role="dialog" aria-labelledby="mdl_comentariosLabel" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+									<div class="modal-content">
+									  <div class="modal-header">
+										<h5 class="modal-title" id="mdl_comentariosLabel">Añade un comentario</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+									  </div>
+									  <div class="modal-body">
+										<div class="form-group">
+											<textarea class="form-control" id="txt_comentario" rows="4"></textarea>
+										</div>
+									  </div>
+									  <div class="modal-footer">
+										<button type="submit" id="btn_cerrar" class="btn btn-danger" data-dismiss="modal"
+										>Cerrar</button>';
+										//Boton para enviar valoracion
+										echo'<button type="submit" id="btn_enviar" data-toggle="modal"
+											name="enviar" class="btn btn-success">Enviar</button><br><br>';
+									echo'</div>
+									</div>
+								  </div>
+								</div>';
 						}
 								
 					}
@@ -271,6 +312,7 @@
 
 				//<!--Columna 2-->
 				echo'<div class="col-sm-6 col-md-6 col-lg-5" style="text-align: left;">';
+				//informacion basica del vendedor o tienda
 					if($tipoVendedor == 1){
 						echo'<h6>Correo: '; 
 							echo$fila["CORREO_ELECTRONICO"];
@@ -377,10 +419,72 @@
 				
 			echo'</div>';
 		?>
+
+		<!--Seccion para leer comentarios que ha recibido el vendedor-->
+		<div class="container">
+			<?php 
+				//consulta con todos los comentarios y usuarios que han hecho comentarios a el vendedor
+				$comentarios = $conexion->ejecutarInstruccion(
+					"SELECT R.COMENTARIOS, U.NOMBRE||' '||U.APELLIDO USUARIO, R.NUMERO_ESTRELLAS,
+					 R.CODIGO_USUARIO_COMPRADOR 
+					FROM TBL_RANKING R
+					INNER JOIN TBL_USUARIOS U ON U.CODIGO_USUARIO = R.CODIGO_USUARIO_COMPRADOR
+					WHERE CODIGO_USUARIO_VENDEDOR = $codigo_usuario_vendedor AND
+					COMENTARIOS IS NOT NULL"
+				);
+				oci_execute($comentarios);
+				$contador = 0;
+				while($fila = $conexion->obtenerFila($comentarios)){	
+					$imagenComprador = 'img/account.png';
+					if($contador == 0){
+						//solo se mostrara una vez este titulo
+						echo'<br><hr><h4>Comentarios</h4><br>';
+						$contador++;
+					}
+					$resultadoCompradores = $conexion->ejecutarInstruccion(
+						"SELECT IMG.RUTA_IMAGEN FROM TBL_VEND_X_TBL_IMG IMG_V
+						INNER JOIN TBL_IMAGENES IMG ON IMG.CODIGO_IMAGEN = IMG_V.CODIGO_IMAGEN
+						WHERE IMG_V.CODIGO_USUARIO_VENDEDOR = ".$fila["CODIGO_USUARIO_COMPRADOR"].""
+					);
+					oci_execute($resultadoCompradores);
+					
+					while($imgRuta = $conexion->obtenerFila($resultadoCompradores)){
+						$imagenComprador = $imgRuta["RUTA_IMAGEN"];
+					}
+					echo'<div class="card bg-light mb-3" style="max-width: 70rem;">';
+						echo'<div class="card-header">';
+							echo'<div class="row" style="text-align:left;">';
+								
+								echo'<div class="col-lg-10 col-md-8 col-sm-8 col-12">';
+									echo'<img class="comentario rounded-circle" src="'.$imagenComprador.'">';
+										echo ' '.$fila["USUARIO"];
+								echo'</div>';
+								/*rateyo para mostrar el numero de estrellas con las que puntuo el comprador, este item
+								no es editable*/
+								echo'<div class="col-lg-2 col-md-4 col-sm-4 col-12">';
+										echo'<h7 class="rateyo" id="puntuacion"';
+										echo'starWidth= "10px"';
+										echo'data-rateyo-read-only="true"';
+										echo'data-rateyo-rating="'.$fila["NUMERO_ESTRELLAS"].'"';
+										echo'data-rateyo-num-stars= "5"';
+										echo'data-rateyo-star-width= "25px">';
+									echo'</h7>
+									</div>
+								</div>';
+						echo'</div>';
+						echo'<div class="card-body" style="text-align:justify; margin-top:10px;">';
+							echo'<p class="card-text">'.$fila["COMENTARIOS"].'</p>';
+						echo'</div>';
+					echo'</div>';
+				}
+				?>
+			</div>
+		</div>
+
 	</div>
 		<!-- /#page-content-wrapper -->
 	<!-- /#wrapper -->
-	  
+	
 	<!--Pie de página-->
 	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
 		<div class="container">
@@ -473,15 +577,25 @@
 		/* Javascript */
 		$(function () {
 			$(".rateyo").rateYo().on("rateyo.change", function (e, data) {
+				//captura del valor del numero de estrellas
 				var rating = data.rating;
-				$(this).parent().find('.result').text('Tu calificación: '+ rating);
+				//$(this).parent().find('.result').text('Tu calificación: '+ rating);
 				if(rating >=1 && rating <=5){
 					$(this).parent().find('input[name=rating]').val(rating);
 				}else{
 					$(this).parent().find('input[name=rating]').val(6);
 				}	
 			});
-    	});	
+			
+			//$("#puntuacion").rateYo("option", "starWidth", "20px"); 
+
+    	});
+
+		//programando el boton cerrar del modal para que limpie la caja de agregar comentario
+		$("#btn_cerrar").click(function(){
+			$('#txt_comentario').val('');
+		});
+
 	</script>
 </body>
 </html>
