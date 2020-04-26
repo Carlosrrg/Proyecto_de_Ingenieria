@@ -453,6 +453,7 @@
 					if ($cantidad==0) {
 						echo'<h5>No se encontraron resultados</h5>';
 					}
+					if ($cantidad!=0) {
 				?>
 				
 				<!--Control de paginacion para cambiar de una pagina a otra-->
@@ -492,6 +493,7 @@
 					</li>
 			      </ul>
 			  </nav>
+			  <?php } ?>
             </div>
 	  </div>
 	  <!-- /#Contenido de la pagina -->

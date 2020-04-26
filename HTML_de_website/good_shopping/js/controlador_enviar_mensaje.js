@@ -62,7 +62,7 @@ $(document).ready(function(){
 			//alert(parametros2);
 
 			$("#r-cargando").show();
-			$("#btn_enviar_mensaje").prop('disabled', true);
+			$("#btn_enviar_mensaje_comprador").prop('disabled', true);
 
 			$.ajax({
 				url:"ajax_procesar_php/acciones_enviar_mensaje_comprador.php",
@@ -71,7 +71,7 @@ $(document).ready(function(){
 				success:function(respuesta2){
 					//alert(respuesta2);
 					$("#r-cargando").hide();
-					$("#btn_enviar_mensaje").prop('disabled', false);
+					$("#btn_enviar_mensaje_comprador").prop('disabled', false);
 
 					if(respuesta2 == 0){
 						alert("Mensaje enviado...");

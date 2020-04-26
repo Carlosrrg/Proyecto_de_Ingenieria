@@ -76,22 +76,30 @@
 				}
 				else{
 					$usuario = $_SESSION['codigo_usuario_sesion'];
-					echo '<div class="nav-item dropdown">';
-						echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
-								$conexion->establecerConexion();
-								$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE
-																						FROM TBL_USUARIOS
-																						WHERE CODIGO_USUARIO = '$usuario'");
-								oci_execute($resultado_usuario);
-								while ($fila = $conexion->obtenerFila($resultado_usuario)) {
-								 	echo $fila["NOMBRE"];
-								}
-						echo '</a>';
-						echo '<div class="dropdown-menu" style="margin: 9px 0 0 -40px;">';
-							echo '<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+					//echo "seccion iniciada por: " . $usuario;
+					$conexion->establecerConexion();
+					$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE,CODIGO_TIPO_USUARIO
+																			FROM TBL_USUARIOS
+																			WHERE CODIGO_USUARIO = '$usuario'");
+					oci_execute($resultado_usuario);
+					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
+						echo '<h6 style="padding-top:4px; margin-right:-10px;">'.$fila["NOMBRE"].'</h6>';
+						$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
+					}
+				    echo'<div class="nav-item dropdown">';
+						echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
+								
+						echo'</a>';
+						echo'<div class="dropdown-menu" style="margin: 9px 0 0 -110px;">';
+							if ($tipo_usuario==1) {
+								echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
+							}
+							else {
+								echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+							}
 							echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
-						echo '</div>';
-					echo '</div>';	
+						echo'</div>';
+					echo'</div>';	
 				}
 			?>
 			
@@ -283,28 +291,6 @@
 				echo '</div><br>';
 			}
 		?>
-			<!-- /#Modal de Vendido -->
-			<button type="button" id="btn-vendido" style="display: none" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm"></button>
-
-			<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-sm" role="document">
-			    <div class="modal-content">
-			      <div class="modal-body">
-			        <center><p>¿Seguro que ya vendió éste producto/servicio?</p></center>
-			        <center>
-			        	<button class="btn btn-success" id="btn-vendido-si">Sí</button>
-			        	<button class="btn btn-danger" id="btn-vendido-no">No</button>
-			        </center>
-			        <button type="button" id="btn-cerrar-vendido" class="close" data-dismiss="modal" aria-label="Close" style="display: none">
-			      </div>
-			    </div>
-			  </div>
-			</div>
-
-			<!-- /#Link a enviar para eliminar producto -->
-			<div id="div-eliminar"></div>
-			<!-- /#Link a enviar para editar producto -->
-			<div id="div-editar"></div>
 
 		</div>
 

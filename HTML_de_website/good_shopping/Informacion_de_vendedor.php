@@ -435,7 +435,7 @@
 				oci_execute($comentarios);
 				$contador = 0;
 				while($fila = $conexion->obtenerFila($comentarios)){	
-					$imagenComprador = 'img/account.png';
+					$imagenComprador = 'recursos/imagenes/ImagenUsuario.png';
 					if($contador == 0){
 						//solo se mostrara una vez este titulo
 						echo'<br><hr><h4>Comentarios</h4><br>';
