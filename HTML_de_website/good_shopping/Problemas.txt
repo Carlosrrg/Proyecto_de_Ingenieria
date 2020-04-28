@@ -1,0 +1,7 @@
+infodeProductos.php
+-Front end
+	-problema del footer se movia hasta la casilla de comentarios sin mantener su posicion estatica.
+-Back end
+	-muestra porductos aunque ya no esten disponibles (eliminados o vendidos).
+
+index.php
