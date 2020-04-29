@@ -151,6 +151,24 @@
 				    echo '</div>';
 			  	}
 			  	else{
+			  		$imagen = " ";
+			  		$resultado_usuario_imagen = $conexion->ejecutarInstruccion("	SELECT A.NOMBRE, A.APELLIDO, A.CORREO_ELECTRONICO, A.TELEFONO ,B.CODIGO_TIPO_VENDEDOR, D.CODIGO_TIPO_IMAGEN, D.RUTA_IMAGEN
+																			FROM TBL_USUARIOS A
+																			INNER JOIN TBL_VENDEDORES B
+																			ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO_VENDEDOR)
+																			INNER JOIN TBL_VEND_X_TBL_IMG C
+																			ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR)
+																			INNER JOIN TBL_IMAGENES D
+																			ON (C.CODIGO_IMAGEN = D.CODIGO_IMAGEN)
+																			WHERE A.CODIGO_USUARIO = '$usuario'
+																			AND D.CODIGO_TIPO_IMAGEN = 1");
+					oci_execute($resultado_usuario_imagen);
+					while ($fila5 = $conexion->obtenerFila($resultado_usuario_imagen)) {
+						$imagen = $fila5["RUTA_IMAGEN"];
+					}
+
+
+
 			  		$tipo_vendedor = "";
 					$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE, APELLIDO, CORREO_ELECTRONICO,
 													 						TELEFONO ,CODIGO_TIPO_VENDEDOR
@@ -162,7 +180,14 @@
 					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 						echo '<div class="col-12 col-lg-12" style="text-align: center">';
 					  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
-						    echo '<img src="recursos/imagenes/ImagenUsuario.png" class="rounded-circle img-fluid" 
+						    echo '<img src="';
+						    	if ($imagen == " ") {
+						    		echo 'recursos/imagenes/ImagenUsuario.png';
+						    	}
+						    	else{
+						    		echo $imagen;
+						    	}
+						    echo '" class="rounded-circle img-fluid" 
 							id="imagenUsuario" alt="Placeholder image" style="width: 100px; height: 100px; padding:10px; ">';
 						  
 						  	//<!--Etiqueta para el nombre del perfil de usuario-->
@@ -179,19 +204,28 @@
 								echo $fila["TELEFONO"];
 							echo '</h7>';
 							echo '<br>';
-							echo '<div><h6>Seleccione el perfil</h6></div>';
-							echo '<form action="">';
-								//<!--Combobox para seleccion de tipo de usuario  id: cmbUsuario-->
-								echo '<select name="usuario" id="cmbUsuario" style="width:120px;">';
-									echo '<option value="1" selected="selected">Vendedor</option>';
-									echo '<option value="2">Comprador</option>';
-								echo '</select>';
-							echo '</form>';
+							
+							$tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+							
+							if ($tipo_vendedor == 1) {
+								echo '<div><h6>Seleccione su perfil</h6></div>';
+								echo '<div class="list-group list-group-flush">';
+									echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
+										echo '<a href="Perfil_usuario_comprador.php" class=" list-group-item-action bg-light">comprador</a><br>';
+										echo '<a href="Productos_y_servicios.php" class=" list-group-item-action bg-light">vendedor</a>';
+									echo '</div>';
+								echo '</div><br>';
+							}
+							else{
+								echo '<div><h6>Vendedor empresarial</h6></div>';
+							}
+							
 						echo '</div>';
 			  			echo '<br>';
 
 			  			echo '<div class="list-group list-group-flush">';
-							echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+			  				
+			  				echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
 							echo '<a href="Notificaciones.php" class="list-group-item list-group-item-action bg-light"><span>
 								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 					  	echo '</div>';
@@ -199,13 +233,13 @@
 					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
 					    echo '<div class="list-group list-group-flush">';
 						    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-							    echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
-							    echo '<br>';
-							    $tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+							    
 							    if ($tipo_vendedor == 1) {
 							    	
 							    }
 							    else{
+							    	echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
+							    	echo '<br>';
 							    	echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
 							    	echo '<br>';
 							    }  

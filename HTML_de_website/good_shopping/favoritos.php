@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eliminar Producto</title>
+    <title>Favoritos</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -12,7 +12,6 @@
     <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="css/mensaje_error.css">
   </head>
   <body>
   	  <?php
@@ -181,7 +180,7 @@
 					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 						echo '<div class="col-12 col-lg-12" style="text-align: center">';
 					  		//<!--Imagen del perfil de usuario id:imagenUsuario-->
-						     echo '<img src="';
+						    echo '<img src="';
 						    	if ($imagen == " ") {
 						    		echo 'recursos/imagenes/ImagenUsuario.png';
 						    	}
@@ -220,30 +219,21 @@
 							else{
 								echo '<div><h6>Vendedor empresarial</h6></div>';
 							}
-
+							
 						echo '</div>';
 			  			echo '<br>';
 
-			  			echo '<div class="list-group list-group-flush">';
-							echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
-							echo '<a href="#" class="list-group-item list-group-item-action bg-light"><span>
+			  			echo '<div class="list-group list-group-flush">'; 
+							echo '<a href="Notificaciones.php" class="list-group-item list-group-item-action bg-light"><span>
 								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 					  	echo '</div>';
 					  	
-					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
+					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Cuenta</h6></span></div>';
 					    echo '<div class="list-group list-group-flush">';
 						    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-							    
-							    if ($tipo_vendedor == 1) {
-							    	
-							    }
-							    else{
-							    	echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
-							    	echo '<br>';
-							    	echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
-							    	echo '<br>';
-							    }  
-							    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
+							    echo '<a href="Perfil_usuario_comprador.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
+							    echo '<br>';  
+							    echo '<a href="favoritos.php" class=" list-group-item-action bg-light">Favoritos</a>';
 						    echo '</div>';
 					    echo '</div>';
 					}
@@ -255,7 +245,7 @@
 
 		<?php
 			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para eliminar Productos y Servicios.</div>';
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para ver tus Productos y Servicios.</div>';
 			}
 			else{
 				//<!-- Page Content -->
@@ -269,55 +259,114 @@
 						echo '<span></span>';
 					echo '</button>';
 
-					//<!--Contenido de la pagina-->
-					$codigo_publicacion = $_GET["codigo-publicacion"];
+					
 
-					echo '<div class="container" style="padding: 30px;width:80%">';
-						echo '<center><div><h5 class="col-lg-12">Díganos el motivo por el cual elimina su publicación</h5></div></center><br>';
+					
 
-					$obtener_productos = $conexion->ejecutarInstruccion("
-						SELECT NOMBRE_PRODUCTO,LOWER(TO_CHAR(FECHA_PUBLICACION,'DD/MONTH/YYYY')) AS FECHA
-						FROM TBL_PUBLICACION_PRODUCTOS
-						WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
-					oci_execute($obtener_productos);
 
-					while ($fila = $conexion->obtenerFila($obtener_productos)) {
-						$nombre_producto = $fila["NOMBRE_PRODUCTO"];
-						$fecha_publicacion = $fila["FECHA"];
-					}
 
-						echo '<p><i>Nombre del producto o servicio:</i> '.$nombre_producto.'</p>';
-						echo '<input id="codigo-publicacion" style="display:none" type="text" value="'.$codigo_publicacion.'">';
+					echo '<div class="container" style="padding: 30px">';
+						echo '<center><div><h5 class="col-lg-12">Vendedores favoritos</h5></div>';
+						echo '<br>';
+						//TABLA DE PRODUCTOS
+						echo '<table class="table" style="width:95%">
+								<thead class="thead-dark">
+								    <tr>
+								      <th scope="col">#</th>
+								      <th scope="col">Vendedor</th>
+								      <th scope="col">Contactos</th>
+								      <th scope="col">Fecha añadió</th>
+								      <th scope="col">calificacion otrogada</th>
+								    </tr>
+							  	</thead>
+							  	<tbody>';
 
-					$obtiene_motivos = $conexion->ejecutarInstruccion("	
-						SELECT CODIGO_MOTIVO_ELIMINACION,NOMBRE_MOTIVO_ELIMINACION
-						FROM TBL_MOTIVO_ELIMINACION");
-					oci_execute($obtiene_motivos);
-					$i = 1;
-					while ($fila = $conexion->obtenerFila($obtiene_motivos)) {
-						echo '<label><input type="radio" name="rbt-motivo" id="rbt-motivo" value="'.$fila["CODIGO_MOTIVO_ELIMINACION"].'" ';
-						if ($i == 1) {
-							echo 'checked';
-							$i++;
-						}
-						echo '> '.$fila["NOMBRE_MOTIVO_ELIMINACION"].'</label><br>';
-					}
+								echo '<tr>
+									<th scope="row">1</th>
+									<td>Carlos Ramos</td>
+									<td>carlos@gmail.com<br>+504 98521478</td>
+									<td>20/04/20</td>
+									<td>
+										<h3 style="color: orange;">&#9733;&#9733;&#9733;&#9733;</h3>
+									</td>
+									<td style="padding-left:2px;padding-right: 2px">';
+								echo '</tr>';	
 
-						echo '<br><label>Desea agregar otros comentarios:</label><br>';
-						echo '<textarea id="txt-descripcion-motivo" class="form-control" style="width: 100%; height: 180px; margin-bottom:10px" placeholder="Opcional"></textarea>';
+								echo '</tbody>
 
-						echo '<button type="button" id="btn_cancelar" style="margin-left:10px" class="btn btn-danger float-right">Cancelar</button>';
-						echo '<button type="button" id="btn-eliminar" class="btn btn-success float-right">Enviar</button>';
-
+							</table>';
+							
+							echo '</center>';
+						echo '</tbody>
+							</table>';
 					echo '</div>';
-				echo '</div><br>';					
+				
+
+
+					echo '<div class="container" style="padding: 30px">';
+						echo '<center><div><h5 class="col-lg-12">Ultimas actualizaciones de los vendedores</h5></div>';
+						echo '<br>';
+						//TABLA DE PRODUCTOS
+						echo '<table class="table" style="width:95%">
+								<thead class="thead-dark">
+								    <tr>
+								      <th scope="col">#</th>
+								      <th scope="col">Ultima publicacion</th>
+								      <th scope="col">Vendedor</th>
+								      <th scope="col">Contactos</th>
+								      <th scope="col">Fecha añadió</th>
+								    </tr>
+							  	</thead>
+							  	<tbody>';
+
+								echo '<tr>
+									<th scope="row">1</th>
+									<td>Camioneta toyota</td>
+									<td>Carlos Ramos</td>
+									<td>carlos@gmail.com<br>+504 98521478</td>
+									<td>20/04/20</td>
+									<td style="padding-left:2px;padding-right: 2px">';
+								echo '</tr>';	
+
+								echo '</tbody>
+
+							</table>';
+
+							echo '</center>';
+						echo '</tbody>
+							</table>';
+					echo '</div>';
+				echo '</div><br>';
 			}
-		?>	
+		?>
+			<!-- /#Modal de Vendido -->
+			<button type="button" id="btn-vendido" style="display: none" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm"></button>
+
+			<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-sm" role="document">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <center><p>¿Seguro que ya vendió éste producto/servicio?</p></center>
+			        <center>
+			        	<button class="btn btn-success" id="btn-vendido-si">Sí</button>
+			        	<button class="btn btn-danger" id="btn-vendido-no">No</button>
+			        </center>
+			        <button type="button" id="btn-cerrar-vendido" class="close" data-dismiss="modal" aria-label="Close" style="display: none">
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<!-- /#Link a enviar para eliminar producto -->
+			<div id="div-eliminar"></div>
+			<!-- /#Link a enviar para editar producto -->
+			<div id="div-editar"></div>
 
 		</div>
+
 	  
 	<!--Pie de página-->
-	<footer id="footer" style="background: #fff; margin-top:20px; width:100%;">
+	<footer id="footer" style="background: #fff; margin-top:0px; width:100%;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
@@ -398,7 +447,7 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/controlador_productos_servicios.js"></script>
+	<script src="js/"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
 		

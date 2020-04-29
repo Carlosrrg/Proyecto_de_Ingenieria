@@ -208,7 +208,7 @@
 								echo $fila["TELEFONO"];
 							echo '</h7>';
 							echo '<br>';
-							
+
 							$tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 							
 							if ($tipo_vendedor == 1) {
@@ -220,51 +220,22 @@
 									echo '</div>';
 								echo '</div><br>';
 							}
-							else{
-								echo '<div><h6>Vendedor empresarial</h6></div>';
-							}
 							
 
-							/*
-							echo '<nav class="navbar navbar-expand-lg navbar-light sticky-top">';
-								echo'<div class="nav-item dropdown">';
-									echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
-										echo '<h7>Seleccione el perfil</h7>';
-									echo'</a>';	
-
-									echo'<div class="dropdown-menu" style="margin: 0 0 0 50px;">';
-										echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Comprador</a>';
-										echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Vendedor</a>';
-									echo'</div>';
-								echo'</div>';
-							echo '</nav>';
-							*/
-
-							
 						echo '</div>';
 			  			echo '<br>';
 
-			  			echo '<div class="list-group list-group-flush">';
-							echo '<a href="Productos_y_servicios.php" class="list-group-item list-group-item-action bg-light"><span><h6><i class="fas fa-shopping-bag"></i> Mis Productos</h6></span></a>'; 
+			  			echo '<div class="list-group list-group-flush">'; 
 							echo '<a href="Notificaciones.php" class="list-group-item list-group-item-action bg-light"><span>
 								<h6><i class="fas fa-money-bill-alt"></i> Notificaciones</h6></span></a>';
 					  	echo '</div>';
 					  	
-					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Tienda</h6></span></div>';
+					    echo '<div class="sidebar-heading"><span><h6><i class="fas fa-home"> </i> Mi Cuenta</h6></span></div>';
 					    echo '<div class="list-group list-group-flush">';
 						    echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-							    
-							    
-							    if ($tipo_vendedor == 1) {
-							    	
-							    }
-							    else{
-							    	echo '<a href="Perfil_usuario_empresarial.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
-							    	echo '<br>';
-							    	echo '<a href="EditarTienda.php" class=" list-group-item-action bg-light">Editar Tienda</a>';
-							    	echo '<br>';
-							    }  
-							    echo '<a href="publicarProducto.php" class=" list-group-item-action bg-light">Publicar Producto</a>';
+							    echo '<a href="Perfil_usuario_comprador.php" class=" list-group-item-action bg-light">Editar Perfil</a>';
+							    echo '<br>';  
+							    echo '<a href="favoritos.php" class=" list-group-item-action bg-light">Favoritos</a>';
 						    echo '</div>';
 					    echo '</div>';
 					}

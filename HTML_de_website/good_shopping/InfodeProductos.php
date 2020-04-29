@@ -426,7 +426,7 @@
 									      	echo '<th scope="col">Precio</th>';
 									    echo '</tr>';
 								 	echo '</thead>';
-								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, A.PRECIO, G.RUTA_IMAGEN
+								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, A.PRECIO, G.RUTA_IMAGEN, A.CODIGO_ESTADO_PUBLICACION
 																								FROM TBL_PUBLICACION_PRODUCTOS A
 																								INNER JOIN TBL_VEND_X_TBL_PUBLI B
 																								ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
@@ -443,7 +443,7 @@
 								while ($fila6 = $conexion->obtenerFila($obtener_producto_destacado)) {
 									for ($i=0; $i <rand(0,count($arreglo_codigo_publicacion)); $i++) {
 										if ($verificar <= 2) {
-										 	if ($arreglo_codigo_publicacion[$i] == $fila6["CODIGO_PUBLICACION_PRODUCTO"]) {
+										 	if ($arreglo_codigo_publicacion[$i] == $fila6["CODIGO_PUBLICACION_PRODUCTO"] && $fila6["CODIGO_ESTADO_PUBLICACION"] == 1) {
 												echo '<tbody>';
 													echo '<tr>'; 
 												      echo '<td><a href="InfodeProductos.php?codigo-publicacion='.$fila6["CODIGO_PUBLICACION_PRODUCTO"].'"><img src="'.$fila6["RUTA_IMAGEN"].'" style="width: 100px; height: 80px"></a></td>';
