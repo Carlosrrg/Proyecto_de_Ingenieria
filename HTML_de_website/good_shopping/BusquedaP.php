@@ -426,7 +426,7 @@
 							  <div class="card-body">	
 								 <div class="row">
 									<div class="col-lg-3">';
-										echo'<img src="'.$fila["RUTA_IMAGEN"].'" style="width:90%; height: 90%;">'; 
+										echo'<img src="'.$fila["RUTA_IMAGEN"].'" style="width:90%;">'; 
 									echo'</div>
 									
 									<div class="col-lg-9">';

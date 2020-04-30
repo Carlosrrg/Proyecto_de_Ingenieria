@@ -225,7 +225,7 @@
 				
 				//si no se ha iniciado sesion no se podra calificar
 				if(!isset($_SESSION['codigo_usuario_sesion'])){
-					echo '<div style="margin-left: 50px; margin-top: 10px">No has iniciado sesión, '." ".
+					echo '<div style="margin-left: 50px; margin-top: 10px; text-align:left;">No has iniciado sesión, '." ".
 					' <a href="index.php">Inicia Sesión</a> '." ".
 					' para poder calificar o agregar a favoritos este vendedor</div>';
 				}else if($codigo_usuario_vendedor != $_SESSION['codigo_usuario_sesion']){
@@ -312,36 +312,41 @@
 
 				//<!--Columna 2-->
 				echo'<div class="col-sm-6 col-md-6 col-lg-5" style="text-align: left;">';
+				if(!isset($_SESSION['codigo_usuario_sesion'])){
+					echo '<div style="margin-left: 50px; margin-top: 10px;">'." ".
+					' <a href="index.php">Inicia Sesión</a> '." ".
+					' para poder ver la información de contacto de este vendedor</div><br>';
+				}else{
 				//informacion basica del vendedor o tienda
-					if($tipoVendedor == 1){
-						echo'<h6>Correo: '; 
-							echo$fila["CORREO_ELECTRONICO"];
-						echo'</h6>';
-		
-						echo'<h6>Telefono: +';
-							echo $fila["TELEFONO"];
-						echo'</h6>';
+						if($tipoVendedor == 1){
+							echo'<h6>Correo: '; 
+								echo$fila["CORREO_ELECTRONICO"];
+							echo'</h6>';
+			
+							echo'<h6>Telefono: +';
+								echo $fila["TELEFONO"];
+							echo'</h6>';
 
-						echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
-							echo $fila['NOMBRE_LUGAR'];
-						if ($fila['CIUDAD']!='0') {
-							echo', '.$fila['CIUDAD'];
+							echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
+								echo $fila['NOMBRE_LUGAR'];
+							if ($fila['CIUDAD']!='0') {
+								echo', '.$fila['CIUDAD'];
+							}
+							echo'</h6>';
+						}else{
+							echo'<br><h6>Correo: '; 
+								echo$fila["CORREO_TIENDA"];
+							echo'</h6>';
+			
+							echo'<h6>Telefono: +';
+								echo $fila["TELEFONO_TIENDA"];
+							echo'</h6>';
+
+							echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
+								echo $fila['NOMBRE_LUGAR'].", ".$fila['DIRECCION_FISICA_TIENDA'];
+							echo'</h6>';
 						}
-						echo'</h6>';
-					}else{
-						echo'<br><h6>Correo: '; 
-							echo$fila["CORREO_TIENDA"];
-						echo'</h6>';
-		
-						echo'<h6>Telefono: +';
-							echo $fila["TELEFONO_TIENDA"];
-						echo'</h6>';
-
-						echo'<h6><img src="img/pin.png" width=30 height=30> Ubicación: ';
-							echo $fila['NOMBRE_LUGAR'].", ".$fila['DIRECCION_FISICA_TIENDA'];
-						echo'</h6>';
 					}
-
 					echo'<h6>Servicios ofrecidos</h6>';
 
 					$resultado_servicios = $conexion->ejecutarInstruccion(
@@ -392,10 +397,11 @@
 					echo'<div class="card card-scroll col-lg-12 col-md-12" 
 						style="max-height: 240px; overflow:scroll; -webkit-overflow-scrolling:touch; margin-bottom:10px;">';
 						echo'<ul class="list-group list-group-flush">';
+						//Mostrar todos los productos disponibles del vendedor
 						$repetido = 0;
 							while($fila = $conexion->obtenerFila($resultado_productos)){
 								if ($repetido != $fila["CODIGO_PUBLICACION_PRODUCTO"]) {
-									echo'<li class="list-group-item"><img src="'.$fila["RUTA_IMAGEN"].'" width=50 height=50>';
+									echo'<li class="list-group-item"><img src="'.$fila["RUTA_IMAGEN"].'" width=50>';
 										echo "\t<a style='color:black' href='infodeProductos.php?codigo-publicacion=".$fila['CODIGO_PUBLICACION_PRODUCTO']."'>".$fila["NOMBRE_PRODUCTO"]."\t";
 										if($fila["CODIGO_TIPO_MONEDA"] == 1){
 											echo"\t L. ";
