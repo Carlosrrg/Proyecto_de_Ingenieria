@@ -97,11 +97,12 @@ footer {
     Estilos para la barra lateral 
 ----------------------------------------------------- */
 #sidebar-wrapper {
-   margin-left: -30rem;
+   margin-left: -20rem;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
-  width: 30rem;
+  width: 20rem;
+  min-width: 20rem;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -110,7 +111,7 @@ footer {
 }
 
 #sidebar-wrapper .list-group {
-  width: 30rem;
+  width: 20rem;
 }
 
 #page-content-wrapper {
@@ -132,7 +133,7 @@ footer {
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    margin-left: -30rem;
+    margin-left: -18rem;
   }
 }
 
@@ -220,6 +221,7 @@ footer {
     }
 	
 	#sidebar-wrapper {
+	   min-width: 18rem;
 	   margin-left: -18rem;
 	   width: 18rem;
 	}

@@ -250,7 +250,7 @@
 
 			<!--id: cmb_ubicacion -> combobox que contendra todas las ubicaciones de los productos-->
 		    <label for="cmb_ubicacion" style="margin-bottom: -10px; margin-top: 30px;"><h6>Ubicación</h6></label>
-			<select id="cmb_ubicacion" class="form-control" style="width: 95%;">
+			<select id="cmb_ubicacion" class="form-control" style="width: 95%;" onchange="refrescar()">
 			<?php
 				echo '<option value="0" ';
 				if (!isset($_GET["lugar"])) {
@@ -276,7 +276,7 @@
 
 			<!--id: cmb_categoria -> combobox que contendra todas las categorias de la base de datos-->
 			<label for="cmb_categoria" style="margin-bottom: -10px; margin-top: 30px;"><h6>Categoría</h6></label>
-			<select id="cmb_categoria" class="form-control" style="width: 95%;">
+			<select id="cmb_categoria" class="form-control" style="width: 95%;" onchange="refrescar()">
 			<?php
 				echo '<option value="0" ';
 				if (!isset($_GET["categoria"])) {
@@ -333,7 +333,7 @@
 
 			<!--id: cmb_ordenar -> combobox que contiene los formatos de orden de la lista de productos-->
 		    <label for="cmb_ordenar" style="margin-bottom: -10px; margin-top: 30px;"><h6>Ordenar por</h6></label>
-			  <select id="cmb_ordenar" class="form-control" style="width: 95%;">
+			  <select id="cmb_ordenar" class="form-control" style="width: 95%;" onchange="refrescar()">
 				<option value="1" <?php if($orden==1){echo'selected';}?> >Más Reciente</option>
 				<option value="2" <?php if($orden==2){echo'selected';}?> >Más Antiguo</option>
 				<option value="3" <?php if($orden==3){echo'selected';}?> >Más Barato</option>
@@ -600,7 +600,7 @@
 <script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
 <script src="js/controlador_busquedas.js"></script><!--Controlador de la pagina-->
 <script src="js/bootstrap.min.js"></script><!--Lanzar archivo Bootstrap.js-->
-<script>
+<script>//JavaScript
 		$(document).ready(function() {
 			
 		  const $valueSpan = $('.valorPrecio');
@@ -626,6 +626,24 @@
                 $(this).toggleClass('active');
             });
         });
+
+		//buscar por filtro de precio
+		$("#slb_precio").click(function(){
+			$("#btn_buscar").click();
+		});
+
+		//buscar for filtro de moneda
+		$("#rb_lempiras").click(function(){
+			$("#btn_buscar").click();
+		});
+		$("#rb_dolares").click(function(){
+			$("#btn_buscar").click();
+		});
+
+		//función para refrescar la busqueda al cativar los combobox
+		function refrescar(){
+			$("#btn_buscar").click();
+		}
 </script>	
 	
 </body>
