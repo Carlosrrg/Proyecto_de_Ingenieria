@@ -62,6 +62,66 @@ $(document).ready(function(){
 		}	
 	});
 
+	//AGREGA NUEVA SUBCATEGORIA
+	$("#txt-subcategoria").keyup(function(){
+		var subcategoria = $("#txt-subcategoria").val();
+		if (subcategoria.length == 0) {
+			$("#btn-subcategoria").prop('disabled', true);
+		} else {
+			$("#btn-subcategoria").prop('disabled', false);
+		}
+	});
+
+	$("#btn-subcategoria").click(function(){
+		var subcategoria = $("#txt-subcategoria").val();
+		var categoria = $("#slc-categoria").val();
+		var parametros = "accion=7&subcategoria="+subcategoria+"&categoria="+categoria;
+		
+		$.ajax({
+			url:"ajax_procesar_php/acciones_administrador.php",
+			data:parametros,
+			method:"POST",
+			success:function(respuesta){
+				if (respuesta == 0) {
+					alert("Subcategoria agregada con éxito!");
+					window.location="Adm_gestion_vendedores.php";
+				} else {
+					if (respuesta == 'ExisteSubcategoria') {
+						alert("La subcategoria ingresada ya existe!");
+						$("#txt-subcategoria").val('');
+						$("#btn-subcategoria").prop('disabled', true);
+					} else {
+						alert("Error al agregar subcategoria.");
+					}
+				}
+			}
+		});	
+	});
+
+	//ELIMINA SUBCATEGORIAS
+	$("#btn-eliminar-subcategorias").click(function(){
+		var subcategorias = "";   
+	    $('input[name="chk-subcategorias[]"]:checked').each(function(){
+	        subcategorias += $(this).val() + ",";
+	    });
+
+	    $.ajax({
+			url:"ajax_procesar_php/acciones_administrador.php",
+			data:"accion=9&subcategorias="+subcategorias,
+			method:"POST",
+			success:function(respuesta){
+				if (respuesta == 0) {
+					alert("Subcategoria(s) eliminada con éxito!");
+				} else {
+					alert("Error al eliminar subcategoria(s)");
+					alert(respuesta);
+				}
+				window.location="Adm_gestion_vendedores.php";
+			}
+		});	
+
+	});
+
 	//AGREGA NUEVO SERVICIO
 	$("#txt-servicio").keyup(function(){
 		var servicio = $("#txt-servicio").val();
@@ -94,6 +154,30 @@ $(document).ready(function(){
 				}
 			}
 		});	
+	});
+
+	//ELIMINA SERVICIOS
+	$("#btn-eliminar-servicios").click(function(){
+		var servicios = "";   
+	    $('input[name="chk-servicios[]"]:checked').each(function(){
+	        servicios += $(this).val() + ",";
+	    });
+
+	    $.ajax({
+			url:"ajax_procesar_php/acciones_administrador.php",
+			data:"accion=8&servicios="+servicios,
+			method:"POST",
+			success:function(respuesta){
+				if (respuesta == 0) {
+					alert("Servicio(s) eliminado con éxito!");
+				} else {
+					alert("Error al eliminar servicio(s)");
+					alert(respuesta);
+				}
+				window.location="Adm_gestion_vendedores.php";
+			}
+		});	
+
 	});
 
 	//MUESTRA ESTADISTICAS POR TIEMPO

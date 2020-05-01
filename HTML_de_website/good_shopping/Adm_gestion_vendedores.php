@@ -210,11 +210,92 @@
 						echo '<div class="container" style="padding: 30px">';
 						//Principio del contenido principal
 						echo '<center><div><h5 class="col-lg-12">Gestión de Vendedores</h5></div></center><hr>';
+
 						echo 	'<div class="col-lg-12">
-								<p>Agregar servicios a vendedores:</p>
+								<p>Gestión de subcategorias y servicios a vendedores:</p>
 								</div>
 								<center>
-									<div class="input-group mb-3" style="width:60%">
+
+									<div class="input-group mb-3" style="width:90%">
+									  <div class="input-group-prepend">
+									    <span class="input-group-text">Nombre de la subcategoría:</span>
+									  </div>
+									  <input type="text" class="form-control" value="" id="txt-subcategoria">
+									  <div class="input-group-prepend">
+									    <span class="input-group-text">Agregar a:</span>
+									  </div>
+									  <select class="custom-select" id="slc-categoria">';
+
+									$resultado_categorias = $conexion->ejecutarInstruccion("	
+							    		SELECT CODIGO_CATEGORIA, NOMBRE_CATEGORIA
+										FROM TBL_CATEGORIAS");
+									oci_execute($resultado_categorias);
+									while ($fila = $conexion->obtenerFila($resultado_categorias)) {
+										echo '<option value="'.$fila["CODIGO_CATEGORIA"].'">'.$fila["NOMBRE_CATEGORIA"].'</option>';
+									}
+
+								echo '</select>
+									  <div class="input-group-append">
+									  	<button type="button" id="btn-subcategoria" class="btn btn-success" disabled>Agregar</button>
+									  </div>
+									</div>
+
+									<button style="margin-bottom:20px" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalScrollable2">Eliminar subcategorías</button>
+
+									<!-- Modal para eliminar subcategorias-->
+									<div class="modal fade" id="exampleModalScrollable2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-scrollable" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="exampleModalScrollableTitle">Seleccione las subcategorías a eliminar:</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:left;margin-bottom:0px;border-radius:0">
+											  <b>ADVERTENCIA: </b> Las subcategorías eliminadas no se podrán recuperar y se eliminaran de las publicaciones que las contengan.
+											  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											    <span aria-hidden="true">&times;</span>
+											  </button>
+										  </div>
+									      <div class="modal-body" style="text-align:left;padding-left:40px">
+									      Subcategorías disponibles:<br><br>';
+
+									    $resultado_categorias = $conexion->ejecutarInstruccion("	
+								    		SELECT CODIGO_CATEGORIA, NOMBRE_CATEGORIA
+								    		FROM TBL_CATEGORIAS");
+										oci_execute($resultado_categorias);
+
+										while ($fila = $conexion->obtenerFila($resultado_categorias)) {
+											echo '<label><li>'.$fila["NOMBRE_CATEGORIA"].'</li></label><br>';
+											$resultado_subcategorias = $conexion->ejecutarInstruccion("	
+										    	SELECT	A.CODIGO_SUB_CATEGORIA, A.NOMBRE_SUB_CATEGORIA,
+										    			B.CODIGO_CATEGORIA
+										    	FROM TBL_SUB_CATEGORIAS A
+												INNER JOIN TBL_CATEGO_X_TBL_SUBCATEGO B
+												ON A.CODIGO_SUB_CATEGORIA = B.CODIGO_SUB_CATEGORIA");
+											oci_execute($resultado_subcategorias);
+											while ($fila2 = $conexion->obtenerFila($resultado_subcategorias)) {
+												if ($fila["CODIGO_CATEGORIA"]==$fila2["CODIGO_CATEGORIA"]) {
+													echo '<label style="padding-left:40px"><input type="checkbox" id="chk-subcategorias[]" name="chk-subcategorias[]" class="thirdparty" value="'.$fila2["CODIGO_SUB_CATEGORIA"].'" ';
+													if ($fila2["CODIGO_SUB_CATEGORIA"]==5||$fila2["CODIGO_SUB_CATEGORIA"]==6) {
+														echo 'disabled';
+													}
+													echo '> '.$fila2["NOMBRE_SUB_CATEGORIA"].'</label><br>';
+												}
+											}
+										}
+
+									echo '</div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									        <button type="button" class="btn btn-danger"  id="btn-eliminar-subcategorias">Eliminar</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+
+									<div class="input-group mb-3" style="width:50%">
 									  <div class="input-group-prepend">
 									    <span class="input-group-text">Nombre del servicio:</span>
 									  </div>
@@ -223,6 +304,45 @@
 									  	<button type="button" id="btn-servicio" class="btn btn-success" disabled>Agregar</button>
 									  </div>
 									</div>
+
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalScrollable">Eliminar servicios</button>
+
+									<!-- Modal para eliminar servicios-->
+									<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-scrollable" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="exampleModalScrollableTitle">Seleccione los servicios a eliminar:</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align:left;margin-bottom:0px;border-radius:0">
+											  <b>ADVERTENCIA: </b> Los servicios eliminados no se podrán recuperar y serán retirados de los vendedores que ofrezcan dichos servicios.
+											  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											    <span aria-hidden="true">&times;</span>
+											  </button>
+										  </div>
+									      <div class="modal-body" style="text-align:left;padding-left:40px">
+									      Servicios disponibles:<br><br>';
+
+									    $resultado_servicios = $conexion->ejecutarInstruccion("	
+								    		SELECT CODIGO_SERVICIO, NOMBRE_SERVICIO
+											FROM TBL_SERVICIOS");
+										oci_execute($resultado_servicios);
+										while ($fila = $conexion->obtenerFila($resultado_servicios)) {
+											echo '<label><input type="checkbox" id="chk-servicios[]" name="chk-servicios[]" class="thirdparty" value="'.$fila["CODIGO_SERVICIO"].'"> '.$fila["NOMBRE_SERVICIO"].'</label><br>';
+										}
+
+									echo '</div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									        <button type="button" class="btn btn-danger" id="btn-eliminar-servicios">Eliminar</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+
 								</center>';
 
 							$codigo_vendedor = array();

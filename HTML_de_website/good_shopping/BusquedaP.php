@@ -171,6 +171,15 @@
 			if ($orden==4) {
 				$sql_orden = "ORDER BY A.PRECIO DESC ";
 			}
+			if ($orden==5) {
+				$sql_orden = "ORDER BY obtener_valoracion(C.CODIGO_USUARIO) DESC ";
+			}
+			if ($orden==6) {
+				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR ASC ";
+			}
+			if ($orden==7) {
+				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR DESC ";
+			}
 			$parametros .= "&orden=".$orden;
 		}
 
@@ -329,6 +338,9 @@
 				<option value="2" <?php if($orden==2){echo'selected';}?> >Más Antiguo</option>
 				<option value="3" <?php if($orden==3){echo'selected';}?> >Más Barato</option>
 				<option value="4" <?php if($orden==4){echo'selected';}?> >Más Caro</option>
+				<option value="5" <?php if($orden==5){echo'selected';}?> >Mejores Vendedores</option>
+				<option value="6" <?php if($orden==6){echo'selected';}?> >Primero Vendedores Individuales</option>
+				<option value="7" <?php if($orden==7){echo'selected';}?> >Primero Vendedores Empresariales</option>
 			  </select>
 
 
@@ -391,7 +403,7 @@
 							        A.NOMBRE_PRODUCTO,
 							        A.PRECIO,
 							        A.DESCIPCION,
-							        TO_CHAR(A.FECHA_PUBLICACION,'DD/MM/YYYY') FECHA_PUBLICACION,
+							        (to_date(SYSDATE, 'dd/mm/yyyy') - to_date(A.FECHA_PUBLICACION, 'dd/mm/yyyy')) FECHA_PUBLICACION,
 							        E.RUTA_IMAGEN,
 							        F.NOMBRE_LUGAR,
 							        ROW_NUMBER() OVER(".$sql_orden.") RN
@@ -404,6 +416,7 @@
 							        ) D ON A.CODIGO_PUBLICACION_PRODUCTO=D.CODIGO_PRODUCTO
 							INNER JOIN TBL_IMAGENES E ON D.CODIGO_IMAGEN=E.CODIGO_IMAGEN
 							INNER JOIN TBL_LUGARES F ON F.CODIGO_LUGAR=C.CODIGO_LUGAR 
+							INNER JOIN TBL_VENDEDORES G ON G.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR
 							".$sql_subcatego1." 
 							WHERE A.CODIGO_ESTADO_PUBLICACION = 1
 							AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('%$busca%')
@@ -421,6 +434,10 @@
 					$cantidad = 0;
 					$codigo_anterior = 0;
 					while ($fila = $conexion->obtenerFila($busquedaProductos)) {
+						$tiempo_publicado = "hace " . $fila["FECHA_PUBLICACION"] . " días.";
+						if ($fila["FECHA_PUBLICACION"]==0) {
+							$tiempo_publicado = "hoy.";
+						}
 						if ($codigo_anterior!=$fila["CODIGO_PUBLICACION_PRODUCTO"]) {
 							echo'<a href="InfodeProductos.php?codigo-publicacion='.$fila["CODIGO_PUBLICACION_PRODUCTO"].'" id="link-productos"><div class="card mini" style="margin-bottom:10px">
 							  <div class="card-body">	
@@ -440,7 +457,7 @@
 											echo '$ ';
 										}
 										echo $fila["PRECIO"].'</h6>';
-										echo'<h6>Publicado el  '.$fila["FECHA_PUBLICACION"].'</h6>';
+										echo'<img src="img/calendar.png" width=15 height=15> Publicado ' . $tiempo_publicado;
 									echo'</div>
 									
 								</div>

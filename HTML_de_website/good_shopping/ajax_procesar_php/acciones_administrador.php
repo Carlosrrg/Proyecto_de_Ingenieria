@@ -14,6 +14,9 @@
 	accion = 4 -> muestra las denuncias
 	accion = 5 -> Da de baja o elimina producto
 	accion = 6 -> Muestra las publicaciones eliminadas
+	accion = 7 -> agrega una nueva subcategoria
+	accion = 8 -> elimina servicios
+	accion = 9 -> elimina subcategorias
 	*/
 
 	$codigo_usuario = $_SESSION['codigo_usuario_sesion'];
@@ -39,7 +42,7 @@
 
 		$obtiene_servicios = $conexion->ejecutarInstruccion("	
 			SELECT NOMBRE_SERVICIO FROM TBL_SERVICIOS
-			WHERE UPPER(NOMBRE_SERVICIO) = UPPER('$servicio')");
+			WHERE UPPER(NOMBRE_SERVICIO) LIKE UPPER('%".$servicio."%')");
 		oci_execute($obtiene_servicios);
 
 		$cantidad = 0;
@@ -295,6 +298,88 @@
 	    }
 
 	    echo json_encode($resultadoEliminaciones);
+	}
+
+	if ($accion == 7) {
+		$subcategoria = $_POST['subcategoria'];
+		$categoria = $_POST['categoria'];
+
+		$obtiene_subcategorias = $conexion->ejecutarInstruccion("	
+			SELECT NOMBRE_SUB_CATEGORIA FROM TBL_SUB_CATEGORIAS
+			WHERE UPPER(NOMBRE_SUB_CATEGORIA) LIKE UPPER('%".$subcategoria."%')");
+		oci_execute($obtiene_subcategorias);
+
+		$cantidad = 0;
+		while ($fila = $conexion->obtenerFila($obtiene_subcategorias)) {
+			$cantidad++;
+		}
+
+		if ($cantidad == 0) {
+			$agrega_servicio = $conexion->ejecutarInstruccion("	
+				DECLARE
+				    V_CODIGO_SUBCATEGORIA INTEGER;
+				BEGIN
+				    P_AGREGAR_SUBCATEGORIAS ('$subcategoria', '$categoria', V_CODIGO_SUBCATEGORIA);
+				END;");
+			oci_execute($agrega_servicio);
+
+			$resultado = $conexion->ejecutarInstruccion("COMMIT");
+			oci_execute($resultado);
+
+			echo 0;
+		} else {
+			echo 'ExisteSubcategoria';
+		}
+	}
+
+	if ($accion == 8) {
+		$servicios = $_POST['servicios'];
+
+		if ($servicios!="") {
+			$servicios_ind = explode(",", $servicios);
+			for ($i=0; $i < count($servicios_ind)-1 ; $i++) { 
+				$elimina_servicio1 = $conexion->ejecutarInstruccion("	
+					DELETE FROM TBL_VEND_X_TBL_SERV
+					WHERE CODIGO_SERVICIO = '$servicios_ind[$i]'");
+				oci_execute($elimina_servicio1);
+				$elimina_servicio2 = $conexion->ejecutarInstruccion("	
+					DELETE FROM TBL_PUBLIC_X_TBL_SERV
+					WHERE CODIGO_SERVICIO = '$servicios_ind[$i]'");
+				oci_execute($elimina_servicio2);
+				$elimina_servicio3 = $conexion->ejecutarInstruccion("
+					DELETE FROM TBL_SERVICIOS
+					WHERE CODIGO_SERVICIO = '$servicios_ind[$i]'");
+				oci_execute($elimina_servicio3);
+			}
+			$resultado = $conexion->ejecutarInstruccion("COMMIT");
+			oci_execute($resultado);
+		}
+		echo 0;
+	}
+
+	if ($accion == 9) {
+		$subcategorias = $_POST['subcategorias'];
+
+		if ($subcategorias!="") {
+			$subcategorias_ind = explode(",", $subcategorias);
+			for ($i=0; $i < count($subcategorias_ind)-1 ; $i++) { 
+				$elimina_categoria1 = $conexion->ejecutarInstruccion("	
+					DELETE FROM TBL_CATEGO_X_TBL_SUBCATEGO
+					WHERE CODIGO_SUB_CATEGORIA = '$subcategorias_ind[$i]'");
+				oci_execute($elimina_categoria1);
+				$elimina_categoria2 = $conexion->ejecutarInstruccion("	
+					DELETE FROM TBL_PRODU_X_TBL_CATEGO
+					WHERE CODIGO_SUB_CATEGORIA = '$subcategorias_ind[$i]'");
+				oci_execute($elimina_categoria2);
+				$elimina_categoria3 = $conexion->ejecutarInstruccion("
+					DELETE FROM TBL_SUB_CATEGORIAS
+					WHERE CODIGO_SUB_CATEGORIA = '$subcategorias_ind[$i]'");
+				oci_execute($elimina_categoria3);
+			}
+			$resultado = $conexion->ejecutarInstruccion("COMMIT");
+			oci_execute($resultado);
+		}
+		echo 0;
 	}
 
 	$conexion->cerrarConexion();
