@@ -304,3 +304,16 @@ a .mini:hover{
 	max-height: 80px;
 	max-width: 80px;
 }
+
+/** ====================
+ * Paginacion
+ =======================*/
+.Paginacion a{
+  color: green;
+}
+
+.Paginacion a:hover{
+  color: green;
+}
+
+

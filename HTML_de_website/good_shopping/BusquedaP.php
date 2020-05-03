@@ -160,13 +160,15 @@
 		$subcategorias = "";
 		$sql_subcatego1 = "";
 		$sql_subcatego2 = "";
-		if (isset($_GET['subcategorias'])) {
-			$subcategorias = $_GET['subcategorias'];
-			if ($subcategorias!="") {
-				$sql_subcatego1 = "INNER JOIN TBL_PRODU_X_TBL_CATEGO G ON A.CODIGO_PUBLICACION_PRODUCTO=G.CODIGO_PRODUCTO ";
-				$sql_subcatego2 = "AND G.CODIGO_SUB_CATEGORIA IN(".$subcategorias.") ";
+		if($categoria != 0){
+			if (isset($_GET['subcategorias'])) {
+				$subcategorias = $_GET['subcategorias'];
+				if ($subcategorias!="") {
+					$sql_subcatego1 = "INNER JOIN TBL_PRODU_X_TBL_CATEGO G ON A.CODIGO_PUBLICACION_PRODUCTO=G.CODIGO_PRODUCTO ";
+					$sql_subcatego2 = "AND G.CODIGO_SUB_CATEGORIA IN(".$subcategorias.") ";
+				}
+				$parametros .= "&subcategorias=".$subcategorias;
 			}
-			$parametros .= "&subcategorias=".$subcategorias;
 		}
 		$orden = 1;
 		$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO DESC ";
@@ -176,19 +178,19 @@
 				$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO ASC ";
 			}
 			if ($orden==3) {
-				$sql_orden = "ORDER BY A.PRECIO ASC ";
+				$sql_orden = "ORDER BY A.PRECIO ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 			}
 			if ($orden==4) {
-				$sql_orden = "ORDER BY A.PRECIO DESC ";
+				$sql_orden = "ORDER BY A.PRECIO DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 			}
 			if ($orden==5) {
-				$sql_orden = "ORDER BY obtener_valoracion(C.CODIGO_USUARIO) DESC ";
+				$sql_orden = "ORDER BY obtener_valoracion(C.CODIGO_USUARIO) DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 			}
 			if ($orden==6) {
-				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR ASC ";
+				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 			}
 			if ($orden==7) {
-				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR DESC ";
+				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 			}
 			$parametros .= "&orden=".$orden;
 		}
@@ -328,7 +330,7 @@
 
 					while ($fila = $conexion->obtenerFila($resultado_subcatego)) {
 						echo '<label>
-							  <input type="checkbox" name="cbox_subcategorias" value="'.$fila["CODIGO_SUB_CATEGORIA"].'" id="cbox_subcategorias" ';
+							  <input type="checkbox" name="cbox_subcategorias" value="'.$fila["CODIGO_SUB_CATEGORIA"].'" id="cbox_subcategorias" onclick="refrescar()" ';
 						for ($i=0; $i < count($subcategorias_ind) ; $i++) { 
 							if ($subcategorias_ind[$i]==$fila["CODIGO_SUB_CATEGORIA"]) {
 								echo ' checked';
@@ -484,7 +486,7 @@
 				?>
 				
 				<!--Control de paginacion para cambiar de una pagina a otra-->
-				<nav aria-label="Paginacion">
+				<nav aria-label="Paginacion" class="Paginacion">
 				  <ul class="pagination justify-content-center">
 					
 					<!--boton que lleva a una pagina anterior, no es nesesario modificar este componente-->
@@ -504,7 +506,7 @@
 				    <li class="page-item 
 					<?php 
 						echo $_GET['pagina']==$i+1 ? 'active' : '' 
-					?>"><a class="page-link" href="BusquedaP.php?pagina=<?php echo ($i+1).$parametros;?>">
+					?>"><a class="page-link" <?php if(($_GET['pagina']-1)==$i){echo'style="background-color:#72A276;color:white;border-color:white"';} ?> href="BusquedaP.php?pagina=<?php echo ($i+1).$parametros;?>">
 					<?php echo $i+1;?>
 					</a></li>
 					<?php endfor ?>

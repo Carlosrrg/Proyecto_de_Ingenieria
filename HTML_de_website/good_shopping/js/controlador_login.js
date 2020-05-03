@@ -190,6 +190,14 @@ $(document).ready(function(){
 		}					
 	});
 
+	//Funcion para ejecutar al presionar enter
+	$("#txt-contrasena").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        $("#btn_iniciar").click();
+	    }
+	});
+
 	$("#btn-busqueda").click(function(){
 		var busca = $("#txt-barraBusqueda").val();
 		window.location="BusquedaP.php?pagina=1&busca="+busca+"";
