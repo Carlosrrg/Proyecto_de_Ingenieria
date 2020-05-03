@@ -245,7 +245,7 @@
 
 		<?php
 			if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para ver tus Productos y Servicios.</div>';
+				echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para ver las ultimas actualizaciones de tus vendedores favoritos.</div>';
 			}
 			else{
 				//<!-- Page Content -->
@@ -276,25 +276,68 @@
 								      <th scope="col">Vendedor</th>
 								      <th scope="col">Contactos</th>
 								      <th scope="col">Fecha añadió</th>
-								      <th scope="col">calificacion otrogada</th>
+								      <th scope="col">Calificacion otorgada</th>
 								    </tr>
 							  	</thead>
 							  	<tbody>';
 
-								echo '<tr>
-									<th scope="row">1</th>
-									<td>Carlos Ramos</td>
-									<td>carlos@gmail.com<br>+504 98521478</td>
-									<td>20/04/20</td>
-									<td>
-										<h3 style="color: orange;">&#9733;&#9733;&#9733;&#9733;</h3>
-									</td>
-									<td style="padding-left:2px;padding-right: 2px">';
-								echo '</tr>';	
 
+							  
+								$contador = 0;
+								$numeracion = 1;
+								$usuario_vendedor = " ";
+								$cantidad = 0;
+
+								$resultado_vendedores_favoritos = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, A.FECHA_AGREGO, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO
+																									FROM TBL_FAVORITOS A
+																									INNER JOIN TBL_VENDEDORES B
+																									ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
+																									INNER JOIN TBL_USUARIOS C
+																									ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO)
+																									WHERE A.CODIGO_USUARIO_COMPRADOR = '$usuario'");
+								oci_execute($resultado_vendedores_favoritos);
+								while ($fila3 = $conexion->obtenerFila($resultado_vendedores_favoritos)) {
+									echo '<tr>
+										<th scope="row">'.$numeracion.'</th>
+										<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila3["CODIGO_USUARIO_VENDEDOR"].'">'.$fila3["NOMBRE"].' '.$fila3["APELLIDO"].'</a></td>
+										<td>'.$fila3["CORREO_ELECTRONICO"].'<br>+504 '.$fila3["TELEFONO"].'</td>
+										<td>'.$fila3["FECHA_AGREGO"].'</td>
+										<td>';
+												$usuario_vendedor = $fila3["CODIGO_USUARIO_VENDEDOR"];
+												$numero_estrellas = 0;
+
+												$resultado_numero_estrellas = $conexion->ejecutarInstruccion("	SELECT NUMERO_ESTRELLAS 
+																												FROM TBL_RANKING
+																												WHERE CODIGO_USUARIO_COMPRADOR = '$usuario'
+																												AND CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor'");
+												oci_execute($resultado_numero_estrellas);
+												while ($fila4 = $conexion->obtenerFila($resultado_numero_estrellas)) {
+													$numero_estrellas = $fila4["NUMERO_ESTRELLAS"];
+												}
+												if ($numero_estrellas == " ") {
+													echo 'No ha dado una calificacion aún';
+													$cantidad = 1; 
+												}
+												else{
+													echo '<h3 style="color: orange;">';
+													for ($i=0; $i < $numero_estrellas ; $i++) { 		
+															echo '&#9733;';
+													}
+													echo '</h3>';
+													$cantidad = 1; 
+												}	
+										echo'</td>
+										<td style="padding-left:2px;padding-right: 2px">';
+									echo '</tr>';
+									$numeracion++;
+									$contador++;
+								}
 								echo '</tbody>
-
 							</table>';
+
+							if ($cantidad == 0) {
+								echo '<h5>No tiene añadido ningun vendedor aún...</h5>';
+							}
 							
 							echo '</center>';
 						echo '</tbody>
@@ -312,25 +355,75 @@
 								    <tr>
 								      <th scope="col">#</th>
 								      <th scope="col">Ultima publicacion</th>
+								      <th scope="col">Fecha publico</th>
 								      <th scope="col">Vendedor</th>
 								      <th scope="col">Contactos</th>
-								      <th scope="col">Fecha añadió</th>
 								    </tr>
 							  	</thead>
 							  	<tbody>';
 
-								echo '<tr>
-									<th scope="row">1</th>
-									<td>Camioneta toyota</td>
-									<td>Carlos Ramos</td>
-									<td>carlos@gmail.com<br>+504 98521478</td>
-									<td>20/04/20</td>
-									<td style="padding-left:2px;padding-right: 2px">';
-								echo '</tr>';	
+							  	$numeracion2 = 1;
+							  	$usuario_vendedor2 = " ";
+							  	$nombre_publicacion = array();
+							  	$codigo_publicacion = array();
+							  	$fecha_publicacion = array();
+							  	$contador2 = 0;
+							  	$verificar = " ";
 
+							  	$resultado_actualizacion_vendedores = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO
+																										FROM TBL_FAVORITOS A
+																										INNER JOIN TBL_VENDEDORES B
+																										ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
+																										INNER JOIN TBL_USUARIOS C
+																										ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO)
+																										WHERE A.CODIGO_USUARIO_COMPRADOR = '$usuario'");
+								oci_execute($resultado_actualizacion_vendedores);
+								while ($fila5 = $conexion->obtenerFila($resultado_actualizacion_vendedores)) {
+									echo '<tr>
+										<th scope="row">'.$numeracion2.'</th>';
+											$usuario_vendedor2 = $fila5["CODIGO_USUARIO_VENDEDOR"];
+
+											$resultado_actualizacion_publicacion = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_VENDEDOR, C.NOMBRE_PRODUCTO, C.CODIGO_PUBLICACION_PRODUCTO, C.FECHA_PUBLICACION, C.CODIGO_ESTADO_PUBLICACION
+																													FROM TBL_VENDEDORES A
+																													INNER JOIN TBL_VEND_X_TBL_PUBLI B
+																													ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
+																													INNER JOIN TBL_PUBLICACION_PRODUCTOS C
+																													ON (B.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO)
+																													WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor2'
+																													ORDER BY C.CODIGO_PUBLICACION_PRODUCTO DESC");
+											oci_execute($resultado_actualizacion_publicacion);
+											while ($fila6 = $conexion->obtenerFila($resultado_actualizacion_publicacion)) {
+												$verificar = $fila6["CODIGO_ESTADO_PUBLICACION"]; 
+												if($verificar != 1){
+													echo'<td>No hay publicaciones recientes</td>';
+								  					echo '<td>------------</td>';
+								  					break;
+												}
+												else{
+													echo '<td><a href="infodeProductos.php?codigo-publicacion='.$codigo_publicacion[$contador2] = $fila6["CODIGO_PUBLICACION_PRODUCTO"].'">';
+													echo $nombre_publicacion[$contador2] = $fila6["NOMBRE_PRODUCTO"];	
+								  					echo '</a></td>';
+								  					echo '<td>'.$fecha_publicacion[$contador2] = $fila6["FECHA_PUBLICACION"].'</td>';
+								  					$contador2++;
+								  					break;
+												}
+												$contador2++;
+												$verificar = " ";
+											}
+											
+										echo '
+										<td>'.$fila5["NOMBRE"].' '.$fila5["APELLIDO"].'</td>
+										<td>'.$fila5["CORREO_ELECTRONICO"].'<br>+504 '.$fila5["TELEFONO"].'</td>
+										<td style="padding-left:2px;padding-right: 2px">';
+									echo '</tr>';
+									$numeracion2++;
+								}
 								echo '</tbody>
-
 							</table>';
+
+							if ($cantidad == 0) {
+								echo '<h5>No tiene añadido ningun vendedor, asi que no hay actualizaciones aún...</h5>';
+							}
 
 							echo '</center>';
 						echo '</tbody>
@@ -339,30 +432,8 @@
 				echo '</div><br>';
 			}
 		?>
-			<!-- /#Modal de Vendido -->
-			<button type="button" id="btn-vendido" style="display: none" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm"></button>
-
-			<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-sm" role="document">
-			    <div class="modal-content">
-			      <div class="modal-body">
-			        <center><p>¿Seguro que ya vendió éste producto/servicio?</p></center>
-			        <center>
-			        	<button class="btn btn-success" id="btn-vendido-si">Sí</button>
-			        	<button class="btn btn-danger" id="btn-vendido-no">No</button>
-			        </center>
-			        <button type="button" id="btn-cerrar-vendido" class="close" data-dismiss="modal" aria-label="Close" style="display: none">
-			      </div>
-			    </div>
-			  </div>
-			</div>
-
-			<!-- /#Link a enviar para eliminar producto -->
-			<div id="div-eliminar"></div>
-			<!-- /#Link a enviar para editar producto -->
-			<div id="div-editar"></div>
-
-		</div>
+			
+	</div>
 
 	  
 	<!--Pie de página-->

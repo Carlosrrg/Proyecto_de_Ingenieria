@@ -77,13 +77,18 @@
 				$usuario = $_SESSION['codigo_usuario_sesion'];
 				//echo "seccion iniciada por: " . $usuario;
 				$conexion->establecerConexion();
-				$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE,CODIGO_TIPO_USUARIO
+				$resultado_usuario = $conexion->ejecutarInstruccion("	
+																		SELECT 	NOMBRE, APELLIDO, CODIGO_TIPO_USUARIO, CORREO_ELECTRONICO, TELEFONO,
+																				NVL(CODIGO_TIPO_VENDEDOR,0) CODIGO_TIPO_VENDEDOR
 																		FROM TBL_USUARIOS
+																		LEFT JOIN TBL_VENDEDORES
+																		ON (CODIGO_USUARIO = CODIGO_USUARIO_VENDEDOR)
 																		WHERE CODIGO_USUARIO = '$usuario'");
 				oci_execute($resultado_usuario);
 				while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 					echo '<h6 style="padding-top:4px; margin-right:-10px;">'.$fila["NOMBRE"].'</h6>';
 					$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
+					$codigo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 				}
 			    echo'<div class="nav-item dropdown">';
 					echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
@@ -94,7 +99,12 @@
 							echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
 						}
 						else {
-							echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+							if ($codigo_vendedor == 1) {
+								echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
+							}
+							else{
+								echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+							}
 						}
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';
