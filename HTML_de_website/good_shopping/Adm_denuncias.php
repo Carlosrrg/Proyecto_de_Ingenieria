@@ -217,9 +217,33 @@
 								  </div>
 								  <input type="text" id="txt-buscar" class="form-control" placeholder="Vendedor o Producto" aria-label="Username" aria-describedby="basic-addon1">
 								</div></center>';
+
 						//Denuncias
-						echo '<div id="div-denuncias" style="width:85%;margin:0 auto">';
-						echo '</div>';
+						echo '<div class="accordion" id="accordionExample">
+							   <center>
+							  	<div class="row">
+                                    <div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+									<label style="text-transform: none;" class="btn btn-secondary btn-sm active collapsed " data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <input type="radio" name="opcion-tienda" id="rb-individual" value="1" checked> Reportes de productos
+                                    </label>
+
+                                    <label style="text-transform: none;" class="btn btn-secondary btn-sm collapsed " data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <input type="radio" name="opcion-tienda" id="rb-empresarial" value="2"> Vendedores muy reportados
+                                    </label>
+                                    </div>
+								</div>
+							   </center>
+
+							<div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+							    <div class="card-body" id="div-denuncias">
+							    </div>
+							</div>
+
+							<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+							    <div class="card-body" id="div-denuncias-vendedores">
+							    </div>
+							</div>
+						</div>';
 						//Fin del contenido principal
 						echo '</div>';
 

@@ -349,6 +349,28 @@
 							$nombre = array();
 							$n_articulos = array();
 							$ranking = array();
+							$filtro = 0;
+							$filtrosql = "B.CODIGO_USUARIO DESC";
+							if (isset($_GET["filtro"])) {
+								$filtro = $_GET['filtro'];
+								switch ($filtro) {
+									case 0:
+										$filtrosql = "B.CODIGO_USUARIO DESC";
+										break;
+									case 1:
+										$filtrosql = "obtener_valoracion(B.CODIGO_USUARIO) DESC";
+										break;
+									case 2:
+										$filtrosql = "obtener_valoracion(B.CODIGO_USUARIO) ASC";
+										break;
+									case 3:
+										$filtrosql = "COUNT(C.CODIGO_USUARIO_VENDEDOR) DESC";
+										break;
+									default:
+										$filtrosql = "B.CODIGO_USUARIO DESC";
+										break;
+								}
+							}
 							$cont = 1;
 							$resultado_gestion = $conexion->ejecutarInstruccion("	
 					    		SELECT * FROM (
@@ -364,7 +386,7 @@
 								LEFT JOIN TBL_RANKING D
 								ON A.CODIGO_USUARIO_VENDEDOR = D.CODIGO_USUARIO_VENDEDOR
 								GROUP BY B.CODIGO_USUARIO, B.NOMBRE||' '||B.APELLIDO
-								ORDER BY B.CODIGO_USUARIO DESC
+								ORDER BY ".$filtrosql."
 								)
 								WHERE ROWNUM <= 10");
 							oci_execute($resultado_gestion);
@@ -378,8 +400,28 @@
 
 							echo '<div class="col-lg-12">
 								<br>Lista de vendedores:
-								<p style="text-align:right;width:80%;margin-bottom:0">Últimos 10 registrados</p>
+
+								<center>
+								<div class="input-group input-group-sm mb-3" style="width:28%">
+								  <div class="input-group-prepend">
+								    <span class="input-group-text" id="inputGroup-sizing-sm">Filtrar por:</span>
+								  </div>
+									<select id="slc-filtro" class="form-control form-control-sm" onchange="filtro()">';
+
+									echo '<option value="0" ';if($filtro==0){echo'selected';}
+									echo '>Últimos registrados</option>';
+									echo '<option value="1" ';if($filtro==1){echo'selected';}
+									echo '>Mejor Calificados</option>';
+									echo '<option value="2" ';if($filtro==2){echo'selected';}
+									echo '>Peor Calificados</option>';
+									echo '<option value="3" ';if($filtro==3){echo'selected';}
+									echo '>Más artículos publicados</option>';
+
+							echo '</select>
+								   </div>
 								</div>
+								</center>
+
 								<center>
 									<table class="table" style="width:60%">
 									  <thead class="thead-dark">
@@ -521,6 +563,10 @@
                 $(this).toggleClass('active');
             });
         });
+        function filtro(){
+        	var filtro = $("#slc-filtro").val();
+        	window.location="Adm_gestion_vendedores.php?filtro="+filtro;
+        }
   </script>
 			
 </body>

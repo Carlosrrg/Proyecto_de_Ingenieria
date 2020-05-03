@@ -340,9 +340,11 @@ $(document).ready(function(){
 
 	//MUESTRA LAS DENUNCIAS			
 	VerDenuncias('');
+	VerDenunciasVendedores('');
 	$('#txt-buscar').keyup(function() {
 		var busqueda = $('#txt-buscar').val();
 		VerDenuncias(busqueda);
+		VerDenunciasVendedores(busqueda);
 	});
 
 	//CONFIRMA ACCIONES
@@ -411,7 +413,7 @@ $(document).ready(function(){
 function VerDenuncias(busqueda){
 	$.ajax({
 		url:"ajax_procesar_php/acciones_administrador.php",
-		data:"accion=4&busqueda="+busqueda,
+		data:"accion=4&subaccion=1&busqueda="+busqueda,
 		dataType:'json',
 		method:"POST",
 		success:function(respuesta){
@@ -419,30 +421,15 @@ function VerDenuncias(busqueda){
 			var imprimir = '';
 			for (var i=0; i<respuesta.length; i++){
 				var habilitarBtn = "";
-				if (respuesta[i].CODIGO_TIPO_REPORTE==1) { 
-					//reporte a vendedor
-					var nombre = respuesta[i].NOMBRE_COMPLETO;
-					var accion = 	respuesta[i].CODIGO_REPORTE+","+
-									respuesta[i].CODIGO_TIPO_REPORTE+","+
-									respuesta[i].CODIGO_USUARIO_VENDEDOR;
-					var link = "'Informacion_de_vendedor.php?codigo-usuario="+respuesta[i].CODIGO_USUARIO_VENDEDOR+"'";
-					var btn1 = "Dar de Baja";
-					var btn2 = "Ver Perfil";
-				}
-				if (respuesta[i].CODIGO_TIPO_REPORTE==2) { 
-					//reporte a producto
-					var nombre = respuesta[i].NOMBRE_PRODUCTO;
-					var accion = 	respuesta[i].CODIGO_REPORTE+","+
-									respuesta[i].CODIGO_TIPO_REPORTE+","+
-									respuesta[i].CODIGO_PUBLICACION_PRODUCTO;
-					var link = "'InfodeProductos.php?codigo-publicacion="+respuesta[i].CODIGO_PUBLICACION_PRODUCTO+"'";
-					var btn1 = "Eliminar Producto";
-					var btn2 = "Ver Producto";
-				}
+				var accion = 	respuesta[i].CODIGO_REPORTE+",2,"+
+								respuesta[i].CODIGO_PUBLICACION_PRODUCTO;
+				var link = "'InfodeProductos.php?codigo-publicacion="+respuesta[i].CODIGO_PUBLICACION_PRODUCTO+"'";
+
 				imprimir += '<div class="row">'+
 								'<div class="col-lg-9 col-sm-12">'+
-									'<b>Denuncia a: </b>'+nombre+'<br>'+
-									'<p><b>Descripción: </b>'+respuesta[i].COMENTARIO_REPORTE+'</p>'+
+									'<b>Denuncia a producto: </b>'+respuesta[i].NOMBRE_PRODUCTO+'<br>'+
+									'<p><b>Descripción de la denuncia: </b>'+respuesta[i].COMENTARIO_REPORTE+'</p>'+
+									'<p><b>Cantidad de denuncias a este producto: </b>'+respuesta[i].CANTIDAD_REPORTES+'</p>'+
 									'<button style="margin-right:5px; margin-bottom:5px" class="btn btn-danger '+
 									'btn-sm" disabled>'+respuesta[i].NOMBRE_TIPO_REPORTE+'</button>'+
 									'<button style="margin-right:5px; margin-bottom:5px" class="btn btn-danger '+
@@ -457,13 +444,66 @@ function VerDenuncias(busqueda){
 									'<b>Emitida: </b>'+respuesta[i].FECHA_EMITIO+''+
 									'<button onclick="accionar('+accion+')" style="margin-top:5px" '+
 									'class="btn btn-success btn-block" '+habilitarBtn+'>'+
-									''+btn1+'</button>'+
+									'Eliminar Producto</button>'+
 									'<button role="link" onclick="window.location='+link+'" class="btn '+
-									'btn-success btn-block" '+habilitarBtn+'>'+btn2+'</button>'+
+									'btn-success btn-block" '+habilitarBtn+'>Ver Producto</button>'+
 								'</div>'+
 							'</div><hr>';
+
 			}
+			imprimir += '<center>-- Fin de los resultados --</center>';
 			$("#div-denuncias").html(imprimir);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});	
+}
+
+function VerDenunciasVendedores(busqueda){
+	$.ajax({
+		url:"ajax_procesar_php/acciones_administrador.php",
+		data:"accion=4&subaccion=2&busqueda="+busqueda,
+		dataType:'json',
+		method:"POST",
+		success:function(respuesta){
+			console.log(respuesta);
+			var imprimir = '<div class="alert alert-warning alert-dismissible fade show" role="alert">'+
+ 							'<strong>Importante:</strong> Aquí aparecen los vendedores que cuentan con 5 o más reportes actualmente.'+
+  							'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+    						'<span aria-hidden="true">&times;</span>'+
+  							'</button>'+
+						   '</div>';
+			for (var i=0; i<respuesta.length; i++){
+				var habilitarBtn = "";
+				var accion = 	respuesta[i].CODIGO_REPORTE+",1,"+
+								respuesta[i].CODIGO_USUARIO_VENDEDOR;
+				var link = "'Informacion_de_vendedor.php?codigo-usuario="+respuesta[i].CODIGO_USUARIO_VENDEDOR+"'";
+				
+				imprimir += '<div class="row">'+
+								'<div class="col-lg-9 col-sm-12">'+
+									'<b>Nombre del vendedor: </b>'+respuesta[i].NOMBRE_COMPLETO_VENDEDOR+'<br>'+
+									'<p><b>Correo electrónico: </b>'+respuesta[i].CORREO_ELECTRONICO+'</p>'+
+									'<p><b>Teléfono: </b>'+respuesta[i].TELEFONO+'</p>'+
+									'<p><b>Cantidad de reportes al vendedor: </b>'+respuesta[i].CANTIDAD_REPORTES_VENDEDORES+'</p>';
+				if (respuesta[i].CORREO_ELECTRONICO == "correo_deshabilitado") {
+					imprimir += '<button style="margin-right:5px; margin-bottom:5px" class="btn btn-info '+
+								'btn-sm" disabled>Reporte Resuelto</button>';
+					habilitarBtn = "disabled";
+				}
+				imprimir +=		'</div>'+
+								'<div class="col-lg-3 col-sm-12">'+
+									'<button onclick="accionar('+accion+')" style="margin-top:5px" '+
+									'class="btn btn-success btn-block" '+habilitarBtn+'>'+
+									'Dar de Baja</button>'+
+									'<button role="link" onclick="window.location='+link+'" class="btn '+
+									'btn-success btn-block" '+habilitarBtn+'>Ver Perfil</button>'+
+								'</div>'+
+							'</div><hr>';
+
+			}
+			imprimir += '<center>-- Fin de los resultados --</center>';
+			$("#div-denuncias-vendedores").html(imprimir);
 		},
 		error:function(error){
 			console.log(error);

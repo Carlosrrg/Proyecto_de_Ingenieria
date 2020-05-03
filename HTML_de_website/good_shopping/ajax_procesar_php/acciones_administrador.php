@@ -17,6 +17,7 @@
 	accion = 7 -> agrega una nueva subcategoria
 	accion = 8 -> elimina servicios
 	accion = 9 -> elimina subcategorias
+	accion = 10 -> filtra vendedores
 	*/
 
 	$codigo_usuario = $_SESSION['codigo_usuario_sesion'];
@@ -198,38 +199,68 @@
 	}
 	if ($accion == 4) {
 		$busqueda = "%".$_POST['busqueda']."%";
-		$muestra_denuncias = $conexion->ejecutarInstruccion("	
-			SELECT  A.CODIGO_REPORTE,
-			        A.CODIGO_TIPO_REPORTE,
-			        B.NOMBRE_TIPO_REPORTE,
-			        NVL(A.CODIGO_PUBLICACION_PRODUCTO,0) CODIGO_PUBLICACION_PRODUCTO,
-			        NVL(C.NOMBRE_PRODUCTO,0) NOMBRE_PRODUCTO,
-			        NVL(A.CODIGO_USUARIO_VENDEDOR,0) CODIGO_USUARIO_VENDEDOR,
-			        NVL(D.NOMBRE||' '||D.APELLIDO,0) NOMBRE_COMPLETO,
-			        E.NOMBRE_MOTIVO_REPORTE,
-			        TO_CHAR(A.FECHA_EMITIO,'DD/MM/YYYY') AS FECHA_EMITIO,
-			        NVL(A.COMENTARIO_REPORTE,'*El usuario no hizo comentarios*') COMENTARIO_REPORTE
-			FROM TBL_REPORTES A
-			INNER JOIN TBL_TIPO_REPORTE B
-			ON A.CODIGO_TIPO_REPORTE = B.CODIGO_TIPO_REPORTE
-			LEFT JOIN TBL_PUBLICACION_PRODUCTOS C
-			ON A.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO
-			LEFT JOIN TBL_USUARIOS D 
-			ON D.CODIGO_USUARIO = A.CODIGO_USUARIO_VENDEDOR
-			INNER JOIN TBL_MOTIVO_REPORTE E
-			ON E.CODIGO_MOTIVO_REPORTE = A.CODIGO_MOTIVO_REPORTE
-			WHERE UPPER(D.NOMBRE) LIKE UPPER('$busqueda') OR UPPER(C.NOMBRE_PRODUCTO) LIKE UPPER('$busqueda')
-			ORDER BY A.CODIGO_REPORTE DESC");
+		$subaccion = $_POST['subaccion'];
 
-		oci_execute($muestra_denuncias);
+		if($subaccion==1){
+			$muestra_denuncias = $conexion->ejecutarInstruccion("	
+				SELECT  A.CODIGO_REPORTE,
+				        A.CODIGO_TIPO_REPORTE,
+				        B.NOMBRE_TIPO_REPORTE,
+				        NVL(A.CODIGO_PUBLICACION_PRODUCTO,0) CODIGO_PUBLICACION_PRODUCTO,
+				        NVL(C.NOMBRE_PRODUCTO,0) NOMBRE_PRODUCTO,
+				        E.NOMBRE_MOTIVO_REPORTE,
+				        TO_CHAR(A.FECHA_EMITIO,'DD/MM/YYYY') AS FECHA_EMITIO,
+				        NVL(A.COMENTARIO_REPORTE,'*El usuario no hizo comentarios*') COMENTARIO_REPORTE,
+				        NVL(F.CANTIDAD_REPORTES,0) CANTIDAD_REPORTES
+				FROM TBL_REPORTES A
+				INNER JOIN TBL_TIPO_REPORTE B
+				ON A.CODIGO_TIPO_REPORTE = B.CODIGO_TIPO_REPORTE
+				LEFT JOIN TBL_PUBLICACION_PRODUCTOS C
+				ON A.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO
+				INNER JOIN TBL_MOTIVO_REPORTE E
+				ON E.CODIGO_MOTIVO_REPORTE = A.CODIGO_MOTIVO_REPORTE
+				LEFT JOIN (
+	                SELECT  NVL(CODIGO_PUBLICACION_PRODUCTO,0) CODIGO_PUBLICACION_PRODUCTO, 
+	                        COUNT(*) CANTIDAD_REPORTES FROM TBL_REPORTES
+	                GROUP BY CODIGO_PUBLICACION_PRODUCTO ) F
+	            ON F.CODIGO_PUBLICACION_PRODUCTO = A.CODIGO_PUBLICACION_PRODUCTO
+				WHERE UPPER(C.NOMBRE_PRODUCTO) LIKE UPPER('$busqueda')
+				ORDER BY A.CODIGO_REPORTE DESC");
 
-		$resultado = array();
+			oci_execute($muestra_denuncias);
 
-	    while($fila = $conexion->obtenerFila($muestra_denuncias)){
-	        $resultado[] = $fila;
-	    }
+			$resultado = array();
 
-	    echo json_encode($resultado);
+		    while($fila = $conexion->obtenerFila($muestra_denuncias)){
+		        $resultado[] = $fila;
+		    }
+
+		    echo json_encode($resultado);
+		} else {
+			$muestra_denuncias_vendedores = $conexion->ejecutarInstruccion("	
+			SELECT  NVL(A.CODIGO_USUARIO_VENDEDOR,0) CODIGO_USUARIO_VENDEDOR, 
+					B.NOMBRE||' '||B.APELLIDO NOMBRE_COMPLETO_VENDEDOR,
+					B.CORREO_ELECTRONICO,B.TELEFONO,
+                    COUNT(*) CANTIDAD_REPORTES_VENDEDORES
+            FROM TBL_REPORTES A
+            INNER JOIN TBL_USUARIOS B
+            ON A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO
+            WHERE UPPER(B.NOMBRE||' '||B.APELLIDO) LIKE UPPER('$busqueda')
+            GROUP BY A.CODIGO_USUARIO_VENDEDOR,B.NOMBRE||' '||B.APELLIDO,
+            B.CORREO_ELECTRONICO,B.TELEFONO
+            HAVING COUNT(*) > 4
+            ORDER BY COUNT(*) DESC");
+
+			oci_execute($muestra_denuncias_vendedores);
+
+			$resultadoDenunciasVendedores = array();
+
+		    while($fila = $conexion->obtenerFila($muestra_denuncias_vendedores)){
+		        $resultadoDenunciasVendedores[] = $fila;
+		    }
+
+		    echo json_encode($resultadoDenunciasVendedores);
+		}
 	}
 
 	if ($accion == 5) {
