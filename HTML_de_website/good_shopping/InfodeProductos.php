@@ -403,30 +403,26 @@
 								$arreglo_codigo_publicacion =array();
 								$contador = 0;
 
-								$obtener_codigo_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, D.NOMBRE, D.APELLIDO, C.CODIGO_USUARIO_VENDEDOR, A.PRECIO, COUNT(*) AS TOTAL
+								$obtener_codigo_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, A.PRECIO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO
 																										FROM TBL_PUBLICACION_PRODUCTOS A
 																										INNER JOIN TBL_VEND_X_TBL_PUBLI B
-																										ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
+																										ON (A.CODIGO_PUBLICACION_PRODUCTO = B.CODIGO_PUBLICACION_PRODUCTO)
 																										INNER JOIN TBL_VENDEDORES C
 																										ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
 																										INNER JOIN TBL_USUARIOS D
 																										ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
-																										INNER JOIN TBL_PROD_X_TBL_IMG F
-																										ON (A.CODIGO_PUBLICACION_PRODUCTO=F.CODIGO_PRODUCTO)
-																										INNER JOIN TBL_IMAGENES G
-																										ON (F.CODIGO_IMAGEN=G.CODIGO_IMAGEN)
-																										WHERE A.CODIGO_TIPO_PUBLICACION = 1
-																										GROUP BY (A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, D.NOMBRE, D.APELLIDO, C.CODIGO_USUARIO_VENDEDOR, A.PRECIO)");
+																										WHERE A.CODIGO_ESTADO_PUBLICACION = 1");
 								oci_execute($obtener_codigo_producto_destacado);
 								while ($fila7 = $conexion->obtenerFila($obtener_codigo_producto_destacado)) {
 									$arreglo_codigo_publicacion[$contador] = $fila7["CODIGO_PUBLICACION_PRODUCTO"];
 									$contador++;
 								}
+								//echo count($arreglo_codigo_publicacion);
 
 								//$verificar = rand(0,2);
-								$verificar = 1;
-								//echo count($arreglo_codigo_publicacion);
-								//echo $numero_aleatorio = rand(0,count($arreglo_codigo_publicacion));
+								$verificar = 0;
+								$codigo_publicacion_imagen = " ";
+								$randon = " ";
 
 								echo '<table class="table" style="width:100%">';
 									echo '<thead class="thead-dark">';
@@ -436,27 +432,39 @@
 									      	echo '<th scope="col">Precio</th>';
 									    echo '</tr>';
 								 	echo '</thead>';
-								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO, A.PRECIO, G.RUTA_IMAGEN, A.CODIGO_ESTADO_PUBLICACION
+								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, A.PRECIO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO
 																								FROM TBL_PUBLICACION_PRODUCTOS A
 																								INNER JOIN TBL_VEND_X_TBL_PUBLI B
-																								ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
+																								ON (A.CODIGO_PUBLICACION_PRODUCTO = B.CODIGO_PUBLICACION_PRODUCTO)
 																								INNER JOIN TBL_VENDEDORES C
 																								ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
 																								INNER JOIN TBL_USUARIOS D
 																								ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
-																								INNER JOIN TBL_PROD_X_TBL_IMG F
-																								ON (A.CODIGO_PUBLICACION_PRODUCTO=F.CODIGO_PRODUCTO)
-																								INNER JOIN TBL_IMAGENES G
-																								ON (F.CODIGO_IMAGEN=G.CODIGO_IMAGEN)
-																								WHERE A.CODIGO_TIPO_PUBLICACION = 1");
+																								WHERE A.CODIGO_ESTADO_PUBLICACION = 1");
 								oci_execute($obtener_producto_destacado);
 								while ($fila6 = $conexion->obtenerFila($obtener_producto_destacado)) {
-									for ($i=0; $i <rand(0,count($arreglo_codigo_publicacion)); $i++) {
+									$randon = rand(0,count($arreglo_codigo_publicacion));
+									for ($i=0; $i <$randon; $i++) {
 										if ($verificar <= 2) {
-										 	if ($arreglo_codigo_publicacion[$i] == $fila6["CODIGO_PUBLICACION_PRODUCTO"] && $fila6["CODIGO_ESTADO_PUBLICACION"] == 1) {
+										 	if ($arreglo_codigo_publicacion[$i] == $fila6["CODIGO_PUBLICACION_PRODUCTO"]) {
 												echo '<tbody>';
 													echo '<tr>'; 
-												      echo '<td><a href="InfodeProductos.php?codigo-publicacion='.$fila6["CODIGO_PUBLICACION_PRODUCTO"].'"><img src="'.$fila6["RUTA_IMAGEN"].'" style="width: 100px; height: 80px"></a></td>';
+												      echo '<td><a href="InfodeProductos.php?codigo-publicacion='.$fila6["CODIGO_PUBLICACION_PRODUCTO"].'"><img src="';
+														    $codigo_publicacion_imagen = $fila6["CODIGO_PUBLICACION_PRODUCTO"];
+
+														    $obtener_imagen_producto = $conexion->ejecutarInstruccion(" SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, C.RUTA_IMAGEN
+																														FROM TBL_PUBLICACION_PRODUCTOS A
+																														INNER JOIN TBL_PROD_X_TBL_IMG B
+																														ON (A.CODIGO_PUBLICACION_PRODUCTO = B.CODIGO_PRODUCTO)
+																														INNER JOIN TBL_IMAGENES C
+																														ON (B.CODIGO_IMAGEN = C.CODIGO_IMAGEN)
+																														WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion_imagen'");
+															oci_execute($obtener_imagen_producto);
+															while ($fila8 = $conexion->obtenerFila($obtener_imagen_producto)) {
+																echo $fila8["RUTA_IMAGEN"];
+																break;
+															}
+												      echo '" style="width: 100px; height: 80px"></a></td>';
 												      echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila6["CODIGO_USUARIO_VENDEDOR"].'">'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</a></td>';
 												      echo '<td>'.$fila6["PRECIO"].'</td>';
 												    echo '</tr>';
@@ -466,7 +474,6 @@
 										} 
 									}
 								}
-
 								echo '</table>';
 								//echo $contador;
 								/*echo $numero_aleatorio = rand(1,25);

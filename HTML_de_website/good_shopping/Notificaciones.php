@@ -298,7 +298,7 @@
 																						INNER JOIN TBL_USUARIOS C
 																						ON (C.CODIGO_USUARIO = B.CODIGO_USUARIO_COMPRADOR)
 																						WHERE CODIGO_USUARIO_VENDEDOR = '$usuario'
-																						ORDER BY (A.CODIGO_MENSAJE)");
+																						ORDER BY (A.CODIGO_MENSAJE) DESC");
 								oci_execute($resultado_mensajes);
 								while ($fila2 = $conexion->obtenerFila($resultado_mensajes)) {
 									echo '<tr>

@@ -362,15 +362,12 @@
 							  	</thead>
 							  	<tbody>';
 
+
+
 							  	$numeracion2 = 1;
 							  	$usuario_vendedor2 = " ";
-							  	$nombre_publicacion = array();
-							  	$codigo_publicacion = array();
-							  	$fecha_publicacion = array();
-							  	$contador2 = 0;
-							  	$verificar = " ";
 
-							  	$resultado_actualizacion_vendedores = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO
+							  	$resultado_actualizacion_vendedores = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR
 																										FROM TBL_FAVORITOS A
 																										INNER JOIN TBL_VENDEDORES B
 																										ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
@@ -383,40 +380,47 @@
 										<th scope="row">'.$numeracion2.'</th>';
 											$usuario_vendedor2 = $fila5["CODIGO_USUARIO_VENDEDOR"];
 
-											$resultado_actualizacion_publicacion = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_VENDEDOR, C.NOMBRE_PRODUCTO, C.CODIGO_PUBLICACION_PRODUCTO, C.FECHA_PUBLICACION, C.CODIGO_ESTADO_PUBLICACION
-																													FROM TBL_VENDEDORES A
-																													INNER JOIN TBL_VEND_X_TBL_PUBLI B
+											$resultado_actualizacion_publicacion = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO, D.NOMBRE_PRODUCTO, D.FECHA_PUBLICACION, D.CODIGO_PUBLICACION_PRODUCTO
+																													FROM TBL_FAVORITOS A
+																													INNER JOIN TBL_VENDEDORES B
 																													ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
-																													INNER JOIN TBL_PUBLICACION_PRODUCTOS C
-																													ON (B.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO)
-																													WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor2'
-																													ORDER BY C.CODIGO_PUBLICACION_PRODUCTO DESC");
+																													INNER JOIN TBL_USUARIOS C
+																													ON (B.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO)
+																													INNER JOIN (
+																													            SELECT A.CODIGO_USUARIO_VENDEDOR, C.NOMBRE_PRODUCTO, C.CODIGO_PUBLICACION_PRODUCTO, C.FECHA_PUBLICACION, C.CODIGO_ESTADO_PUBLICACION
+																													            FROM TBL_VENDEDORES A
+																													            INNER JOIN TBL_VEND_X_TBL_PUBLI B
+																													            ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
+																													            INNER JOIN TBL_PUBLICACION_PRODUCTOS C
+																													            ON (B.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO)
+																													            INNER JOIN (
+																													                        SELECT MAX(C.CODIGO_PUBLICACION_PRODUCTO) AS ULTIMA_PUBLICACION
+																													                        FROM TBL_VENDEDORES A
+																													                        INNER JOIN TBL_VEND_X_TBL_PUBLI B
+																													                        ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
+																													                        INNER JOIN TBL_PUBLICACION_PRODUCTOS C
+																													                        ON (B.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO)
+																													                        WHERE A.CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor2'
+																													                        AND C.CODIGO_ESTADO_PUBLICACION = 1
+																													            ) D
+																													            ON (C.CODIGO_PUBLICACION_PRODUCTO = D.ULTIMA_PUBLICACION)
+																													) D
+																													ON (B.CODIGO_USUARIO_VENDEDOR = D.CODIGO_USUARIO_VENDEDOR)
+																													WHERE A.CODIGO_USUARIO_COMPRADOR = '$usuario'");
 											oci_execute($resultado_actualizacion_publicacion);
 											while ($fila6 = $conexion->obtenerFila($resultado_actualizacion_publicacion)) {
-												$verificar = $fila6["CODIGO_ESTADO_PUBLICACION"]; 
-												if($verificar != 1){
-													echo'<td>No hay publicaciones recientes</td>';
-								  					echo '<td>------------</td>';
-								  					break;
-												}
-												else{
-													echo '<td><a href="infodeProductos.php?codigo-publicacion='.$codigo_publicacion[$contador2] = $fila6["CODIGO_PUBLICACION_PRODUCTO"].'">';
-													echo $nombre_publicacion[$contador2] = $fila6["NOMBRE_PRODUCTO"];	
-								  					echo '</a></td>';
-								  					echo '<td>'.$fecha_publicacion[$contador2] = $fila6["FECHA_PUBLICACION"].'</td>';
-								  					$contador2++;
-								  					break;
-												}
-												$contador2++;
-												$verificar = " ";
+												echo '<td><a href="infodeProductos.php?codigo-publicacion='.$fila6["CODIGO_PUBLICACION_PRODUCTO"].'">';
+												echo $fila6["NOMBRE_PRODUCTO"];	
+								  				echo '</a></td>';
+								  				echo '<td>'.$fila6["FECHA_PUBLICACION"].'</td>';
+											  	echo '
+													<td>'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</td>
+													<td>'.$fila6["CORREO_ELECTRONICO"].'<br>+504 '.$fila6["TELEFONO"].'</td>
+													<td style="padding-left:2px;padding-right: 2px">';
+												echo '</tr>';
 											}
-											
-										echo '
-										<td>'.$fila5["NOMBRE"].' '.$fila5["APELLIDO"].'</td>
-										<td>'.$fila5["CORREO_ELECTRONICO"].'<br>+504 '.$fila5["TELEFONO"].'</td>
-										<td style="padding-left:2px;padding-right: 2px">';
-									echo '</tr>';
 									$numeracion2++;
+									$usuario_vendedor2 = " ";
 								}
 								echo '</tbody>
 							</table>';
