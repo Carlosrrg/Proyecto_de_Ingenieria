@@ -359,8 +359,8 @@
 
 				<div class="col-xs-3 col-mx-3" style="padding-left:40px; padding-right: 10px;">
 					<br>
-					<h6>Terminos y condiciones</h6>
-					<a href="#" style="color: black;">
+					<h6>Términos y condiciones</h6>
+					<a href="Terminos_y_condiciones.html" style="color: black;">
 						<span>
 							Condiciones de servicio
 						</span>
