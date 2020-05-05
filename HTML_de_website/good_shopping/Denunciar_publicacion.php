@@ -269,6 +269,15 @@
 					$codigo_tipo_reporte = 2;
 					//$codigo_publicacion = 21;
 
+					//<!--Boton para desplegar la barra lateral-->
+					echo '<button type="button" id="menu-toggle" class="sidebar-btn">';
+						echo '<span></span>';
+						echo '<span>';
+							echo '<img src="recursos/imagenes/ImagenUsuario.png" style="width: 35px; height: 35px; margin-top:-28px; margin-left: -10px;">';
+						echo '</span>';
+						echo '<span></span>';
+					echo '</button>';
+
 					echo '<div class="container" style="padding: 30px;width:80%">';
 						echo '<center><div><h5 class="col-lg-12">Díganos el motivo de su denuncia</h5></div></center><br>';
 

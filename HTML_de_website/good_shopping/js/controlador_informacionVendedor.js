@@ -20,7 +20,7 @@ $(document).ready(function(){
 			method:"POST",
 			success:function(respuesta){
 				if (respuesta != 0) {
-					alert(respuesta);
+					//alert(respuesta);
 					//si se puntuo el vendedor se recarga la pagina para visualizar los cambios
 					location.reload(true);
 				} else {
@@ -51,7 +51,7 @@ $(document).ready(function(){
 							//en caso que el text area no tuviese ningun caracter
 							alert('tiene que agregar un comentario no dejar el texto vacío');
 						}else{
-							alert(respuesta);
+							//alert(respuesta);
 							location.reload(true);//recargar la pagina para poder ver los nuevos comentarios
 						}
 					} else {

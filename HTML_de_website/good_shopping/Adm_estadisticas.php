@@ -218,10 +218,9 @@
 								  </div>
 								  <select class="custom-select" id="slc-estadisticas">
 								    <option value="0" selected>-- Seleccione --</option>
-								    <option value="Tiempo">Todo el tiempo</option>
-								    <option value="Año">Año</option>
-								    <option value="Mes">Mes</option>
-								    <option value="Día">Día</option>
+								    <option value="1">Productos por categoria</option>
+								    <option value="2">Ultimos usuarios registrados</option>
+								    <option value="3">Cantidad de productos por departamento</option>
 								  </select>
 								</div></center>';
 						echo '<div id="div-estadisticas"></div>';
@@ -349,7 +348,7 @@
 	<?php
 		$sql = '';
 		$estadistica = '';
-		if(1 == 2){
+		if(1 == 1){
 			$estadistica = 'productos_x_cat';
 		}else if(2 == 2){
 			$estadistica = '2_tipos_usarios';
