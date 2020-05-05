@@ -407,7 +407,7 @@
 						</span>
 					</a>
 					<br>
-					<a href="#" style="color: black;">
+					<a href="Politica_de_privacidad.html" style="color: black;">
 						<span>
 							Políticas de privacidad
 						</span>
