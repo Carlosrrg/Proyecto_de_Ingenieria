@@ -225,12 +225,12 @@
 							echo'</h6>';
 
 							echo'<h5>Calificación de la tienda</h5>';
-							echo'<h3 style="color: orange;">';
-							echo $fila["NUMERO_ESTRELLAS"];
-							echo'&#9733;</h3>';
 							echo'</div>';
 						echo'</div>';
 					echo'</div>';
+					echo'<h3 style="color: orange;">';
+					echo $fila["NUMERO_ESTRELLAS"];
+					echo'&#9733;</h3>';
 				}
 				
 				//si no se ha iniciado sesion no se podra calificar
@@ -250,7 +250,7 @@
 					oci_execute($esTienda);
 					
 					while($obtenerTienda = $conexion->obtenerFila($esTienda)){
-						//Lastiendas no pueden calificar vendedores	
+						//Las tiendas no pueden calificar vendedores	
 						if($obtenerTienda["CODIGO_TIPO_VENDEDOR"] != 2){
 							$resultadoMiValoracion = $esTienda = $conexion->ejecutarInstruccion(
 								"SELECT NUMERO_ESTRELLAS FROM TBL_RANKING
@@ -412,11 +412,12 @@
 							while($fila = $conexion->obtenerFila($resultado_productos)){
 								if ($repetido != $fila["CODIGO_PUBLICACION_PRODUCTO"]) {
 									echo'<li class="list-group-item"><img src="'.$fila["RUTA_IMAGEN"].'" width=50>';
-										echo "\t<a style='color:black' href='infodeProductos.php?codigo-publicacion=".$fila['CODIGO_PUBLICACION_PRODUCTO']."'>".$fila["NOMBRE_PRODUCTO"]."\t";
+										echo "\t<a style='color:black;' href='infodeProductos.php?codigo-publicacion="
+										.$fila['CODIGO_PUBLICACION_PRODUCTO']."'>".$fila["NOMBRE_PRODUCTO"]."\t";
 										if($fila["CODIGO_TIPO_MONEDA"] == 1){
-											echo"\t L. ";
+											echo"\t L.";
 										}else{
-											echo"\t $. ";
+											echo"\t $.";
 										}
 										echo $fila["PRECIO"]."\tEstado: ".$fila["NOMBRE_ESTADO_PRODUCTO"];
 									echo'</a></li>';

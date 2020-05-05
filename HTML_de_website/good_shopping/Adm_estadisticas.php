@@ -12,6 +12,7 @@
     <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" 
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+	<link href="css/graficos.css" rel="stylesheet">
   </head>
   <body>
   	  <?php
@@ -224,81 +225,13 @@
 								  </select>
 								</div></center>';
 						echo '<div id="div-estadisticas"></div>';
-/*
-						echo '<div class="card-deck">';
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Cuentas totales creadas</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title" style="font-size:50px">+50</h5>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-						echo '</div>';
-
-						echo '<div class="card-deck">';
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-
-						echo '<div class="card text-center border-success mb-3" style="max-width: 18rem;">
-								  <div class="card-header bg-transparent border-success">Header</div>
-								  <div class="card-body text-success">
-								    <h5 class="card-title">Success card title</h5>
-								    <p class="card-text">Texto</p>
-								  </div>
-								  <div class="card-footer bg-transparent border-success">Footer</div>
-								</div>';
-						echo '</div>';*/
+						
+						echo'<figure class="highcharts-figure">
+							<div id="grafico"></div>
+							<p class="highcharts-description">
+								<!--Grafico para la tienda goodshopping.-->
+							</p>
+						</figure>';
 
 						//Fin del contenido principal
 						echo '</div>';
@@ -395,17 +328,224 @@
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/controlador_administrador.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
-		
-  <!--Boton para desplegar la barra lateral-->		
-  <script type="text/javascript">
+	<script src="js/bootstrap.min.js"></script>
+	  	
+    <!--Boton para desplegar la barra lateral-->		
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#menu-toggle").on('click', function () {
                 $("#wrapper").toggleClass("toggled");
                 $(this).toggleClass('active');
             });
         });
-  </script>
+    </script>
+
+	<!--Librerias para graficos-->
+	<script src="js/highcharts.js"></script>
+	<script src="js/exporting.js"></script>
+	<script src="js/export-data.js"></script>
+	<script src="js/accessibility.js"></script>
+
+	<?php
+		$sql = '';
+		$estadistica = '';
+		if(1 == 2){
+			$estadistica = 'productos_x_cat';
+		}else if(2 == 2){
+			$estadistica = '2_tipos_usarios';
+		}else{
+			$estadistica = 'productos_x_dep';
+		}
+
+		$ejeY = 0;
+		if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+			$cantidad_productos = $conexion->ejecutarInstruccion("SELECT COUNT(*) NUM_PRODUCTOS FROM TBL_PUBLICACION_PRODUCTOS");
+			oci_execute($cantidad_productos);
+			while($fila = $conexion->obtenerFila($cantidad_productos)){
+				$ejeY = $fila["NUM_PRODUCTOS"];
+			}
+		}
+
+		$titulo = $tituloY = '';
+		if($estadistica == 'productos_x_cat'){
+			$titulo = 'Cantidad de productos publicados por categoría';					
+			$tituloY = 'Cantidad de productos';
+			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(C.NOMBRE_CATEGORIA) CANTIDAD_PRODUCTOS, 
+														C.NOMBRE_CATEGORIA 
+													FROM TBL_CATEGORIAS C
+													INNER JOIN TBL_PUBLICACION_PRODUCTOS PB 
+														ON PB.CODIGO_CATEGORIA = C.CODIGO_CATEGORIA
+													GROUP BY C.NOMBRE_CATEGORIA
+													ORDER BY C.NOMBRE_CATEGORIA"
+													);
+			
+		}else if($estadistica == '2_tipos_usarios'){
+			$titulo = 'Cantidad de usuarios registrados los ultimos 5 meses';					
+			$tituloY = 'Cantidad de usuarios';
+			$cantidad_vendedores = $conexion->ejecutarInstruccion("SELECT COUNT(*) NUM_VENDEDORES FROM TBL_VENDEDORES");
+			oci_execute($cantidad_vendedores);
+			while($fila = $conexion->obtenerFila($cantidad_vendedores)){
+				$ejeY = $fila["NUM_VENDEDORES"];
+			}
+
+			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(V.CODIGO_TIPO_VENDEDOR) VENDEDORES, V.CODIGO_TIPO_VENDEDOR, 
+														TO_CHAR(U.FECHA_REGISTRO, 'MM') MES
+													FROM TBL_VENDEDORES V
+													INNER JOIN TBL_USUARIOS U 
+														ON U.CODIGO_USUARIO = V.CODIGO_USUARIO_VENDEDOR
+													WHERE (to_char(sysdate, 'YYYY') = to_char(U.FECHA_REGISTRO, 'YYYY')) AND
+														(to_char(sysdate, 'MM')-to_char(U.FECHA_REGISTRO, 'MM') >= 0) AND
+														(to_char(sysdate, 'MM')-to_char(U.FECHA_REGISTRO, 'MM') <= 5)
+													GROUP BY V.CODIGO_TIPO_VENDEDOR,
+													TO_CHAR(U.FECHA_REGISTRO, 'MM')
+													ORDER BY MES"
+													);
+		}else if($estadistica == 'productos_x_dep'){
+			$titulo = 'productos recientemente publicados por departamento';					
+			$tituloY = 'Cantidad de productos';
+			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(L.NOMBRE_LUGAR) CANTIDAD, L.NOMBRE_LUGAR FROM TBL_USUARIOS U
+													INNER JOIN TBL_LUGARES L ON L.CODIGO_LUGAR = U.CODIGO_LUGAR
+													INNER JOIN TBL_VENDEDORES V 
+														ON V.CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
+													INNER JOIN TBL_VEND_X_TBL_PUBLI VxP 
+														ON VxP.CODIGO_USUARIO_VENDEDOR = V.CODIGO_USUARIO_VENDEDOR
+													INNER JOIN TBL_PUBLICACION_PRODUCTOS P
+														ON P.CODIGO_PUBLICACION_PRODUCTO = VxP.CODIGO_PUBLICACION_PRODUCTO
+													WHERE (to_char(sysdate, 'YYYY') = to_char(P.FECHA_PUBLICACION, 'YYYY')) AND
+														(to_char(sysdate, 'MM') = to_char(P.FECHA_PUBLICACION, 'MM')) AND
+														(to_char(sysdate, 'DD')-to_char(P.FECHA_PUBLICACION, 'DD') <= 14)
+													GROUP BY L.NOMBRE_LUGAR
+													ORDER BY L.NOMBRE_LUGAR"
+													);
+		}
+	?>
+
+	<script type="text/javascript">
+		Highcharts.chart('grafico', {
+			chart: {
+				type: 'column'
+			},
+			title: {
+				text: '<?php echo $titulo?>'
+			},
+			xAxis: {
+					<?php
+						if($estadistica == 'productos_x_cat'){
+							oci_execute($sql);
+							echo'categories: [';	 
+							while($fila = $conexion->obtenerFila($sql)){
+									echo "'".$fila["NOMBRE_CATEGORIA"]."', ";
+							}
+							echo'],';
+						}else if($estadistica == 'productos_x_dep'){
+							oci_execute($sql);
+							echo'categories: [';	 
+							while($fila = $conexion->obtenerFila($sql)){
+									echo "'".$fila["NOMBRE_LUGAR"]."', ";			
+							}
+							echo'],';
+						}
+					?>
+
+					<?php
+						if($estadistica == '2_tipos_usarios'){
+							echo"categories: [
+								'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+								'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' 
+							],";
+						}
+					?>
+				
+				crosshair: true
+			},
+			yAxis: {
+				min: 0, max: '<?php echo $ejeY?>',
+				title: {
+					text: '<?php echo $tituloY;?>'
+				}
+			},
+			tooltip: {
+				headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					'<td style="padding:0"><b>{point.y: 1f} </b></td></tr>',
+				footerFormat: '</table>',
+				shared: true,
+				useHTML: true
+			},
+			plotOptions: {
+				column: {
+					pointPadding: 0.1,
+					borderWidth: 0
+				}
+			},
+			
+			series: [		
+				<?php
+					if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+						echo"{name: 'productos', data: [";
+						oci_execute($sql);
+						while($fila = $conexion->obtenerFila($sql)){
+							if($estadistica == 'productos_x_dep'){	
+								echo $fila["CANTIDAD"].",";
+							}else if($estadistica == 'productos_x_cat'){
+								echo $fila["CANTIDAD_PRODUCTOS"].",";
+							}
+						}
+						echo']},';
+					}
+				?>	
+
+				<?php
+					if($estadistica == '2_tipos_usarios'){	
+						oci_execute($sql);
+						$meses = [0,0,0,0,0,0,0,0,0,0,0,0];
+						$meses2 = [0,0,0,0,0,0,0,0,0,0,0,0];
+						$vendedorNormal = 0;
+						$vendedorEmpresarial = 0;
+						while($fila = $conexion->obtenerFila($sql)){
+							if($fila["CODIGO_TIPO_VENDEDOR"] == 1){
+								for($i = 0; $i < 12; $i++){
+									if($fila["MES"] == $i+1){
+										$meses[$i] = $fila["VENDEDORES"];
+										$vendedorNormal++;
+										break;
+									}
+								}	
+							}else if($fila["CODIGO_TIPO_VENDEDOR"] == 2){
+								for($i = 0; $i < 12; $i++){
+									if($fila["MES"] == $i+1){
+										$meses2[$i] = $fila["VENDEDORES"];
+										$vendedorEmpresarial++;
+										break;
+									}
+								}
+							}
+						}
+						if($vendedorNormal > 0){
+							echo"{name: 'Vendedores normales', data: [";
+							for($i = 0; $i<12; $i++){
+								echo $meses[$i];
+								echo ',';
+							}
+							echo']},';		
+						}
+
+						if($vendedorEmpresarial > 0){
+							echo"{name: 'Vendedores empresariales', data: [";
+							for($i = 0; $i<12; $i++){
+								echo $meses2[$i];
+								echo ',';
+							}
+							echo']},';		
+						}
+					}
+					
+				?>	
+				
+			]
+			
+		});
+	</script>
 			
 </body>
 </html>
