@@ -467,6 +467,7 @@
 					     							echo $fila["DESCRIPCION_TIENDA"];
 					     						}
 											echo'</textarea>';
+											echo '<div id="errorDescripcion" class="errores">La descripción no debe ser mayor a 500 caracteres.</div>';
 
 											echo '<div class="container-fluid" style="padding: 20px">';
 												echo '<span>';

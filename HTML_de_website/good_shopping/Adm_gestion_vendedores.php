@@ -364,7 +364,7 @@
 										$filtrosql = "obtener_valoracion(B.CODIGO_USUARIO) ASC";
 										break;
 									case 3:
-										$filtrosql = "COUNT(C.CODIGO_USUARIO_VENDEDOR) DESC";
+										$filtrosql = "COUNT(C.CODIGO_PUBLICACION_PRODUCTO) DESC";
 										break;
 									default:
 										$filtrosql = "B.CODIGO_USUARIO DESC";
@@ -375,17 +375,19 @@
 							$resultado_gestion = $conexion->ejecutarInstruccion("	
 					    		SELECT * FROM (
 								SELECT  B.CODIGO_USUARIO,
-								        B.NOMBRE||' '||B.APELLIDO AS NOMBRE_COMPLETO,
-								        COUNT(C.CODIGO_USUARIO_VENDEDOR) AS N_ARTICULOS,
-								        NVL(AVG(D.NUMERO_ESTRELLAS),0) AS RANKING
+								        INITCAP(B.NOMBRE||' '||B.APELLIDO) AS NOMBRE_COMPLETO,
+								        COUNT(C.CODIGO_PUBLICACION_PRODUCTO) AS N_ARTICULOS,
+								        obtener_valoracion(B.CODIGO_USUARIO) AS RANKING
 								FROM TBL_VENDEDORES A
 								INNER JOIN TBL_USUARIOS B
 								ON A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO
 								LEFT JOIN TBL_VEND_X_TBL_PUBLI C
 								ON A.CODIGO_USUARIO_VENDEDOR = C.CODIGO_USUARIO_VENDEDOR
-								LEFT JOIN TBL_RANKING D
-								ON A.CODIGO_USUARIO_VENDEDOR = D.CODIGO_USUARIO_VENDEDOR
-								GROUP BY B.CODIGO_USUARIO, B.NOMBRE||' '||B.APELLIDO
+                                LEFT JOIN TBL_PUBLICACION_PRODUCTOS E
+                                ON E.CODIGO_PUBLICACION_PRODUCTO = C.CODIGO_PUBLICACION_PRODUCTO
+                                WHERE E.CODIGO_ESTADO_PUBLICACION <> 3
+								GROUP BY B.CODIGO_USUARIO, INITCAP(B.NOMBRE||' '||B.APELLIDO),
+                                        obtener_valoracion(B.CODIGO_USUARIO)
 								ORDER BY ".$filtrosql."
 								)
 								WHERE ROWNUM <= 10");

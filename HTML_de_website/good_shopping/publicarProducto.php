@@ -392,7 +392,7 @@
 								echo '</div>';//Fin del div de servicios
 								echo '<label for="txt-descripcion" style="padding-top:15px; "><h6>Descripción del Producto o Servicio:</h6></label>';
 								echo '<textarea id="txt-descripcion" name="txt-descripcion" class="form-control" style="width: 100%; height: 180px;" placeholder="Ingrese la descripción detallada de su producto o servicio."></textarea>
-									  <div id="mensaje4" class="errores">*Se requiere de una descripción.</div>';
+									  <div id="mensaje4" class="errores">*Se requiere de una descripción (menor a 500 caracteres)</div>';
 
 								echo '<div class="container-fluid" style="padding-top: 20px">';
 									echo '<span>';

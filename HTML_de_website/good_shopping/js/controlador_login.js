@@ -203,6 +203,14 @@ $(document).ready(function(){
 		window.location="BusquedaP.php?pagina=1&busca="+busca+"";
 	});
 
+	$("#txt-barraBusqueda").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        var busca = $("#txt-barraBusqueda").val();
+			window.location="BusquedaP.php?pagina=1&busca="+busca+"";
+	    }
+	});
+
 	$("#btn_iniciar").click(function(){
 
 		var correo = $("#txt-correo").val();

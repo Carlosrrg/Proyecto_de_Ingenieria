@@ -288,7 +288,7 @@
 
 			<!--id: cmb_categoria -> combobox que contendra todas las categorias de la base de datos-->
 			<label for="cmb_categoria" style="margin-bottom: -10px; margin-top: 30px;"><h6>Categoría</h6></label>
-			<select id="cmb_categoria" class="form-control" style="width: 95%;" onchange="refrescar()">
+			<select id="cmb_categoria" class="form-control" style="width: 95%;" onchange="refrescarCategoria()">
 			<?php
 				echo '<option value="0" ';
 				if (!isset($_GET["categoria"])) {
@@ -656,6 +656,15 @@
 		function refrescar(){
 			$("#btn_buscar").click();
 		}
+		
+		//buscar cuando cambia de categoria
+		function refrescarCategoria(){
+			$('input[name="cbox_subcategorias"]:checked').each(function(){
+	            $(this).prop("checked", false);
+	        });
+			$("#btn_buscar").click();
+		}
+
 </script>	
 	
 </body>

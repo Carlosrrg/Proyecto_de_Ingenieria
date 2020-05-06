@@ -8,7 +8,7 @@ $(document).ready(function(){
 		var codigo_vendedor = $("#txt-idVendedor").val();
 		var codigo_publicacion = $("#txt-codigo-p").val();
 
-		if (mensaje == "") {
+		if (mensaje == "" || mensaje.length > 499) {
 			$("#mensaje1").fadeIn();
 			return false;
 		}
@@ -43,14 +43,13 @@ $(document).ready(function(){
 		}
 	});
 
-
 	$("#btn_enviar_mensaje_comprador").click(function(){
 
 		var mensaje = $("#txt-mensaje").val();
 		var codigo_comprador = $("#txt-idComprador").val();
 		var codigo_publicacion = $("#txt-codigo-p").val();
 
-		if (mensaje == "") {
+		if (mensaje == "" || mensaje.length > 499) {
 			$("#mensaje1").fadeIn();
 			return false;
 		}
@@ -83,6 +82,22 @@ $(document).ready(function(){
 				}
 			});	
 		}
+	});
+
+	//funcion de enviar mensaje al presionar enter
+	$("#txt-mensaje").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        var URLactual = window.location.pathname;
+	        var pagina = URLactual.split("/");
+	        var paginaActual = pagina[pagina.length-1];
+	        if (paginaActual == "InfodeProductos.php") {
+	        	$("#btn_enviar_mensaje").click();
+	        }
+	        if (paginaActual == "Responder_mensaje.php") {
+	        	$("#btn_enviar_mensaje_comprador").click();
+	        }
+	    }
 	});
 
 });

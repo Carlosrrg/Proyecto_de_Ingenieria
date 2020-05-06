@@ -505,7 +505,7 @@
 								echo'<span>';
 									echo'<button type="submit" name="btn_enviar_mensaje" id="btn_enviar_mensaje" class="btn btn-success"> Enviar Mensaje</button>';
 								echo'</span>';	
-								echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos</div>';
+								echo'<div id="mensaje1" class="errores">Por favor, rellene los campos requeridos con un máximo de 500 caracteres.</div>';
 							}
 						}
 					?>

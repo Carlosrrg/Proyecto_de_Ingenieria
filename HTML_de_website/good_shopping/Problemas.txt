@@ -5,3 +5,17 @@ infodeProductos.php
 	-muestra porductos aunque ya no esten disponibles (eliminados o vendidos).
 
 index.php
+
+
+Adm_gestion_vendedores
+-Back end
+	-Mostraba más numeros de articulos a los vendedores de los que tenia.
+
+BusquedaP.php
+-Back end
+	-Cuando cambiaba de categoria con subcategorias no arrojaba ningun resultado.
+
+EditarTienda.php
+-Back end
+	-Error con la descripcion de la tienda al superar los 500 caracteres.
+	(igual con descripcion de productos y mensajes).

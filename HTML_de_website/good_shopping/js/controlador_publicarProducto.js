@@ -88,7 +88,7 @@ $(document).ready(function(){
 				}
 				else{
 					$("#mensaje3").fadeOut();
-					if (descripcion == "") {
+					if (descripcion == "" || descripcion.length > 499) {
 						$("#mensaje4").fadeIn();
 						return false;
 					}

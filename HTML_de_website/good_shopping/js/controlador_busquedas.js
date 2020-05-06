@@ -38,6 +38,14 @@ $(document).ready(function(){
         
 	});
 
+	//Funcion para ejecutar al presionar enter
+	$("#txt_buscar").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        $("#btn_buscar").click();
+	    }
+	});
+
 	//Muestra subcategorias
 	$('#cmb_categoria').change(function() {	
 		var categoria = $("#cmb_categoria").val();

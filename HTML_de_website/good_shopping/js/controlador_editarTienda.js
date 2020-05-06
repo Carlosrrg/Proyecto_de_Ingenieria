@@ -49,37 +49,44 @@ $(document).ready(function(){
 				}
 				else{
 					$("#mensaje24").fadeOut();
-					$("#mensaje25").fadeOut();
-					$("#mensaje26").fadeOut();
+					if (descripcion.length > 499) {
+						$("#errorDescripcion").fadeIn();
+						return false;
+					}
+					else{
+						$("#errorDescripcion").fadeOut();
+						$("#mensaje25").fadeOut();
+						$("#mensaje26").fadeOut();
 
-					var parametros = 	"&txt-nombre-tienda="+nombre_tienda+
-										"&txt-correo-tienda="+correo_tienda+
-										"&txt-telefono-tienda="+telefono_tienda+
-										"&txt-direccion-tienda="+direccion_tienda+
-										"&slc-servicios="+servicios+
-										"&txt-descripcion="+descripcion;
-					
-					$.ajax({
-						url:"ajax_procesar_php/acciones_editarTienda.php",
-						data:parametros,
-						method:"POST",
-						success:function(respuesta){
-							if (respuesta == 0) {
-								//alert("El correo electronico ingresado es invalido, por favor ingrese uno nuevo...");
-								$("#mensaje25").fadeIn();
-								$("#txt-correo-tienda").val("");
+						var parametros = 	"&txt-nombre-tienda="+nombre_tienda+
+											"&txt-correo-tienda="+correo_tienda+
+											"&txt-telefono-tienda="+telefono_tienda+
+											"&txt-direccion-tienda="+direccion_tienda+
+											"&slc-servicios="+servicios+
+											"&txt-descripcion="+descripcion;
+						
+						$.ajax({
+							url:"ajax_procesar_php/acciones_editarTienda.php",
+							data:parametros,
+							method:"POST",
+							success:function(respuesta){
+								if (respuesta == 0) {
+									//alert("El correo electronico ingresado es invalido, por favor ingrese uno nuevo...");
+									$("#mensaje25").fadeIn();
+									$("#txt-correo-tienda").val("");
+								}
+								if (respuesta == 2) {
+									$("#mensaje26").fadeIn();
+									$('html, body').animate({scrollTop:0}, 'slow');
+								}
+								else{
+									$("#mensaje25").fadeOut();
+									alert("Actualizado con exito...");
+									window.location="EditarTienda.php";
+								}
 							}
-							if (respuesta == 2) {
-								$("#mensaje26").fadeIn();
-								$('html, body').animate({scrollTop:0}, 'slow');
-							}
-							else{
-								$("#mensaje25").fadeOut();
-								alert("Actualizado con exito...");
-								window.location="EditarTienda.php";
-							}
-						}
-					});	
+						});	
+					}
 				}
 			}
 		}
@@ -166,11 +173,17 @@ $(document).ready(function(){
 	$('input').change(function() {
 		$("#editar_tienda").prop('disabled', false);
 	});
-	$('input').keypress(function() {
+	$('input').keyup(function() {
 		$("#editar_tienda").prop('disabled', false);
 	});
-	$('textarea').keypress(function() {
+	$('textarea').keyup(function() {
 		$("#editar_tienda").prop('disabled', false);
+		var descripcion = $("#txt-descripcion").val();
+		if (descripcion.length > 499) {
+			$("#errorDescripcion").fadeIn();
+		} else {
+			$("#errorDescripcion").fadeOut();
+		}
 	});
 
 });
