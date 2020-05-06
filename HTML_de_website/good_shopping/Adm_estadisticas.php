@@ -471,10 +471,29 @@
 				shared: true,
 				useHTML: true
 			},
+			
+			<?php
+				if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+					$entero = 0;
+					$cantidad = 18;
+					echo"colors: [";
+					for($i=0 ; $i < $cantidad; $i++){
+						echo"'#".substr(md5($entero), 0, 6)."',";
+						$entero += 2;
+					}
+					echo'],';
+				}
+			?>
+
 			plotOptions: {
 				column: {
 					pointPadding: 0.1,
-					borderWidth: 0
+					borderWidth: 0,
+					<?php
+						if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+							echo 'colorByPoint: true';
+						}
+					?>
 				}
 			},
 			
