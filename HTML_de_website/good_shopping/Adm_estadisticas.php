@@ -212,18 +212,63 @@
 						//Principio del contenido principal
 						echo '<center><div><h5 class="col-lg-12">Estadísticas de la Página</h5></div></center><hr>';
 
-						echo '<center><div class="input-group mb-3" style="width:35%">
+						//Tipo de estadistica
+						echo '<center><div class="input-group mb-3" style="width:52%">
 								  <div class="input-group-prepend">
 								    <label class="input-group-text" for="slc-estadisticas">Mostrar estadísticas de: </label>
 								  </div>
-								  <select class="custom-select" id="slc-estadisticas">
-								    <option value="0" selected>-- Seleccione --</option>
-								    <option value="1">Productos por categoria</option>
-								    <option value="2">Ultimos usuarios registrados</option>
-								    <option value="3">Cantidad de productos por departamento</option>
+								  <select class="custom-select" id="slc-estadisticas">';
+
+								$estadistica = 1;
+	
+								if (isset($_GET['estadistica'])) {
+									$estadistica = $_GET['estadistica'];
+								}
+
+							echo '<option value="1" ';if($estadistica==1){echo'selected';};
+							echo '>Cantidad de productos por categoria</option>';
+							echo '<option value="2" ';if($estadistica==2){echo'selected';};
+							echo '>Cantidad de vendedores registrados</option>';
+							echo '<option value="3" ';if($estadistica==3){echo'selected';};
+							echo '>Cantidad de productos por departamento</option>
 								  </select>
 								</div></center>';
-						echo '<div id="div-estadisticas"></div>';
+
+						//Tiempo a mostrar
+						echo '<center><div class="input-group mb-3" style="width:30%">
+								  <div class="input-group-prepend">
+								    <label class="input-group-text" for="slc-tiempo">En: </label>
+								  </div>
+								  <select class="custom-select" id="slc-tiempo">';
+
+								$tiempo = 1;
+	
+								if (isset($_GET['tiempo'])) {
+									$tiempo = $_GET['tiempo'];
+								}
+
+							echo '<option value="1" ';if($tiempo==1){echo'selected';};
+							echo '>Año</option>';
+							echo '<option value="2" ';if($tiempo==2){echo'selected';};
+							echo '>Mes</option>';
+							echo '<option value="3" ';if($tiempo==3){echo'selected';};
+							echo '>Semana</option>
+								  </select>';
+
+						//Fecha a mostrar
+						echo '<select class="custom-select" id="slc-fecha">';
+
+								$fecha = 1;
+								if (isset($_GET['fecha'])) {
+									$fecha = $_GET['fecha'];
+								}
+								echo '<option value="1" ';if($fecha==1){echo'selected';}
+								echo '>Actual</option>';
+								echo '<option value="2" ';if($fecha==2){echo'selected';}
+								echo '>Anterior</option>';
+
+						echo '</select>
+								</div></center>';
 						
 						echo'<figure class="highcharts-figure">
 							<div id="grafico"></div>
@@ -337,6 +382,21 @@
                 $(this).toggleClass('active');
             });
         });
+
+        $("#slc-estadisticas").change(function(){
+        	window.location = "Adm_estadisticas.php?estadistica="+$("#slc-estadisticas").val();
+        });
+
+        $("#slc-tiempo").change(function(){
+        	window.location = 	"Adm_estadisticas.php?estadistica="+$("#slc-estadisticas").val()+
+        						"&tiempo="+$("#slc-tiempo").val();
+        });
+
+        $("#slc-fecha").change(function(){
+        	window.location = 	"Adm_estadisticas.php?estadistica="+$("#slc-estadisticas").val()+
+        						"&tiempo="+$("#slc-tiempo").val()+
+        						"&fecha="+$("#slc-fecha").val();
+        });
     </script>
 
 	<!--Librerias para graficos-->
@@ -347,75 +407,173 @@
 
 	<?php
 		$sql = '';
-		$estadistica = '';
-		if(1 == 1){
-			$estadistica = 'productos_x_cat';
-		}else if(2 == 2){
-			$estadistica = '2_tipos_usarios';
-		}else{
-			$estadistica = 'productos_x_dep';
+
+		switch ($estadistica) {
+			case 1:
+				$estadistica = 'productos_x_cat';
+				break;
+			case 2:
+				$estadistica = '2_tipos_usarios';
+				break;
+			case 3:
+				$estadistica = 'productos_x_dep';
+				break;
+			default:
+				$estadistica = 'productos_x_cat';
+				break;
+		}
+
+		$año = date("Y");
+		$año_anterior = strtotime("-1 year");
+		$año_anterior = date("Y", $año_anterior);
+		switch ($tiempo) {
+			case 1:
+				$sql_tiempo = 'YYYY';
+				$sql_tiempo_dividido = 'MM';
+				if ($fecha == 1) {
+					$sql_fecha = $año;
+				} else {
+					$sql_fecha = $año_anterior;
+				}
+				break;
+			case 2:
+				$sql_tiempo = 'MM/YYYY';
+				$sql_tiempo_dividido = 'DD';
+				$mes = date("m");
+				$mes_anterior = strtotime("-1 month");
+				$mes_anterior = date("m", $mes_anterior);
+				if ($fecha == 1) {
+					$sql_fecha = $mes."/".$año;
+				} else {
+					$sql_fecha = $mes_anterior."/".$año;
+				}
+				break;
+			case 3:
+				$sql_tiempo = 'IW/YYYY';
+				$sql_tiempo_dividido = 'D';
+				$semana = date("W");
+				$semana_anterior = strtotime("-1 week");
+				$semana_anterior = date("W", $semana_anterior);
+				if ($fecha == 1) {
+					$sql_fecha = $semana."/".$año;
+				} else {
+					$sql_fecha = $semana_anterior."/".$año;
+				}
+				break;
+			default:
+				$sql_tiempo = 'YYYY';
+				$sql_tiempo_dividido = 'MM';
+				if ($fecha == 1) {
+					$sql_fecha = $año;
+				} else {
+					$sql_fecha = $año_anterior;
+				}
+				break;
 		}
 
 		$ejeY = 0;
-		if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
-			$cantidad_productos = $conexion->ejecutarInstruccion("SELECT COUNT(*) NUM_PRODUCTOS FROM TBL_PUBLICACION_PRODUCTOS");
+		$titulo = $tituloY = '';
+
+		//GRAFICA POR CATEGORIA
+		if($estadistica == 'productos_x_cat'){
+			$titulo = 'Cantidad De Productos Publicados Por Categoría';				
+			$tituloY = 'Cantidad de productos';
+
+			$cantidad_productos = $conexion->ejecutarInstruccion("
+				SELECT NVL(MAX(COUNT(*)),0) NUM_PRODUCTOS 
+				FROM TBL_CATEGORIAS C
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS PB 
+				ON PB.CODIGO_CATEGORIA = C.CODIGO_CATEGORIA
+				WHERE TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY C.CODIGO_CATEGORIA, 
+				TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo_dividido."')");
 			oci_execute($cantidad_productos);
 			while($fila = $conexion->obtenerFila($cantidad_productos)){
 				$ejeY = $fila["NUM_PRODUCTOS"];
 			}
+
+			$sql = $conexion->ejecutarInstruccion(" 
+				SELECT  C.CODIGO_CATEGORIA CODIGO,
+				        TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo_dividido."') TIEMPO,
+				        COUNT(C.CODIGO_CATEGORIA) CANTIDAD
+				FROM TBL_CATEGORIAS C
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS PB 
+				ON PB.CODIGO_CATEGORIA = C.CODIGO_CATEGORIA
+				WHERE TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY C.CODIGO_CATEGORIA, 
+				TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo_dividido."')
+				ORDER BY C.CODIGO_CATEGORIA, TIEMPO");
+			
 		}
 
-		$titulo = $tituloY = '';
-		if($estadistica == 'productos_x_cat'){
-			$titulo = 'Cantidad de productos publicados por categoría';					
-			$tituloY = 'Cantidad de productos';
-			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(C.NOMBRE_CATEGORIA) CANTIDAD_PRODUCTOS, 
-														C.NOMBRE_CATEGORIA 
-													FROM TBL_CATEGORIAS C
-													INNER JOIN TBL_PUBLICACION_PRODUCTOS PB 
-														ON PB.CODIGO_CATEGORIA = C.CODIGO_CATEGORIA
-													GROUP BY C.NOMBRE_CATEGORIA
-													ORDER BY C.NOMBRE_CATEGORIA"
-													);
-			
-		}else if($estadistica == '2_tipos_usarios'){
-			$titulo = 'Cantidad de usuarios registrados los ultimos 5 meses';					
-			$tituloY = 'Cantidad de usuarios';
-			$cantidad_vendedores = $conexion->ejecutarInstruccion("SELECT COUNT(*) NUM_VENDEDORES FROM TBL_VENDEDORES");
+		//GRAFICA POR TIPO DE USUARIO
+		else if($estadistica == '2_tipos_usarios'){
+			$titulo = 'Cantidad De Vendedores Registrados';					
+			$tituloY = 'Cantidad de vendedores';
+
+			$cantidad_vendedores = $conexion->ejecutarInstruccion("
+				SELECT NVL(MAX(COUNT(*)),0) NUM_VENDEDORES FROM TBL_VENDEDORES V
+				INNER JOIN TBL_USUARIOS U
+				ON V.CODIGO_USUARIO_VENDEDOR=U.CODIGO_USUARIO
+				WHERE TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY V.CODIGO_TIPO_VENDEDOR,
+				TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo_dividido."')");
 			oci_execute($cantidad_vendedores);
 			while($fila = $conexion->obtenerFila($cantidad_vendedores)){
 				$ejeY = $fila["NUM_VENDEDORES"];
 			}
 
-			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(V.CODIGO_TIPO_VENDEDOR) VENDEDORES, V.CODIGO_TIPO_VENDEDOR, 
-														TO_CHAR(U.FECHA_REGISTRO, 'MM') MES
-													FROM TBL_VENDEDORES V
-													INNER JOIN TBL_USUARIOS U 
-														ON U.CODIGO_USUARIO = V.CODIGO_USUARIO_VENDEDOR
-													WHERE (to_char(sysdate, 'YYYY') = to_char(U.FECHA_REGISTRO, 'YYYY')) AND
-														(to_char(sysdate, 'MM')-to_char(U.FECHA_REGISTRO, 'MM') >= 0) AND
-														(to_char(sysdate, 'MM')-to_char(U.FECHA_REGISTRO, 'MM') <= 5)
-													GROUP BY V.CODIGO_TIPO_VENDEDOR,
-													TO_CHAR(U.FECHA_REGISTRO, 'MM')
-													ORDER BY MES"
-													);
-		}else if($estadistica == 'productos_x_dep'){
-			$titulo = 'productos recientemente publicados por departamento';					
+			$sql = $conexion->ejecutarInstruccion(" 
+				SELECT 	V.CODIGO_TIPO_VENDEDOR CODIGO, 
+				        TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo_dividido."') TIEMPO,
+				        COUNT(V.CODIGO_TIPO_VENDEDOR) CANTIDAD
+				FROM TBL_VENDEDORES V
+				INNER JOIN TBL_USUARIOS U 
+				ON U.CODIGO_USUARIO = V.CODIGO_USUARIO_VENDEDOR
+				WHERE TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY V.CODIGO_TIPO_VENDEDOR,
+				TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo_dividido."')
+				ORDER BY V.CODIGO_TIPO_VENDEDOR, TIEMPO");
+
+		}
+
+		//GRAFICA POR DEPARTAMENTO
+		else if($estadistica == 'productos_x_dep'){
+			$titulo = 'Cantidad De Productos Publicados Por Departamento';					
 			$tituloY = 'Cantidad de productos';
-			$sql = $conexion->ejecutarInstruccion(" SELECT COUNT(L.NOMBRE_LUGAR) CANTIDAD, L.NOMBRE_LUGAR FROM TBL_USUARIOS U
-													INNER JOIN TBL_LUGARES L ON L.CODIGO_LUGAR = U.CODIGO_LUGAR
-													INNER JOIN TBL_VENDEDORES V 
-														ON V.CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
-													INNER JOIN TBL_VEND_X_TBL_PUBLI VxP 
-														ON VxP.CODIGO_USUARIO_VENDEDOR = V.CODIGO_USUARIO_VENDEDOR
-													INNER JOIN TBL_PUBLICACION_PRODUCTOS P
-														ON P.CODIGO_PUBLICACION_PRODUCTO = VxP.CODIGO_PUBLICACION_PRODUCTO
-													WHERE (to_char(sysdate, 'YYYY') = to_char(P.FECHA_PUBLICACION, 'YYYY')) AND
-														(to_char(sysdate, 'MM') = to_char(P.FECHA_PUBLICACION, 'MM')) AND
-														(to_char(sysdate, 'DD')-to_char(P.FECHA_PUBLICACION, 'DD') <= 14)
-													GROUP BY L.NOMBRE_LUGAR
-													ORDER BY L.NOMBRE_LUGAR"
-													);
+
+			$cantidad_productos = $conexion->ejecutarInstruccion("
+				SELECT NVL(MAX(COUNT(*)),0) NUM_PRODUCTOS 
+				FROM TBL_USUARIOS U
+				INNER JOIN TBL_LUGARES L 
+				ON L.CODIGO_LUGAR = U.CODIGO_LUGAR
+				INNER JOIN TBL_VEND_X_TBL_PUBLI VxP 
+				ON VxP.CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS P
+				ON P.CODIGO_PUBLICACION_PRODUCTO = VxP.CODIGO_PUBLICACION_PRODUCTO
+				WHERE TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY L.CODIGO_LUGAR,
+				TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo_dividido."')");
+			oci_execute($cantidad_productos);
+			while($fila = $conexion->obtenerFila($cantidad_productos)){
+				$ejeY = $fila["NUM_PRODUCTOS"];
+			}
+
+			$sql = $conexion->ejecutarInstruccion(" 
+				SELECT  L.CODIGO_LUGAR CODIGO,
+				        TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo_dividido."') TIEMPO,
+				        COUNT(L.NOMBRE_LUGAR) CANTIDAD
+				FROM TBL_USUARIOS U
+				INNER JOIN TBL_LUGARES L 
+				ON L.CODIGO_LUGAR = U.CODIGO_LUGAR
+				INNER JOIN TBL_VEND_X_TBL_PUBLI VxP 
+				ON VxP.CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS P
+				ON P.CODIGO_PUBLICACION_PRODUCTO = VxP.CODIGO_PUBLICACION_PRODUCTO
+				WHERE TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+				GROUP BY L.CODIGO_LUGAR,
+				TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo_dividido."')
+				ORDER BY L.CODIGO_LUGAR, TIEMPO");
 		}
 	?>
 
@@ -429,30 +587,24 @@
 			},
 			xAxis: {
 					<?php
-						if($estadistica == 'productos_x_cat'){
-							oci_execute($sql);
-							echo'categories: [';	 
-							while($fila = $conexion->obtenerFila($sql)){
-									echo "'".$fila["NOMBRE_CATEGORIA"]."', ";
-							}
-							echo'],';
-						}else if($estadistica == 'productos_x_dep'){
-							oci_execute($sql);
-							echo'categories: [';	 
-							while($fila = $conexion->obtenerFila($sql)){
-									echo "'".$fila["NOMBRE_LUGAR"]."', ";			
-							}
-							echo'],';
-						}
-					?>
-
-					<?php
-						if($estadistica == '2_tipos_usarios'){
-							echo"categories: [
+							if ($tiempo == 1) {
+								echo"categories: [
 								'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
 								'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' 
-							],";
-						}
+								],";
+							}
+							if ($tiempo == 2) {
+								echo"categories: [
+								'1', '2', '3', '4', '5', '6', '7','8', '9', '10', '11', '12' 
+								,'13','14','15','16','17','18','19','20','21','22','23','24','25','26',
+								'27','28','29','30','31'
+								],";
+							}
+							if ($tiempo == 3) {
+								echo"categories: [
+								'domingo','lunes', 'martes', 'miercoles', 'jueves', 'viernes','sabado'
+								],";
+							}
 					?>
 				
 				crosshair: true
@@ -491,7 +643,7 @@
 					borderWidth: 0,
 					<?php
 						if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
-							echo 'colorByPoint: true';
+							echo 'colorByPoint: false';
 						}
 					?>
 				}
@@ -499,63 +651,124 @@
 			
 			series: [		
 				<?php
-					if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
-						echo"{name: 'productos', data: [";
-						oci_execute($sql);
-						while($fila = $conexion->obtenerFila($sql)){
-							if($estadistica == 'productos_x_dep'){	
-								echo $fila["CANTIDAD"].",";
-							}else if($estadistica == 'productos_x_cat'){
-								echo $fila["CANTIDAD_PRODUCTOS"].",";
-							}
-						}
-						echo']},';
+					oci_execute($sql);
+
+					//tiempo que se define
+					if ($tiempo == 1) {
+						$cantidad_tiempo = 12;
 					}
-				?>	
+					if ($tiempo == 2) {
+						$cantidad_tiempo = 31;
+					}
+					if ($tiempo == 3) {
+						$cantidad_tiempo = 7;
+					}
 
-				<?php
+					//Muestra Grafica de productos por categoria
+					if($estadistica == 'productos_x_cat'){
+						$categorias = $conexion->ejecutarInstruccion("
+							SELECT  C.CODIGO_CATEGORIA,C.NOMBRE_CATEGORIA
+							FROM TBL_CATEGORIAS C
+							INNER JOIN TBL_PUBLICACION_PRODUCTOS PB 
+							ON PB.CODIGO_CATEGORIA = C.CODIGO_CATEGORIA
+							WHERE TO_CHAR(TO_DATE(PB.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+							GROUP BY C.CODIGO_CATEGORIA,C.NOMBRE_CATEGORIA
+							ORDER BY C.CODIGO_CATEGORIA");
+						oci_execute($categorias);
+
+						$categorizacion = array();
+						//define las comparaciones
+						while($fila = $conexion->obtenerFila($categorias)){
+							$categorizacion[] = $fila["NOMBRE_CATEGORIA"];
+						}
+					}
+
+					//Muestra Grafica por tipo de usuario
 					if($estadistica == '2_tipos_usarios'){	
-						oci_execute($sql);
-						$meses = [0,0,0,0,0,0,0,0,0,0,0,0];
-						$meses2 = [0,0,0,0,0,0,0,0,0,0,0,0];
-						$vendedorNormal = 0;
-						$vendedorEmpresarial = 0;
-						while($fila = $conexion->obtenerFila($sql)){
-							if($fila["CODIGO_TIPO_VENDEDOR"] == 1){
-								for($i = 0; $i < 12; $i++){
-									if($fila["MES"] == $i+1){
-										$meses[$i] = $fila["VENDEDORES"];
-										$vendedorNormal++;
-										break;
-									}
-								}	
-							}else if($fila["CODIGO_TIPO_VENDEDOR"] == 2){
-								for($i = 0; $i < 12; $i++){
-									if($fila["MES"] == $i+1){
-										$meses2[$i] = $fila["VENDEDORES"];
-										$vendedorEmpresarial++;
-										break;
-									}
-								}
-							}
-						}
-						if($vendedorNormal > 0){
-							echo"{name: 'Vendedores normales', data: [";
-							for($i = 0; $i<12; $i++){
-								echo $meses[$i];
-								echo ',';
-							}
-							echo']},';		
-						}
+						$departamentos = $conexion->ejecutarInstruccion("
+							SELECT 	V.CODIGO_TIPO_VENDEDOR,
+							        TV.NOMBRE_TIPO_VENDEDOR
+							FROM TBL_VENDEDORES V
+							INNER JOIN TBL_USUARIOS U 
+							ON U.CODIGO_USUARIO = V.CODIGO_USUARIO_VENDEDOR
+							INNER JOIN TBL_TIPO_VENDEDORES TV
+							ON TV.CODIGO_TIPO_VENDEDOR = V.CODIGO_TIPO_VENDEDOR
+							WHERE TO_CHAR(TO_DATE(U.FECHA_REGISTRO), '".$sql_tiempo."') = '".$sql_fecha."' 
+							GROUP BY V.CODIGO_TIPO_VENDEDOR,TV.NOMBRE_TIPO_VENDEDOR
+							ORDER BY V.CODIGO_TIPO_VENDEDOR");
+						oci_execute($departamentos);
 
-						if($vendedorEmpresarial > 0){
-							echo"{name: 'Vendedores empresariales', data: [";
-							for($i = 0; $i<12; $i++){
-								echo $meses2[$i];
-								echo ',';
-							}
-							echo']},';		
+						$categorizacion = array();
+						//define las comparaciones
+						while($fila = $conexion->obtenerFila($departamentos)){
+							$categorizacion[] = $fila["NOMBRE_TIPO_VENDEDOR"];
 						}
+					}
+
+					//Muestra Grafica de productos por departamento
+					if($estadistica == 'productos_x_dep'){
+						$departamentos = $conexion->ejecutarInstruccion("
+							SELECT L.CODIGO_LUGAR, L.NOMBRE_LUGAR
+							FROM TBL_USUARIOS U
+							INNER JOIN TBL_LUGARES L 
+							ON L.CODIGO_LUGAR = U.CODIGO_LUGAR
+							INNER JOIN TBL_VEND_X_TBL_PUBLI VxP 
+							ON VxP.CODIGO_USUARIO_VENDEDOR = U.CODIGO_USUARIO
+							INNER JOIN TBL_PUBLICACION_PRODUCTOS P
+							ON P.CODIGO_PUBLICACION_PRODUCTO = VxP.CODIGO_PUBLICACION_PRODUCTO
+							WHERE TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo."') = '".$sql_fecha."' 
+							GROUP BY L.CODIGO_LUGAR, L.NOMBRE_LUGAR
+							ORDER BY L.CODIGO_LUGAR");
+						oci_execute($departamentos);
+
+						$categorizacion = array();
+						//define las comparaciones
+						while($fila = $conexion->obtenerFila($departamentos)){
+							$categorizacion[] = $fila["NOMBRE_LUGAR"];
+						}
+					}
+						
+					//llenado de arreglo para el tiempo establecido
+					for ($i = 0; $i < count($categorizacion); $i++) {
+						for ($j = 0; $j < $cantidad_tiempo; $j++) {
+							$arreglo[$i][$j] = 0;
+						}
+					}
+
+					//llena los campos que existen
+					$cont = 0;
+					$codigo_anterior = 0;
+					while($fila = $conexion->obtenerFila($sql)){
+						if ($fila["CODIGO"] != $codigo_anterior) {
+							if ($codigo_anterior != 0) {
+								$cont++;
+							}
+						} 
+						for($i = 0; $i < $cantidad_tiempo; $i++){
+							if($fila["TIEMPO"] == $i+1){
+								$arreglo[$cont][$i] = $fila["CANTIDAD"];
+							}
+						}
+						$codigo_anterior = $fila["CODIGO"];
+					}
+
+					//mete los datos a la grafica
+					for($i = 0; $i< count($categorizacion); $i++) {
+						echo"{name: '".$categorizacion[$i]."', data: [";
+						for ($j = 0; $j< $cantidad_tiempo; $j++) {
+							echo $arreglo[$i][$j];
+							echo ',';
+						}
+						echo']},';	
+					}
+
+					//si no hay ningun dato
+					if (count($categorizacion)==0) {
+						echo"{name: 'No existen datos para este tiempo', data: [";
+						for ($j = 0; $j< $cantidad_tiempo; $j++) {
+							echo '0,';
+						}
+						echo']},';	
 					}
 					
 				?>	

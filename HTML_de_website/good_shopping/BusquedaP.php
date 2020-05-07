@@ -628,9 +628,8 @@
 		  		$valueSpan.html($value.val());
 		  	}
 		  });
-			
 		});
-		
+
 		//Boton para desplegar la barra lateral
 		$(document).ready(function () {
             $("#menu-toggle").on('click', function () {

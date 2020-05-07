@@ -212,7 +212,7 @@
 						echo '<center><div><h5 class="col-lg-12">Gestión de Vendedores</h5></div></center><hr>';
 
 						echo 	'<div class="col-lg-12">
-								<p>Gestión de subcategorias y servicios a vendedores:</p>
+								<h6>Gestión de subcategorias y servicios a vendedores:</h6>
 								</div>
 								<center>
 
@@ -343,7 +343,7 @@
 									  </div>
 									</div>
 
-								</center>';
+								</center><br>';
 
 							$codigo_vendedor = array();
 							$nombre = array();
@@ -401,7 +401,7 @@
 							}
 
 							echo '<div class="col-lg-12">
-								<br>Lista de vendedores:
+								<h6>Lista de vendedores:</h6>
 
 								<center>
 								<div class="input-group input-group-sm mb-3" style="width:28%">
@@ -453,10 +453,11 @@
 									  }
 								echo '</tbody>
 									</table>
-								</center>';
+									<p><b>NOTA: </b>Solo aparecerán los 10 primeros registros encontrados de vendedores que tengan productos publicados actualmente.</p>
+								</center><br>';
 							echo '<div class="col-lg-12">
-								<br>Últimas publicaciones eliminadas:
-								</div><br>';
+								<h6>Últimas publicaciones eliminadas:<h6>
+								</div>';
 							//Lista de publicaciones eliminadas
 							echo '<div id="div-publicaciones-eliminadas" style="width:85%;margin:0 auto;">';
 							echo '</div>';

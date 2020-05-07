@@ -224,7 +224,7 @@
 						//Principio del contenido principal
 						echo '<center><div><h5 class="col-lg-12">Configuración de las Publicaciones</h5></div></center><hr>';
 						echo 	'<div class="col-lg-12">
-								<p>Tiempo de vida de las publicaciones:</p><br>
+								<h6>Tiempo de vida de las publicaciones:</h6><br>
 									<center>
 									<div class="input-group mb-3" style="width:40%">
 									  <div class="input-group-prepend">
