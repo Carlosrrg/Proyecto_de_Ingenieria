@@ -67,12 +67,13 @@ body {
     Estilos para la barra lateral 
 ----------------------------------------------------- */
 #sidebar-wrapper {
-  margin-left: -15rem;
+  margin-left: -16rem;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
   transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
   min-height:80vh;
+  max-width: 16rem;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -81,7 +82,7 @@ body {
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+  width: 16rem;
 }
 
 #page-content-wrapper {
@@ -103,7 +104,7 @@ body {
   }
 
   #wrapper.toggled #sidebar-wrapper {
-    margin-left: -15rem;
+    margin-left: -16rem;
   }
 }
 
