@@ -29,34 +29,36 @@
 				</a>
 				<div class="dropdown-menu dropright scrollMenu" style="align-content: initial; margin: 6px 0 0 -17px; border-radius: 0px;">
 					<h6 style="text-align: center;">Categorías</h6>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Entretenimiento</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Películas & Música</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Computadoras & Accesorios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Consolas & Videojuegos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Celulares & Accesorios</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Vehículos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Inmuebles</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Hogar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Muebles</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Electrodomésticos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Jardín & Herramientas</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Empleos, Negocios & Servicios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Ofertas de empleo</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios a negocios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios al público</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros servicios</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Otros</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros productos</a>
+					<?php
+						$conexion->establecerConexion();
+
+						echo '<div class="dropdown-divider"></div>';
+
+						$codigo_categoria_base = " ";
+						$resultado_categorias = $conexion->ejecutarInstruccion("	SELECT CODIGO_CATEGORIA, NOMBRE_CATEGORIA
+																					FROM TBL_CATEGORIAS");
+						oci_execute($resultado_categorias);
+						while ($fila2 = $conexion->obtenerFila($resultado_categorias)) {
+							$codigo_categoria_base = $fila2["CODIGO_CATEGORIA"];
+
+							echo '<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria='.$fila2["CODIGO_CATEGORIA"].'">'.$fila2["NOMBRE_CATEGORIA"].'</a>';	
+
+							$resultado_sub_categorias = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_CATEGORIA, A.NOMBRE_CATEGORIA, C.NOMBRE_SUB_CATEGORIA, C.CODIGO_SUB_CATEGORIA
+																							FROM TBL_CATEGORIAS A
+																							INNER JOIN TBL_CATEGO_X_TBL_SUBCATEGO B
+																							ON (A.CODIGO_CATEGORIA = B.CODIGO_CATEGORIA)
+																							INNER JOIN TBL_SUB_CATEGORIAS C
+																							ON (B.CODIGO_SUB_CATEGORIA = C.CODIGO_SUB_CATEGORIA)
+																							WHERE A.CODIGO_CATEGORIA = '$codigo_categoria_base'
+																							ORDER BY (C.CODIGO_SUB_CATEGORIA) ASC");
+							oci_execute($resultado_sub_categorias);
+							while ($fila3 = $conexion->obtenerFila($resultado_sub_categorias)) {
+								echo '<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria='.$codigo_categoria_base.'&subcategorias='.$fila3["CODIGO_SUB_CATEGORIA"].'">'.$fila3["NOMBRE_SUB_CATEGORIA"].'</a>';
+							}
+							echo '<div class="dropdown-divider"></div>';
+							$codigo_categoria_base = " ";
+						}		
+					?>
 				</div>
 			</div>
 
@@ -77,13 +79,18 @@
 					$usuario = $_SESSION['codigo_usuario_sesion'];
 					//echo "seccion iniciada por: " . $usuario;
 					$conexion->establecerConexion();
-					$resultado_usuario = $conexion->ejecutarInstruccion("	SELECT NOMBRE,CODIGO_TIPO_USUARIO
-																			FROM TBL_USUARIOS
-																			WHERE CODIGO_USUARIO = '$usuario'");
+					$resultado_usuario = $conexion->ejecutarInstruccion("	
+						SELECT 	NOMBRE, APELLIDO, CODIGO_TIPO_USUARIO, CORREO_ELECTRONICO, TELEFONO,
+								NVL(CODIGO_TIPO_VENDEDOR,0) CODIGO_TIPO_VENDEDOR
+						FROM TBL_USUARIOS
+						LEFT JOIN TBL_VENDEDORES
+						ON (CODIGO_USUARIO = CODIGO_USUARIO_VENDEDOR)
+						WHERE CODIGO_USUARIO = '$usuario'");
 					oci_execute($resultado_usuario);
 					while ($fila = $conexion->obtenerFila($resultado_usuario)) {
 						echo '<h6 style="padding-top:4px; margin-right:-10px;">'.$fila["NOMBRE"].'</h6>';
 						$tipo_usuario = $fila["CODIGO_TIPO_USUARIO"];
+						$codigo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
 					}
 				    echo'<div class="nav-item dropdown">';
 						echo'<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">';
@@ -94,7 +101,12 @@
 								echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
 							}
 							else {
-								echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+								if ($codigo_vendedor == 1) {
+									echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
+								}
+								else{
+									echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+								}
 							}
 							echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 						echo'</div>';

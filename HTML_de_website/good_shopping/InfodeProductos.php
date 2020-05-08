@@ -35,34 +35,36 @@
 				</a>
 				<div class="dropdown-menu dropright scrollMenu" style="align-content: initial; margin: 6px 0 0 -17px; border-radius: 0px;">
 					<h6 style="text-align: center;">Categorías</h6>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Entretenimiento</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Películas & Música</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Computadoras & Accesorios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Consolas & Videojuegos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Celulares & Accesorios</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Vehículos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Inmuebles</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Comprar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Rentar</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Hogar</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Muebles</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Electrodomésticos</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Jardín & Herramientas</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Empleos, Negocios & Servicios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Ofertas de empleo</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios a negocios</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Servicios al público</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros servicios</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Otros</a>
-					<a class="dropdown-item" style="padding-left: 50px;" href="#">Otros productos</a>
+					<?php
+						$conexion->establecerConexion();
+
+						echo '<div class="dropdown-divider"></div>';
+
+						$codigo_categoria_base = " ";
+						$resultado_categorias = $conexion->ejecutarInstruccion("	SELECT CODIGO_CATEGORIA, NOMBRE_CATEGORIA
+																					FROM TBL_CATEGORIAS");
+						oci_execute($resultado_categorias);
+						while ($fila2 = $conexion->obtenerFila($resultado_categorias)) {
+							$codigo_categoria_base = $fila2["CODIGO_CATEGORIA"];
+
+							echo '<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria='.$fila2["CODIGO_CATEGORIA"].'">'.$fila2["NOMBRE_CATEGORIA"].'</a>';	
+
+							$resultado_sub_categorias = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_CATEGORIA, A.NOMBRE_CATEGORIA, C.NOMBRE_SUB_CATEGORIA, C.CODIGO_SUB_CATEGORIA
+																							FROM TBL_CATEGORIAS A
+																							INNER JOIN TBL_CATEGO_X_TBL_SUBCATEGO B
+																							ON (A.CODIGO_CATEGORIA = B.CODIGO_CATEGORIA)
+																							INNER JOIN TBL_SUB_CATEGORIAS C
+																							ON (B.CODIGO_SUB_CATEGORIA = C.CODIGO_SUB_CATEGORIA)
+																							WHERE A.CODIGO_CATEGORIA = '$codigo_categoria_base'
+																							ORDER BY (C.CODIGO_SUB_CATEGORIA) ASC");
+							oci_execute($resultado_sub_categorias);
+							while ($fila3 = $conexion->obtenerFila($resultado_sub_categorias)) {
+								echo '<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria='.$codigo_categoria_base.'&subcategorias='.$fila3["CODIGO_SUB_CATEGORIA"].'">'.$fila3["NOMBRE_SUB_CATEGORIA"].'</a>';
+							}
+							echo '<div class="dropdown-divider"></div>';
+							$codigo_categoria_base = " ";
+						}		
+					?>
 				</div>
 			</div>
 
@@ -239,14 +241,15 @@
 							}
 
 							echo '<br>Calificacion del Vendedor<br>';
-							for ($i=1; $i <= 5 ; $i++) { 
+							for ($i=1; $i <= 5 ; $i++) {
 								echo '<span class="fa fa-star ';
 								  	if ($i<=$promedio_estrellas) {
 								  		echo 'checked';
 								  	}	
 								echo'"></span>';
 							}
-							echo '<br>';
+							echo '<h3 style="color: orange;">'.$promedio_estrellas.'</h3>';
+							//echo '<br>';
 							//echo '<span class="fa fa-star-half checked "></span>';
 					  ?> 
 					  
@@ -254,7 +257,7 @@
 					  <br>Compartir<br>
 					  <a href="https://www.facebook.com/sharer/sharer.php?u=" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
 					  <a href="https://pinterest.com/pin/create/button/?media=" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
-					  <a href="https://twitter.com/intent/tweet?text= Compra%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento&url=&hashtags=Goodshopping" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a><br><br>
+					  <a href="https://twitter.com/intent/tweet?text= Compra,%20Vende%20facil%20y%20rapido%20desde%20tu%20hogar%20en%20cualquier%20momento%20en%20Good%20Shopping&url=http://localhost/good_shopping/InfodeProductos.php?codigo-publicacion=81" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a><br><br>
 					<?php
 						$tipo_usuario_seccion = " ";
 
@@ -266,7 +269,7 @@
 							$tipo_usuario_seccion = $fila12["CODIGO_TIPO_VENDEDOR"];
 						}
 						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para deninciar este vendedor<br></div>';
+							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para poder denunciar esta publicacion<br></div>';
 						}
 						else{
 							if ($codigo_usuario_vendedor != $usuario && $tipo_usuario==2 && $tipo_usuario_seccion == 1) {
@@ -494,7 +497,7 @@
     				<!--scrollbar mensaje de texto-->                    
 					<?php 
 						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor</div>';
+							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor sobre esta publicacion</div>';
 						}
 						else{
 							if ($codigo_usuario_vendedor!=$usuario && $tipo_usuario_seccion == 1) {

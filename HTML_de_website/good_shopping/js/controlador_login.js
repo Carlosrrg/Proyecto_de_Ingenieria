@@ -232,7 +232,7 @@ $(document).ready(function(){
 				success:function(respuesta){
 					//alert(respuesta);
 					if(respuesta == 0){
-						alert("El usuario ingresado no existe...");
+						alert("El usuario o la contraseña ingresada no existe...");
 						$("#txt-correo").val("");
 						$("#txt-contrasena").val("");
 					}

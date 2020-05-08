@@ -28,34 +28,67 @@
 			</a>
 			<div class="dropdown-menu dropright" style="overflow-y: auto; height: 590px; margin: 6px 0 0 -17px; border-radius: 0px;">
 				<h6 style="text-align: center;">Categorías</h6>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=1">Entretenimiento</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=1">Películas & Música</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=2">Computadoras & Accesorios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=3">Consolas & Videojuegos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=4">Celulares & Accesorios</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=2">Vehículos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=5">Comprar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=6">Rentar</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=3">Inmuebles</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=5">Comprar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=6">Rentar</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=4">Hogar</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=7">Muebles</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=8">Electrodomésticos</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=9">Jardín & Herramientas</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=5">Empleos, Negocios & Servicios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=10">Ofertas de empleo</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=11">Servicios a negocios</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=12">Servicios al público</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5">Otros servicios</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=6">Otros</a>
-				<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=6&subcategorias=13">Otros productos</a>
+				<?php
+					$conexion->establecerConexion();
+
+					echo '<div class="dropdown-divider"></div>';
+
+					$codigo_categoria_base = " ";
+					$resultado_categorias = $conexion->ejecutarInstruccion("	SELECT CODIGO_CATEGORIA, NOMBRE_CATEGORIA
+																				FROM TBL_CATEGORIAS");
+					oci_execute($resultado_categorias);
+					while ($fila2 = $conexion->obtenerFila($resultado_categorias)) {
+						$codigo_categoria_base = $fila2["CODIGO_CATEGORIA"];
+
+						echo '<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria='.$fila2["CODIGO_CATEGORIA"].'">'.$fila2["NOMBRE_CATEGORIA"].'</a>';	
+
+						$resultado_sub_categorias = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_CATEGORIA, A.NOMBRE_CATEGORIA, C.NOMBRE_SUB_CATEGORIA, C.CODIGO_SUB_CATEGORIA
+																						FROM TBL_CATEGORIAS A
+																						INNER JOIN TBL_CATEGO_X_TBL_SUBCATEGO B
+																						ON (A.CODIGO_CATEGORIA = B.CODIGO_CATEGORIA)
+																						INNER JOIN TBL_SUB_CATEGORIAS C
+																						ON (B.CODIGO_SUB_CATEGORIA = C.CODIGO_SUB_CATEGORIA)
+																						WHERE A.CODIGO_CATEGORIA = '$codigo_categoria_base'
+																						ORDER BY (C.CODIGO_SUB_CATEGORIA) ASC");
+						oci_execute($resultado_sub_categorias);
+						while ($fila3 = $conexion->obtenerFila($resultado_sub_categorias)) {
+							echo '<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria='.$codigo_categoria_base.'&subcategorias='.$fila3["CODIGO_SUB_CATEGORIA"].'">'.$fila3["NOMBRE_SUB_CATEGORIA"].'</a>';
+						}
+						echo '<div class="dropdown-divider"></div>';
+						$codigo_categoria_base = " ";
+					}
+
+
+					/*
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=1">Entretenimiento</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=1">Películas & Música</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=2">Computadoras & Accesorios</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=3">Consolas & Videojuegos</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=1&subcategorias=4">Celulares & Accesorios</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=2">Vehículos</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=5">Comprar</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=2&subcategorias=6">Rentar</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=3">Inmuebles</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=5">Comprar</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=3&subcategorias=6">Rentar</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=4">Hogar</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=7">Muebles</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=8">Electrodomésticos</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=4&subcategorias=9">Jardín & Herramientas</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=5">Empleos, Negocios & Servicios</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=10">Ofertas de empleo</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=11">Servicios a negocios</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5&subcategorias=12">Servicios al público</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=5">Otros servicios</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="BusquedaP.php?pagina=1&categoria=6">Otros</a>
+					<a class="dropdown-item" style="padding-left: 50px;" href="BusquedaP.php?pagina=1&categoria=6&subcategorias=13">Otros productos</a>		
+					*/
+				?>		
 			</div>
 		</div>
 
@@ -123,16 +156,21 @@
 							
 					echo'</a>';
 					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -110px;">';
-						if ($tipo_usuario==1) {
+						if (isset($tipo_usuario) && isset($codigo_vendedor)) {
+							if ($tipo_usuario==1) {
 							echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
+							}
+							else {
+								if ($codigo_vendedor == 1) {
+									echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
+								}
+								else{
+									echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+								}
+							}
 						}
-						else {
-							if ($codigo_vendedor == 1) {
-								echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
-							}
-							else{
-								echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
-							}
+						else{
+							echo '<script>window.location="php/session_cerrar.php"</script>';
 						}
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';

@@ -1,10 +1,50 @@
+Problemas en el desarrollo de cada pantalla. (bitacoras de desarrolladores)
+
 infodeProductos.php
 -Front end
 	-problema del footer se movia hasta la casilla de comentarios sin mantener su posicion estatica.
+	-algunos elementos de la informacion se movian de manera extraña en distintos tipos de pantallas
 -Back end
-	-muestra porductos aunque ya no esten disponibles (eliminados o vendidos).
+	-muestra productos aunque ya no esten disponibles (eliminados o vendidos).
+	-en la parte de productos destacados se mostraban productos repetidos ya que un producto puede tener hasta cinco imagenes y el problema en este caso era la consulta a la base de datos.
+	-otro problema surgia al momento de mostrar la informacion de un producto si antes haber iniciado seccion aparecian problemas de php por datos no recibidos a la clase conexion.
 
-index.php
+favoritos.php
+-Front end 	
+	-tablas que muestran a los vendedores como tambien sus ultimas publicaciones se movian cuando habia valores muy grandes en los campos.
+-Back end
+	-problema en la consulta para mostrar las estrellas con las que el comprador en este caso el usuario en seccion ha calificado al vendedor.
+	-problema en la consulta para mostrar la ultima publicacion de cada vendedor anadido a favorito.
+
+notificaciones.php
+-Front end 
+	-ninguno en las pruebas hechas en el desarrollo
+-Back end
+	-modificacion en la base de datos para poder relacionar cada mensaje con la publicacion desde donde se hiso el envio.
+	-otro problema fue con respecto a la tabla mensajes la cual se modifico 
+
+modulo_registro.html
+-Front end 
+	-ninguno en las pruebas hechas en el desarrollo
+	-se anadio la opcion de poder seleccionar que tipo de vendedor es si es empresarial o individual.
+-Back end
+	-Problemas iniciales de no poder obtener los datos desde el formulario por el motivo que la libreria de JQuery estaba danada.
+	-modificacion de la base de datos para anadir al vendedor empresarial.
+
+index.php/iniciar seccion
+-Front end
+	-menu desplegable se movia de lugar al momento de decir que la contrasena o usuario es incorrecta
+-Back end
+	-no se guardaba de manera satisfactoria la variable seccion de cada usuario que validaba correo y contrasena.
+	-problema al intentar ingresar un numero determinado con la contrasena incorrecta no deja pero al dar atras mostraba una seccion iniciada la cual era ficticia o no tenia codigo de usuario.
+
+perfil_usuario_comprador.php y perfil_usuario_vendedor.php
+-Front end 
+	-problemas de colocar cada caja de texto para asi mostrar la informacion asi como editar luego esta por parte de cada usuario
+-Back end
+	-ninguno que no se puediera reparar en el mismo instante.
+
+
 
 
 Adm_gestion_vendedores
