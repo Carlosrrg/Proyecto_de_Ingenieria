@@ -232,7 +232,11 @@
 							echo '<option value="2" ';if($estadistica==2){echo'selected';};
 							echo '>Cantidad de vendedores registrados</option>';
 							echo '<option value="3" ';if($estadistica==3){echo'selected';};
-							echo '>Cantidad de productos por departamento</option>
+							echo '>Cantidad de productos por departamento</option>';
+							echo '<option value="4" ';if($estadistica==4){echo'selected';};
+							echo '>Servicios más publicados</option>';
+							echo '<option value="5" ';if($estadistica==5){echo'selected';};
+							echo '>Cantidad de reportes realizados</option>
 								  </select>
 								</div></center>';
 
@@ -408,7 +412,6 @@
 	<script src="js/accessibility.js"></script>
 
 	<?php
-		$sql = '';
 
 		switch ($estadistica) {
 			case 1:
@@ -420,14 +423,19 @@
 			case 3:
 				$estadistica = 'productos_x_dep';
 				break;
+			case 4:
+				$estadistica = 'productos_x_serv';
+				break;
+			case 5:
+				$estadistica = 'cant_reportes';
+				break;
 			default:
 				$estadistica = 'productos_x_cat';
 				break;
 		}
 
 		$año = date("Y");
-		$año_anterior = strtotime("-1 year");
-		$año_anterior = date("Y", $año_anterior);
+		$año_anterior = date("Y", strtotime("-1 year"));
 		switch ($tiempo) {
 			case 1:
 				$sql_tiempo = 'YYYY';
@@ -437,30 +445,38 @@
 				} else {
 					$sql_fecha = $año_anterior;
 				}
+				$cantidad_tiempo = 12;
 				break;
 			case 2:
 				$sql_tiempo = 'MM/YYYY';
 				$sql_tiempo_dividido = 'DD';
 				$mes = date("m");
-				$mes_anterior = strtotime("-1 month");
-				$mes_anterior = date("m", $mes_anterior);
+				$mes_anterior = date("m", strtotime("-1 month"));
 				if ($fecha == 1) {
 					$sql_fecha = $mes."/".$año;
+					$cantidad_tiempo = date("t",$mes);
 				} else {
+					if ($mes_anterior == '12') {
+						$año = $año_anterior;
+					}
 					$sql_fecha = $mes_anterior."/".$año;
+					$cantidad_tiempo = date("t",strtotime("-1 month"));
 				}
 				break;
 			case 3:
 				$sql_tiempo = 'IW/YYYY';
 				$sql_tiempo_dividido = 'D';
 				$semana = date("W");
-				$semana_anterior = strtotime("-1 week");
-				$semana_anterior = date("W", $semana_anterior);
+				$semana_anterior = date("W", strtotime("-1 week"));
 				if ($fecha == 1) {
 					$sql_fecha = $semana."/".$año;
 				} else {
+					if ($semana == 1) {
+						$año = $año_anterior;
+					}
 					$sql_fecha = $semana_anterior."/".$año;
 				}
+				$cantidad_tiempo = 7;
 				break;
 			default:
 				$sql_tiempo = 'YYYY';
@@ -470,11 +486,13 @@
 				} else {
 					$sql_fecha = $año_anterior;
 				}
+				$cantidad_tiempo = 12;
 				break;
 		}
 
 		$ejeY = 0;
 		$titulo = $tituloY = '';
+		$sql = '';
 
 		//GRAFICA POR CATEGORIA
 		if($estadistica == 'productos_x_cat'){
@@ -577,6 +595,63 @@
 				TO_CHAR(TO_DATE(P.FECHA_PUBLICACION), '".$sql_tiempo_dividido."')
 				ORDER BY L.CODIGO_LUGAR, TIEMPO");
 		}
+
+		//GRAFICA DE SERVICIOS MAS PUBLICADOS
+		else if($estadistica == 'productos_x_serv'){
+			$titulo = 'Servicios Más Publicados';					
+			$tituloY = 'Cantidad de servicios';
+
+			$cantidad_servicios = $conexion->ejecutarInstruccion("
+				SELECT NVL(MAX(COUNT(*)),0) NUM_PRODUCTOS
+				FROM TBL_PUBLIC_X_TBL_SERV PXS
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS PP
+				ON PP.CODIGO_PUBLICACION_PRODUCTO = PXS.CODIGO_PUBLICACION_PRODUCTO
+				WHERE TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo."') = '".$sql_fecha."'
+				GROUP BY PXS.CODIGO_SERVICIO, 
+				TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo_dividido."')");
+			oci_execute($cantidad_servicios);
+			while($fila = $conexion->obtenerFila($cantidad_servicios)){
+				$ejeY = $fila["NUM_PRODUCTOS"];
+			}
+
+			$sql = $conexion->ejecutarInstruccion(" 
+				SELECT  PXS.CODIGO_SERVICIO AS CODIGO,
+				        TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo_dividido."') TIEMPO,
+				        COUNT(PXS.CODIGO_SERVICIO) CANTIDAD
+				FROM TBL_PUBLIC_X_TBL_SERV PXS
+				INNER JOIN TBL_PUBLICACION_PRODUCTOS PP
+				ON PP.CODIGO_PUBLICACION_PRODUCTO = PXS.CODIGO_PUBLICACION_PRODUCTO
+				WHERE TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo."') = '".$sql_fecha."'
+				GROUP BY PXS.CODIGO_SERVICIO, 
+				TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo_dividido."')
+				ORDER BY PXS.CODIGO_SERVICIO, TIEMPO");
+		}
+
+		//GRAFICA DE CANTIDAD DE REPORTES
+		else if($estadistica == 'cant_reportes'){
+			$titulo = 'Reportes Realizados';					
+			$tituloY = 'Cantidad de reportes';
+
+			$cantidad_reportes = $conexion->ejecutarInstruccion("
+				SELECT NVL(MAX(COUNT(*)),0) NUM_REPORTES
+				FROM TBL_REPORTES
+				WHERE TO_CHAR(TO_DATE(FECHA_EMITIO),'".$sql_tiempo."') = '".$sql_fecha."'
+				GROUP BY TO_CHAR(TO_DATE(FECHA_EMITIO),'".$sql_tiempo_dividido."')");
+			oci_execute($cantidad_reportes);
+			while($fila = $conexion->obtenerFila($cantidad_reportes)){
+				$ejeY = $fila["NUM_REPORTES"];
+			}
+
+			$sql = $conexion->ejecutarInstruccion(" 
+				SELECT  1 AS CODIGO,
+				        TO_CHAR(TO_DATE(FECHA_EMITIO),'".$sql_tiempo_dividido."') TIEMPO,
+				        COUNT(*) CANTIDAD
+				FROM TBL_REPORTES
+				WHERE TO_CHAR(TO_DATE(FECHA_EMITIO),'".$sql_tiempo."') = '".$sql_fecha."'
+				GROUP BY 1,TO_CHAR(TO_DATE(FECHA_EMITIO),'".$sql_tiempo_dividido."')
+				ORDER BY TIEMPO");
+		}
+
 	?>
 
 	<script type="text/javascript">
@@ -596,11 +671,11 @@
 								],";
 							}
 							if ($tiempo == 2) {
-								echo"categories: [
-								'1', '2', '3', '4', '5', '6', '7','8', '9', '10', '11', '12' 
-								,'13','14','15','16','17','18','19','20','21','22','23','24','25','26',
-								'27','28','29','30','31'
-								],";
+								echo"categories: [";
+								for ($i = 1; $i <= $cantidad_tiempo; $i++) {
+									echo "'".$i."',";
+								}
+								echo "],";
 							}
 							if ($tiempo == 3) {
 								echo"categories: [
@@ -627,9 +702,10 @@
 			},
 			
 			<?php
-				if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+				if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat' 
+					|| $estadistica == 'productos_x_serv'){
 					$entero = 0;
-					$cantidad = 18;
+					$cantidad = 30;
 					echo"colors: [";
 					for($i=0 ; $i < $cantidad; $i++){
 						echo"'#".substr(md5($entero), 0, 6)."',";
@@ -644,7 +720,8 @@
 					pointPadding: 0.1,
 					borderWidth: 0,
 					<?php
-						if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'){
+						if($estadistica == 'productos_x_dep' || $estadistica == 'productos_x_cat'
+							|| $estadistica == 'productos_x_serv'){
 							echo 'colorByPoint: false';
 						}
 					?>
@@ -654,17 +731,6 @@
 			series: [		
 				<?php
 					oci_execute($sql);
-
-					//tiempo que se define
-					if ($tiempo == 1) {
-						$cantidad_tiempo = 12;
-					}
-					if ($tiempo == 2) {
-						$cantidad_tiempo = 31;
-					}
-					if ($tiempo == 3) {
-						$cantidad_tiempo = 7;
-					}
 
 					//Muestra Grafica de productos por categoria
 					if($estadistica == 'productos_x_cat'){
@@ -728,6 +794,32 @@
 						while($fila = $conexion->obtenerFila($departamentos)){
 							$categorizacion[] = $fila["NOMBRE_LUGAR"];
 						}
+					}
+
+					//Muestra Grafica de productos por servicios
+					if($estadistica == 'productos_x_serv'){
+						$servicios = $conexion->ejecutarInstruccion("
+							SELECT PXS.CODIGO_SERVICIO, S.NOMBRE_SERVICIO
+							FROM TBL_PUBLIC_X_TBL_SERV PXS
+							INNER JOIN TBL_PUBLICACION_PRODUCTOS PP
+							ON PP.CODIGO_PUBLICACION_PRODUCTO = PXS.CODIGO_PUBLICACION_PRODUCTO
+							INNER JOIN TBL_SERVICIOS S
+							ON S.CODIGO_SERVICIO = PXS.CODIGO_SERVICIO
+							WHERE TO_CHAR(TO_DATE(PP.FECHA_PUBLICACION),'".$sql_tiempo."') = '".$sql_fecha."'
+							GROUP BY PXS.CODIGO_SERVICIO, S.NOMBRE_SERVICIO
+							ORDER BY PXS.CODIGO_SERVICIO");
+						oci_execute($servicios);
+
+						$categorizacion = array();
+						//define las comparaciones
+						while($fila = $conexion->obtenerFila($servicios)){
+							$categorizacion[] = $fila["NOMBRE_SERVICIO"];
+						}
+					}
+
+					//Muestra Grafica de cantidad de reportes
+					if($estadistica == 'cant_reportes'){
+						$categorizacion = ['Reportes'];
 					}
 						
 					//llenado de arreglo para el tiempo establecido
