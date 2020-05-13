@@ -552,13 +552,13 @@
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
 					<h6>Goodshopping</h6>
-					<a href="#" style="color: black;">
+					<a href="Acerca_de_nosotros.html" style="color: black;">
 						<span>
 							Acerca de nosotros
 						</span>
 					</a>
 					<br>
-					<a href="#" style="color: black;">
+					<a href="contactanos.html" style="color: black;">
 						<span>
 							Contáctanos
 						</span>
@@ -568,7 +568,7 @@
 				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
 					<h6>Destacados</h6>
-					<a href="#" style="color: black;">
+					<a href="index.php" style="color: black;">
 						<span>
 							Región
 						</span>
@@ -580,7 +580,7 @@
 						</span>
 					</a>
 					<br>
-					<a href="#" style="color: black;">
+					<a href="vendedores.html" style="color: black;">
 						<span>
 							Vendedor
 						</span>
