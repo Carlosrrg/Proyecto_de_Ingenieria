@@ -5,7 +5,8 @@ $(document).ready(function(){
 		var lugar = $("#cmb_ubicacion").val();
 		var categoria = $("#cmb_categoria").val();
 		var tipo_moneda = $('input:radio[name=opcion_moneda]:checked').val();
-		var precio_max = $("#slb_precio").val();
+		var precio_min = $("#slider-range").slider("values", 0 );
+		var precio_max = $("#slider-range").slider("values", 1 );
 		var orden = $("#cmb_ordenar").val();
 
 		var cont = 0;
@@ -30,6 +31,7 @@ $(document).ready(function(){
 							"&lugar="+lugar+
 							"&categoria="+categoria+
 							"&tipo_moneda="+tipo_moneda+
+							"&precio_min="+precio_min+
 							"&precio_max="+precio_max+
 							"&subcategorias="+subcategorias+
 							"&orden="+orden;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Good Shopping</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="icon" type="image/jpg" href="recursos/imagenes/logo.png">
@@ -151,13 +152,26 @@
 			$parametros .= "&tipo_moneda=".$tipo_moneda;
 		}
 		$precio_max = 50000;
-		$sql_precio = "";
+		$sql_precio_max = "";
 		if (isset($_GET['precio_max'])) {
 			$precio_max = $_GET['precio_max'];
 			if ($precio_max!=50000) {
-				$sql_precio = "AND A.PRECIO <= ".$precio_max." ";
+				$sql_precio_max = "AND A.PRECIO <= ".$precio_max." ";
+			} else {
+				$precio_max = 50000;
 			}
 			$parametros .= "&precio_max=".$precio_max;
+		}
+		$precio_min = 0;
+		$sql_precio_min = "";
+		if (isset($_GET['precio_min'])) {
+			$precio_min = $_GET['precio_min'];
+			if ($precio_min!=0) {
+				$sql_precio_min = "AND A.PRECIO >= ".$precio_min." ";
+			} else {
+				$precio_min = 0;
+			}
+			$parametros .= "&precio_min=".$precio_min;
 		}
 		$subcategorias = "";
 		$sql_subcatego1 = "";
@@ -208,7 +222,8 @@
 			".$sql_lugar."
 			".$sql_categoria." 
 			".$sql_moneda." 
-			".$sql_precio." 
+			".$sql_precio_min." 
+			".$sql_precio_max." 
 			".$sql_subcatego2." 
 			");
 		oci_execute($resultado_cantP);
@@ -380,11 +395,14 @@
 			el valor minimo "min" debe contener el menor precio del producto mas barato de la base de datos
 			el valor maximo "max" debe contener el mayor precio del producto mas caro de la base de datos
 			el valor "value" del slider debe ser el valor maximo-->
-			<div class="slidecontainer">
-				Rango máximo de precio:
-			  <span class="font-weight-bold text ml-2 valorPrecio" style="color:#15B714;"></span>
-			  <input type="range" min="0" max="50000" value="<?php echo $precio_max; ?>" class="slider" id="slb_precio">
-			</div>  
+			<input type="text" value="<?php echo $precio_min; ?>" id="precio_min" style="display:none">
+			<input type="text" value="<?php echo $precio_max; ?>" id="precio_max" style="display:none">
+			<p>
+			  <label for="amount">Rango de precio:</label>
+			  <input type="text" id="amount" readonly style="border:0; color:green; width:40%">
+			</p>
+			 
+			<div id="slider-range"></div>
 			  
 		  </div>	  
 	    </div>
@@ -437,7 +455,8 @@
 							".$sql_lugar."
 							".$sql_categoria." 
 							".$sql_moneda." 
-							".$sql_precio." 
+							".$sql_precio_min." 
+							".$sql_precio_max." 
 							".$sql_subcatego2." 
 							".$sql_orden.")
 						WHERE RN BETWEEN $limiteInferior+1 AND $limiteSuperior"
@@ -612,26 +631,10 @@
 
 	<!--Agregando bootstrap al archivo html-->
 <script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><!--jquery para el slider doble-->
 <script src="js/controlador_busquedas.js"></script><!--Controlador de la pagina-->
 <script src="js/bootstrap.min.js"></script><!--Lanzar archivo Bootstrap.js-->
 <script>//JavaScript
-		$(document).ready(function() {
-			
-		  const $valueSpan = $('.valorPrecio');
-		  const $value = $('#slb_precio');
-		  $valueSpan.html($value.val());
-		  if ($value.val()==50000) {
-		  	$valueSpan.html("Ilimitado");
-		  }
-		  $value.on('input change', () => {
-		  	if ($value.val()==50000) {
-		  		$valueSpan.html("Ilimitado");
-		  	} else {
-		  		$valueSpan.html($value.val());
-		  	}
-		  });
-		});
-
 		//Boton para desplegar la barra lateral
 		$(document).ready(function () {
             $("#menu-toggle").on('click', function () {
@@ -641,7 +644,7 @@
         });
 
 		//buscar por filtro de precio
-		$("#slb_precio").click(function(){
+		$("#slider-range").click(function(){
 			$("#btn_buscar").click();
 		});
 
@@ -666,7 +669,26 @@
 			$("#btn_buscar").click();
 		}
 
-</script>	
-	
+		//Funcion para valor del slider de precio
+		$( function() {
+		    $( "#slider-range" ).slider({
+		    range: true,
+		    min: 0,
+		    max: 50000,
+		    values: [ $("#precio_min").val(), $("#precio_max").val() ],
+		    slide: function( event, ui ) {
+		        $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+		    }
+		});
+
+		var valor_maximo = $( "#slider-range" ).slider( "values", 1 );
+		if (valor_maximo == 50000) {
+			valor_maximo = "Máx.";
+		}
+		$( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +" - " +  valor_maximo);
+
+		});
+
+</script>
 </body>
 </html>
