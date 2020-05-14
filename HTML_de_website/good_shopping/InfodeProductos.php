@@ -226,9 +226,23 @@
 							oci_execute($obtener_vendedor);
 							while ($fila = $conexion->obtenerFila($obtener_vendedor)) {
 								echo '<div style="text-align: center;">';
-					  			echo '<br><br><h5><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila["CODIGO_USUARIO_VENDEDOR"].'">'.$fila["NOMBRE"].' '.$fila["APELLIDO"].'</a></h5>';
-					  			$codigo_usuario_vendedor = $fila["CODIGO_USUARIO_VENDEDOR"];
+								$codigo_usuario_vendedor = $fila["CODIGO_USUARIO_VENDEDOR"];
 					  			$codigo_tipo_vendedor = $fila["CODIGO_TIPO_VENDEDOR"];
+								if ($codigo_tipo_vendedor == 2) {
+									$obtener_nombre_vendedor = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_TIENDA
+																									FROM TBL_TIENDAS A
+																									INNER JOIN TBL_VENDEDORES B
+																									ON (A.CODIGO_TIENDA = B.CODIGO_TIENDA)
+																									WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'
+																									AND CODIGO_TIPO_VENDEDOR = '$codigo_tipo_vendedor'");
+									oci_execute($obtener_nombre_vendedor);
+									while ($fila9 = $conexion->obtenerFila($obtener_nombre_vendedor)) {
+										echo '<br><br><h5><a href="Informacion_de_vendedor.php?codigo-usuario='.$codigo_usuario_vendedor.'">'.$fila9["NOMBRE_TIENDA"].'</a></h5>';
+									}
+								}
+								else{
+									echo '<br><br><h5><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila["CODIGO_USUARIO_VENDEDOR"].'">'.$fila["NOMBRE"].' '.$fila["APELLIDO"].'</a></h5>';
+								}
 							}
 
 							$obtener_vendedor_calificacion = $conexion->ejecutarInstruccion(" 	
@@ -364,9 +378,11 @@
 								echo $fila3["NOMBRE_LUGAR"].'.</h6>';
 							}
 
+							$tipo_publicacion2 = " ";
+
 							echo '<br><h6>Categoria:</h6>';
 							$obtener_categoria = $conexion->ejecutarInstruccion(" 	
-								SELECT A.NOMBRE_PRODUCTO, B.NOMBRE_CATEGORIA
+								SELECT A.NOMBRE_PRODUCTO, B.NOMBRE_CATEGORIA, A.CODIGO_TIPO_PUBLICACION
 								FROM TBL_PUBLICACION_PRODUCTOS A
 								INNER JOIN TBL_CATEGORIAS B
 								ON (A.CODIGO_CATEGORIA=B.CODIGO_CATEGORIA)
@@ -374,20 +390,38 @@
 							oci_execute($obtener_categoria);
 							while ($fila4 = $conexion->obtenerFila($obtener_categoria)) {
 								echo $fila4["NOMBRE_CATEGORIA"];
+								$tipo_publicacion2 = $fila4["CODIGO_TIPO_PUBLICACION"];
 							}
 
-							$obtener_sub_categoria = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, C.NOMBRE_SUB_CATEGORIA
+							if ($tipo_publicacion2 == 1) {
+								$obtener_sub_categoria = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, C.NOMBRE_SUB_CATEGORIA
 																						FROM TBL_PUBLICACION_PRODUCTOS A
 																						INNER JOIN TBL_PRODU_X_TBL_CATEGO B
 																						ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PRODUCTO)
 																						INNER JOIN TBL_SUB_CATEGORIAS C
 																						ON (B.CODIGO_SUB_CATEGORIA=C.CODIGO_SUB_CATEGORIA)
 																						WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
-							oci_execute($obtener_sub_categoria);
-							while ($fila5 = $conexion->obtenerFila($obtener_sub_categoria)) {
-								echo '<ul>';
-				  					echo '<li>'.$fila5["NOMBRE_SUB_CATEGORIA"].'</li>';
-				  				echo '</ul>';
+								oci_execute($obtener_sub_categoria);
+								while ($fila5 = $conexion->obtenerFila($obtener_sub_categoria)) {
+									echo '<ul>';
+					  					echo '<li>'.$fila5["NOMBRE_SUB_CATEGORIA"].'</li>';
+					  				echo '</ul>';
+								}
+							}
+							else{
+								$obtener_servicio = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_PRODUCTO, C.NOMBRE_SERVICIO
+																							FROM TBL_PUBLICACION_PRODUCTOS A
+																							INNER JOIN TBL_PUBLIC_X_TBL_SERV B
+																							ON (A.CODIGO_PUBLICACION_PRODUCTO=B.CODIGO_PUBLICACION_PRODUCTO)
+																							INNER JOIN TBL_SERVICIOS C
+																							ON (B.CODIGO_SERVICIO=C.CODIGO_SERVICIO)
+																							WHERE A.CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+								oci_execute($obtener_servicio);
+								while ($fila13 = $conexion->obtenerFila($obtener_servicio)) {
+									echo '<ul>';
+					  					echo '<li>'.$fila13["NOMBRE_SERVICIO"].'</li>';
+					  				echo '</ul>';
+								}
 							}
 				  		?>
 				  		
@@ -398,7 +432,7 @@
 				  <!--Columna 3-->
 				  <div class="col-sm-6 col-md-6 col-lg-3 offset-lg-0"><!--Columna 3-->
 	<!--scrollbar onlyread-->			  	
-					<label for="cmb-categoria"><h6>Productos Destacados:<h6></label>
+					<label for="cmb-categoria"><h6>Publicaciones Destacadas:<h6></label>
 						<div>
 
 							<?php
@@ -427,6 +461,9 @@
 								$codigo_publicacion_imagen = " ";
 								$randon = " ";
 
+								$codigo_usuario_vendedor2 = " ";
+								$codigo_tipo_vendedor2 = " ";
+
 								echo '<table class="table" style="width:100%">';
 									echo '<thead class="thead-dark">';
 									    echo '<tr>';
@@ -435,7 +472,7 @@
 									      	echo '<th scope="col">Precio</th>';
 									    echo '</tr>';
 								 	echo '</thead>';
-								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, A.PRECIO, C.CODIGO_USUARIO_VENDEDOR, D.NOMBRE, D.APELLIDO
+								$obtener_producto_destacado = $conexion->ejecutarInstruccion(" 	SELECT A.CODIGO_PUBLICACION_PRODUCTO, A.NOMBRE_PRODUCTO, A.PRECIO, C.CODIGO_USUARIO_VENDEDOR, C.CODIGO_TIPO_VENDEDOR, D.NOMBRE, D.APELLIDO, E.NOMBRE_TIPO_MONEDA
 																								FROM TBL_PUBLICACION_PRODUCTOS A
 																								INNER JOIN TBL_VEND_X_TBL_PUBLI B
 																								ON (A.CODIGO_PUBLICACION_PRODUCTO = B.CODIGO_PUBLICACION_PRODUCTO)
@@ -443,9 +480,14 @@
 																								ON (B.CODIGO_USUARIO_VENDEDOR=C.CODIGO_USUARIO_VENDEDOR)
 																								INNER JOIN TBL_USUARIOS D
 																								ON (C.CODIGO_USUARIO_VENDEDOR=D.CODIGO_USUARIO)
+																								INNER JOIN TBL_MONEDA E
+																								ON (A.CODIGO_TIPO_MONEDA=E.CODIGO_TIPO_MONEDA)
 																								WHERE A.CODIGO_ESTADO_PUBLICACION = 1");
 								oci_execute($obtener_producto_destacado);
 								while ($fila6 = $conexion->obtenerFila($obtener_producto_destacado)) {
+									$codigo_usuario_vendedor2 = $fila6["CODIGO_USUARIO_VENDEDOR"];
+					  				$codigo_tipo_vendedor2 = $fila6["CODIGO_TIPO_VENDEDOR"];
+
 									$randon = rand(0,count($arreglo_codigo_publicacion));
 									for ($i=0; $i <$randon; $i++) {
 										if ($verificar <= 2) {
@@ -468,8 +510,28 @@
 																break;
 															}
 												      echo '" style="width: 100px; height: 80px"></a></td>';
-												      echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila6["CODIGO_USUARIO_VENDEDOR"].'">'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</a></td>';
-												      echo '<td>'.$fila6["PRECIO"].'</td>';
+
+												      	if ($codigo_tipo_vendedor2 == 2) {
+															$obtener_nombre_vendedor2 = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_TIENDA
+																															FROM TBL_TIENDAS A
+																															INNER JOIN TBL_VENDEDORES B
+																															ON (A.CODIGO_TIENDA = B.CODIGO_TIENDA)
+																															WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor2'
+																															AND CODIGO_TIPO_VENDEDOR = '$codigo_tipo_vendedor2'");
+															oci_execute($obtener_nombre_vendedor2);
+															while ($fila11 = $conexion->obtenerFila($obtener_nombre_vendedor2)) {
+																echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$codigo_usuario_vendedor2.'">'.$fila11["NOMBRE_TIENDA"].'</a></td>';
+															}
+														}
+														else{
+															echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila6["CODIGO_USUARIO_VENDEDOR"].'">'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</a></td>';
+														}
+														if($fila6["NOMBRE_TIPO_MONEDA"] == "Lempiras"){
+															echo '<td>L. '.$fila6["PRECIO"].'</td>';
+														}
+														else{
+															echo '<td>$. '.$fila6["PRECIO"].'</td>';
+														}
 												    echo '</tr>';
 												echo '</tbody>';
 												$verificar++;

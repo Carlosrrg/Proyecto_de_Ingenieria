@@ -300,7 +300,9 @@
 								$usuario_vendedor = " ";
 								$cantidad = 0;
 
-								$resultado_vendedores_favoritos = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, A.FECHA_AGREGO, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO
+								$codigo_tipo_vendedor = " ";
+
+								$resultado_vendedores_favoritos = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, A.FECHA_AGREGO, B.CODIGO_USUARIO_VENDEDOR, B.CODIGO_TIPO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO
 																									FROM TBL_FAVORITOS A
 																									INNER JOIN TBL_VENDEDORES B
 																									ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
@@ -310,12 +312,29 @@
 								oci_execute($resultado_vendedores_favoritos);
 								while ($fila3 = $conexion->obtenerFila($resultado_vendedores_favoritos)) {
 									echo '<tr>
-										<th scope="row">'.$numeracion.'</th>
-										<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila3["CODIGO_USUARIO_VENDEDOR"].'">'.$fila3["NOMBRE"].' '.$fila3["APELLIDO"].'</a></td>
-										<td>'.$fila3["CORREO_ELECTRONICO"].'<br>+504 '.$fila3["TELEFONO"].'</td>
+										<th scope="row">'.$numeracion.'</th>';
+										$usuario_vendedor = $fila3["CODIGO_USUARIO_VENDEDOR"];
+										$codigo_tipo_vendedor = $fila3["CODIGO_TIPO_VENDEDOR"];
+
+										if ($codigo_tipo_vendedor == 2) {
+											$obtener_nombre_vendedor = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_TIENDA
+																											FROM TBL_TIENDAS A
+																											INNER JOIN TBL_VENDEDORES B
+																											ON (A.CODIGO_TIENDA = B.CODIGO_TIENDA)
+																											WHERE CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor'
+																											AND CODIGO_TIPO_VENDEDOR = '$codigo_tipo_vendedor'");
+											oci_execute($obtener_nombre_vendedor);
+											while ($fila9 = $conexion->obtenerFila($obtener_nombre_vendedor)) {
+												echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$usuario_vendedor.'">'.$fila9["NOMBRE_TIENDA"].'</a></td>';
+											}
+										}
+										else{
+											echo '<td><a href="Informacion_de_vendedor.php?codigo-usuario='.$fila3["CODIGO_USUARIO_VENDEDOR"].'">'.$fila3["NOMBRE"].' '.$fila3["APELLIDO"].'</a></td>';
+										}
+										echo '<td>'.$fila3["CORREO_ELECTRONICO"].'<br>+504 '.$fila3["TELEFONO"].'</td>
 										<td>'.$fila3["FECHA_AGREGO"].'</td>
 										<td>';
-												$usuario_vendedor = $fila3["CODIGO_USUARIO_VENDEDOR"];
+												
 												$numero_estrellas = 0;
 
 												$resultado_numero_estrellas = $conexion->ejecutarInstruccion("	SELECT NUMERO_ESTRELLAS 
@@ -379,7 +398,7 @@
 							  	$numeracion2 = 1;
 							  	$usuario_vendedor2 = " ";
 
-							  	$resultado_actualizacion_vendedores = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR
+							  	$resultado_actualizacion_vendedores = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR, B.CODIGO_TIPO_VENDEDOR
 																										FROM TBL_FAVORITOS A
 																										INNER JOIN TBL_VENDEDORES B
 																										ON (A.CODIGO_USUARIO_VENDEDOR = B.CODIGO_USUARIO_VENDEDOR)
@@ -390,6 +409,7 @@
 								while ($fila5 = $conexion->obtenerFila($resultado_actualizacion_vendedores)) {
 									echo '<tr>';
 											$usuario_vendedor2 = $fila5["CODIGO_USUARIO_VENDEDOR"];
+											$codigo_tipo_vendedor2 = $fila5["CODIGO_TIPO_VENDEDOR"];
 
 											$resultado_actualizacion_publicacion = $conexion->ejecutarInstruccion("	SELECT A.CODIGO_USUARIO_COMPRADOR, B.CODIGO_USUARIO_VENDEDOR, C.NOMBRE, C.APELLIDO, C.CORREO_ELECTRONICO, C.TELEFONO, D.NOMBRE_PRODUCTO, D.FECHA_PUBLICACION, D.CODIGO_PUBLICACION_PRODUCTO
 																													FROM TBL_FAVORITOS A
@@ -425,9 +445,23 @@
 												echo $fila6["NOMBRE_PRODUCTO"];	
 								  				echo '</a></td>';
 								  				echo '<td>'.$fila6["FECHA_PUBLICACION"].'</td>';
-											  	echo '
-													<td>'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</td>
-													<td>'.$fila6["CORREO_ELECTRONICO"].'<br>+504 '.$fila6["TELEFONO"].'</td>
+
+								  				if ($codigo_tipo_vendedor2 == 2) {
+													$obtener_nombre_vendedor2 = $conexion->ejecutarInstruccion(" 	SELECT A.NOMBRE_TIENDA
+																													FROM TBL_TIENDAS A
+																													INNER JOIN TBL_VENDEDORES B
+																													ON (A.CODIGO_TIENDA = B.CODIGO_TIENDA)
+																													WHERE CODIGO_USUARIO_VENDEDOR = '$usuario_vendedor2'
+																													AND CODIGO_TIPO_VENDEDOR = '$codigo_tipo_vendedor2'");
+													oci_execute($obtener_nombre_vendedor2);
+													while ($fila10 = $conexion->obtenerFila($obtener_nombre_vendedor2)) {
+														echo '<td>'.$fila10["NOMBRE_TIENDA"].'</td>';
+													}
+												}
+												else{
+													echo '<td>'.$fila6["NOMBRE"].' '.$fila6["APELLIDO"].'</td>';
+												}
+												echo '<td>'.$fila6["CORREO_ELECTRONICO"].'<br>+504 '.$fila6["TELEFONO"].'</td>
 													<td style="padding-left:2px;padding-right: 2px">';
 												echo '</tr>';
 											}
