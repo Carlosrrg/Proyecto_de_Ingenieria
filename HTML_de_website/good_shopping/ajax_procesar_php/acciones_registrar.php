@@ -49,6 +49,23 @@
 			$mensaje = 0;
 		}
 
+		//verifica si el rtn ingresado ya existe
+		$cantidad_rtn = 0;
+		if ($vendedor==2) {
+			$rtn = $_POST["txt-rtn"];
+
+			$existe_rtn = $conexion->ejecutarInstruccion(
+				"SELECT COUNT(*) EXISTE FROM TBL_TIENDAS
+				WHERE RTN = '$rtn'");
+			oci_execute($existe_rtn);
+			while ($fila = $conexion->obtenerFila($existe_rtn)) {
+		    	$cantidad_rtn = $fila["EXISTE"];
+		    }
+		    if ($cantidad_rtn!=0) {
+		    	$mensaje = 2;
+		    }
+		}
+
 		if($mensaje==1){
 			$codigo_recuperacion = rand(1,3);
 			//echo "codigo_recuperacion: ".$codigo_recuperacion;
@@ -61,7 +78,6 @@
 
 			if ($vendedor==2) {
 				$nombre_tienda = $_POST["txt-nombre-tienda"];
-				$rtn = $_POST["txt-rtn"];
 
 				$ingresar_tienda = $conexion->ejecutarInstruccion(
 																	"DECLARE
@@ -84,12 +100,12 @@
 																	SELECT CODIGO_USUARIO,$vendedor,NULL FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC");
 				oci_execute($ingresar_vendedor);
 
-				$ingresar_comprador = $conexion->ejecutarInstruccion(
-																	"INSERT INTO TBL_COMPRADORES (CODIGO_USUARIO_COMPRADOR)
-																	SELECT CODIGO_USUARIO FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC"
-				);
-				oci_execute($ingresar_comprador);
 			}
+
+			$ingresar_comprador = $conexion->ejecutarInstruccion(
+				"INSERT INTO TBL_COMPRADORES (CODIGO_USUARIO_COMPRADOR)
+				SELECT CODIGO_USUARIO FROM TBL_USUARIOS WHERE ROWNUM=1 ORDER BY CODIGO_USUARIO DESC");
+			oci_execute($ingresar_comprador);
 
 			//$mensaje = "Datos ingresados con éxito!\n";
 
@@ -135,6 +151,7 @@
 			//FIN DE FUNCION PARA ENVIAR CORREO
 
 		}
+
 		if (!isset($codigo_usuario)) {
 			echo $mensaje;
 		}

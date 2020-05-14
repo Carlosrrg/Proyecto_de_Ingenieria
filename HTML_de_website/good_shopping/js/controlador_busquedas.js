@@ -5,8 +5,8 @@ $(document).ready(function(){
 		var lugar = $("#cmb_ubicacion").val();
 		var categoria = $("#cmb_categoria").val();
 		var tipo_moneda = $('input:radio[name=opcion_moneda]:checked').val();
-		var precio_min = $("#slider-range").slider("values", 0 );
-		var precio_max = $("#slider-range").slider("values", 1 );
+		var precio_min = $("#precio_min").val();
+		var precio_max = $("#precio_max").val();
 		var orden = $("#cmb_ordenar").val();
 
 		var cont = 0;
@@ -31,10 +31,25 @@ $(document).ready(function(){
 							"&lugar="+lugar+
 							"&categoria="+categoria+
 							"&tipo_moneda="+tipo_moneda+
-							"&precio_min="+precio_min+
-							"&precio_max="+precio_max+
 							"&subcategorias="+subcategorias+
 							"&orden="+orden;
+
+		var guarda_precio = 0;
+		if (precio_min!="" && precio_max!="") {
+			if (parseInt(precio_min) > parseInt(precio_max)) {
+				guarda_precio = precio_min;
+				precio_min = precio_max;
+				precio_max = guarda_precio;
+			}
+		}
+
+		if (precio_min!="") {
+			parametros += "&precio_min="+precio_min;
+		}
+
+		if (precio_max!="") {
+			parametros += "&precio_max="+precio_max;
+		}
 
 		window.location="BusquedaP.php?"+parametros+"";
         
@@ -46,6 +61,31 @@ $(document).ready(function(){
 	    if(code==13){
 	        $("#btn_buscar").click();
 	    }
+	});
+	$("#precio_min").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        $("#btn_buscar").click();
+	    }
+	});
+	$("#precio_max").keypress(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if(code==13){
+	        $("#btn_buscar").click();
+	    }
+	});
+
+	//solo numeros en el rango
+	$("#precio_min").keyup(function (){
+       this.value = (this.value + '').replace(/[^0-9]/g, '');
+    });
+    $("#precio_max").keyup(function (){
+       this.value = (this.value + '').replace(/[^0-9]/g, '');
+    });
+
+	//Click al boton de rango de precio
+	$("#btn_precio").click(function(){
+		$("#btn_buscar").click();
 	});
 
 	//Muestra subcategorias

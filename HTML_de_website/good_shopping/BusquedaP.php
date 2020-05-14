@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Good Shopping</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="icon" type="image/jpg" href="recursos/imagenes/logo.png">
@@ -119,11 +118,13 @@
 		$conexion->establecerConexion();
 		//Gestion de parametros para buscar
 		$parametros = "";
+
 		$busca = "";
 		if (isset($_GET['busca'])) {
 			$busca = $_GET['busca'];
 			$parametros .= "&busca=".$busca;
 		}
+
 		$lugar = 0;
 		$sql_lugar = "";
 		if (isset($_GET['lugar'])) {
@@ -133,6 +134,7 @@
 			}
 			$parametros .= "&lugar=".$lugar;
 		}
+
 		$categoria = 0;
 		$sql_categoria = "";
 		if (isset($_GET['categoria'])) {
@@ -142,6 +144,7 @@
 			}
 			$parametros .= "&categoria=".$categoria;
 		}
+
 		$tipo_moneda = 0;
 		$sql_moneda = "";
 		if (isset($_GET['tipo_moneda'])) {
@@ -151,28 +154,27 @@
 			}
 			$parametros .= "&tipo_moneda=".$tipo_moneda;
 		}
-		$precio_max = 50000;
-		$sql_precio_max = "";
-		if (isset($_GET['precio_max'])) {
-			$precio_max = $_GET['precio_max'];
-			if ($precio_max!=50000) {
-				$sql_precio_max = "AND A.PRECIO <= ".$precio_max." ";
-			} else {
-				$precio_max = 50000;
-			}
-			$parametros .= "&precio_max=".$precio_max;
-		}
-		$precio_min = 0;
+
+		$precio_min = "";
 		$sql_precio_min = "";
 		if (isset($_GET['precio_min'])) {
 			$precio_min = $_GET['precio_min'];
-			if ($precio_min!=0) {
+			if ($precio_min!="") {
 				$sql_precio_min = "AND A.PRECIO >= ".$precio_min." ";
-			} else {
-				$precio_min = 0;
 			}
 			$parametros .= "&precio_min=".$precio_min;
 		}
+		
+		$precio_max = "";
+		$sql_precio_max = "";
+		if (isset($_GET['precio_max'])) {
+			$precio_max = $_GET['precio_max'];
+			if ($precio_max!="") {
+				$sql_precio_max = "AND A.PRECIO <= ".$precio_max." ";
+			}
+			$parametros .= "&precio_max=".$precio_max;
+		}
+		
 		$subcategorias = "";
 		$sql_subcatego1 = "";
 		$sql_subcatego2 = "";
@@ -186,6 +188,7 @@
 				$parametros .= "&subcategorias=".$subcategorias;
 			}
 		}
+
 		$orden = 1;
 		$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO DESC ";
 		if (isset($_GET['orden'])) {
@@ -330,7 +333,7 @@
 			</select>
 
 			<!--Grupos de casillaspara seleccion multiple de subcategorias-->
-		    <p id="div-subcategorias" style="margin-bottom: -10px; margin-top: 30px; text-align: justify;">
+		    <p id="div-subcategorias" style="margin-bottom: -10px; margin-top: 10px; text-align: justify;">
 		    <?php 
 		    	if ($categoria!=0) {
 		    		$resultado_subcatego = $conexion->ejecutarInstruccion("
@@ -378,31 +381,29 @@
 				radio dolares->id: rb_dolares
 			-->
 		    <center style="margin-bottom: 5px; margin-top: 30px;">
+		    	<label style="margin-bottom: -10px; margin-top: 10px; margin-left:-10px"><h6>Moneda:</h6></label>
 				  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-					  <label style="text-transform: none;" class="btn btn-secondary btn-sm col-lg-6">
+					  <label style="text-transform: none;" class="btn btn-outline-dark btn-sm">
 						<input type="radio" name="opcion_moneda" id="rb_lempiras" value="1"
-						 <?php if($tipo_moneda==1){echo ' checked';} ?> >Lempiras
+						 <?php if($tipo_moneda==1){echo ' checked';} ?>> Lempiras 
 					  </label>
-					  <label style="text-transform: none;" class="btn btn-secondary btn-sm col-lg-6">
+					  <label style="text-transform: none;" class="btn btn-outline-dark btn-sm">
 						<input type="radio" name="opcion_moneda" id="rb_dolares" value="2"
-						<?php if($tipo_moneda==2){echo ' checked';} ?>>Dolares
+						<?php if($tipo_moneda==2){echo ' checked';} ?>> Dolares 
+					  </label>
+					  <label style="text-transform: none;" class="btn btn-outline-dark btn-sm">
+						<input type="radio" name="opcion_moneda" id="rb_ambas" value="0"
+						<?php if($tipo_moneda==0){echo ' checked';} ?>> Ambas 
 					  </label>
 				 </div>
 		    </center><br>
 
-			<!--Slider para controlar la cantidad de dinero maxima del precio de los productos
-			id:slb_precio
-			el valor minimo "min" debe contener el menor precio del producto mas barato de la base de datos
-			el valor maximo "max" debe contener el mayor precio del producto mas caro de la base de datos
-			el valor "value" del slider debe ser el valor maximo-->
-			<input type="text" value="<?php echo $precio_min; ?>" id="precio_min" style="display:none">
-			<input type="text" value="<?php echo $precio_max; ?>" id="precio_max" style="display:none">
-			<p>
-			  <label for="amount">Rango de precio:</label>
-			  <input type="text" id="amount" readonly style="border:0; color:green; width:40%">
-			</p>
-			 
-			<div id="slider-range"></div>
+			<!--inputs para controlar la cantidad de dinero minima y maxima del precio de los productos-->
+
+			<label style="margin-bottom: -10px; margin-top: 10px;"><h6>Precio:</h6></label>
+			<label style="width:30%"><input type="text" value="<?php echo $precio_min; ?>" id="precio_min" placeholder="Mín." class="form-control"></label> - 
+			<label style="width:30%"><input type="text" value="<?php echo $precio_max; ?>" id="precio_max" placeholder="Máx." class="form-control"></label>
+			<button type="button" id="btn_precio" class="btn btn-outline-dark btn-sm" style="padding:0"><img src="recursos/imagenes/Desplegar.png" style="width: 20px;"></button>
 			  
 		  </div>	  
 	    </div>
@@ -631,7 +632,6 @@
 
 	<!--Agregando bootstrap al archivo html-->
 <script src="js/jquery.js"></script><!--Lanzar archivo jquery-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><!--jquery para el slider doble-->
 <script src="js/controlador_busquedas.js"></script><!--Controlador de la pagina-->
 <script src="js/bootstrap.min.js"></script><!--Lanzar archivo Bootstrap.js-->
 <script>//JavaScript
@@ -643,16 +643,14 @@
             });
         });
 
-		//buscar por filtro de precio
-		$("#slider-range").click(function(){
-			$("#btn_buscar").click();
-		});
-
 		//buscar for filtro de moneda
 		$("#rb_lempiras").click(function(){
 			$("#btn_buscar").click();
 		});
 		$("#rb_dolares").click(function(){
+			$("#btn_buscar").click();
+		});
+		$("#rb_ambas").click(function(){
 			$("#btn_buscar").click();
 		});
 
@@ -668,26 +666,6 @@
 	        });
 			$("#btn_buscar").click();
 		}
-
-		//Funcion para valor del slider de precio
-		$( function() {
-		    $( "#slider-range" ).slider({
-		    range: true,
-		    min: 0,
-		    max: 50000,
-		    values: [ $("#precio_min").val(), $("#precio_max").val() ],
-		    slide: function( event, ui ) {
-		        $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-		    }
-		});
-
-		var valor_maximo = $( "#slider-range" ).slider( "values", 1 );
-		if (valor_maximo == 50000) {
-			valor_maximo = "Máx.";
-		}
-		$( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +" - " +  valor_maximo);
-
-		});
 
 </script>
 </body>

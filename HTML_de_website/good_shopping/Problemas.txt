@@ -30,6 +30,7 @@ modulo_registro.html
 -Back end
 	-Problemas iniciales de no poder obtener los datos desde el formulario por el motivo que la libreria de JQuery estaba danada.
 	-modificacion de la base de datos para anadir al vendedor empresarial.
+	-Se registraban dos tiendas con el mismo RTN.
 
 index.php/iniciar seccion
 -Front end

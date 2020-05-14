@@ -170,8 +170,14 @@ $(document).ready(function(){
 																			$("#txt-correo").val("");
 																		}
 																		else{
-																			alert("Registrado con exito!, Se envio la informacion a su direccion de correo electronico");
-																			window.location="index.php";
+																			if(respuesta1 == 2){
+																				alert("El RTN ingresado ya existe, porfavor intente con uno nuevo.");
+																				$("#txt-rtn").val("");
+																			}
+																			else{
+																				alert("Registrado con exito!, Se envio la informacion a su direccion de correo electronico");
+																				window.location="index.php";
+																			}
 																		}
 																	}
 															});	
