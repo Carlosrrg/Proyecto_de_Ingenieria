@@ -75,6 +75,7 @@ $(document).ready(function(){
 				success:function(respuesta){
 					if (respuesta != 0) {
 						alert(respuesta);//se agrgo correctamente a favoritos
+						location.reload(true);
 					} else {
 						alert("Error al agregar a favoritos.");
 					}

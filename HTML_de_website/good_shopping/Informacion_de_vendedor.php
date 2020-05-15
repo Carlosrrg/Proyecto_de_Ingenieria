@@ -127,10 +127,28 @@
 	  	<?php
 			//<!--Fila 1-->
 			echo'<div class="row">';
-		
 			//obtencion del codigo del vendedor enviado desde la anterior pagina
 			$codigo_usuario_vendedor = $_GET["codigo-usuario"];
+			$usuario = $_SESSION['codigo_usuario_sesion'];//codigo de usuario comprador
 			echo'<input type="text" id="codigoVendedor" value="'.$codigo_usuario_vendedor.'" style="display: none;">';
+			
+			//accion del boton de favoritos
+			$accionFavoritos = ["accion", "boton"];  
+			$datos_favoritos = $conexion->ejecutarInstruccion(
+				" SELECT COUNT(*) CANTIDAD FROM TBL_FAVORITOS
+					WHERE CODIGO_USUARIO_COMPRADOR = ".$usuario." AND 
+						CODIGO_USUARIO_VENDEDOR = ".$codigo_usuario_vendedor.""
+			);
+			oci_execute($datos_favoritos);
+			while ($fila = $conexion->obtenerFila($datos_favoritos)){
+				if($fila["CANTIDAD"] > 0){
+					$accionFavoritos[0] = "Quitar de favoritos";
+					$accionFavoritos[1] = "btn btn-danger";
+				}else{
+					$accionFavoritos[0] = "Añadir a favoritos";
+					$accionFavoritos[1] = "btn btn-dark";
+				}
+			}
 			
 			//consulta para obtener los datos del usuario en una variable de conexion: resultado_usuario
 			$resultado_usuario = $conexion->ejecutarInstruccion(
@@ -242,7 +260,6 @@
 					' para poder calificar o agregar a favoritos este vendedor</div>';
 				}else if($codigo_usuario_vendedor != $_SESSION['codigo_usuario_sesion']){
 					//Apartado de calificaciones y envio de comentarios
-					$usuario = $_SESSION['codigo_usuario_sesion'];
 					$esTienda = $conexion->ejecutarInstruccion(
 					"SELECT V.CODIGO_TIPO_VENDEDOR FROM TBL_USUARIOS U
 						INNER JOIN TBL_VENDEDORES V 
@@ -250,7 +267,6 @@
 						WHERE U.CODIGO_USUARIO = $usuario
 					");
 					oci_execute($esTienda);
-					
 					while($obtenerTienda = $conexion->obtenerFila($esTienda)){
 						//Las tiendas no pueden calificar vendedores	
 						if($obtenerTienda["CODIGO_TIPO_VENDEDOR"] != 2){
@@ -266,9 +282,10 @@
 							while($filaEstrella = $conexion->obtenerFila($resultadoMiValoracion)){
 								$miValoracion = $filaEstrella["NUMERO_ESTRELLAS"];
 							}
-							//Botón agregar a favoritos 
+
+							//Botón agregar a favoritos
 							echo'<button type="button" id="btn_favoritos" 
-							name="btn_favoritos" class="btn btn-dark">Añadir a favoritos</button><br><br>';
+							name="btn_favoritos" class="'.$accionFavoritos[1].'">'.$accionFavoritos[0].'</button><br><br>';
 							//etiqueta para indicar la seccion de calificar vendedor
 							echo'<h6 style="color: #000;">Calificar este vendedor</h6>';
 							//Hacer funcionar valoracion por estrellas

@@ -39,7 +39,13 @@
 		while ($fila = $conexion->obtenerFila($datos_favoritos)){
 			$yaAgregado = $fila["CANTIDAD"];
 			if($yaAgregado > 0){
-				echo 'Ya tiene agregado este vendedor';
+				$quitar_favorito = $conexion->ejecutarInstruccion(
+					"DELETE FROM TBL_FAVORITOS
+					 WHERE CODIGO_USUARIO_COMPRADOR = $codigo_usuario_comprador AND
+					 	   CODIGO_USUARIO_VENDEDOR = $codigoVendedor
+				");
+				oci_execute($quitar_favorito);
+				echo'Vendedor quitado de favoritos';
 			}else{
 				$insertar_favorito = $conexion->ejecutarInstruccion("
 					INSERT INTO TBL_FAVORITOS(CODIGO_USUARIO_COMPRADOR, CODIGO_USUARIO_VENDEDOR, FECHA_AGREGO)
