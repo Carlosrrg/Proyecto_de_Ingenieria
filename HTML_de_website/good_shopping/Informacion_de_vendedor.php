@@ -129,24 +129,23 @@
 			echo'<div class="row">';
 			//obtencion del codigo del vendedor enviado desde la anterior pagina
 			$codigo_usuario_vendedor = $_GET["codigo-usuario"];
-			$usuario = $_SESSION['codigo_usuario_sesion'];//codigo de usuario comprador
 			echo'<input type="text" id="codigoVendedor" value="'.$codigo_usuario_vendedor.'" style="display: none;">';
 			
 			//accion del boton de favoritos
-			$accionFavoritos = ["accion", "boton"];  
-			$datos_favoritos = $conexion->ejecutarInstruccion(
-				" SELECT COUNT(*) CANTIDAD FROM TBL_FAVORITOS
-					WHERE CODIGO_USUARIO_COMPRADOR = ".$usuario." AND 
-						CODIGO_USUARIO_VENDEDOR = ".$codigo_usuario_vendedor.""
-			);
-			oci_execute($datos_favoritos);
-			while ($fila = $conexion->obtenerFila($datos_favoritos)){
-				if($fila["CANTIDAD"] > 0){
-					$accionFavoritos[0] = "Quitar de favoritos";
-					$accionFavoritos[1] = "btn btn-danger";
-				}else{
-					$accionFavoritos[0] = "Añadir a favoritos";
-					$accionFavoritos[1] = "btn btn-dark";
+			$accionFavoritos = ["Añadir a favoritos", "btn btn-dark"]; 
+			if(isset($_SESSION['codigo_usuario_sesion'])){
+				$usuario = $_SESSION['codigo_usuario_sesion'];//codigo de usuario comprador 
+				$datos_favoritos = $conexion->ejecutarInstruccion(
+					" SELECT COUNT(*) CANTIDAD FROM TBL_FAVORITOS
+						WHERE CODIGO_USUARIO_COMPRADOR = ".$usuario." AND 
+							CODIGO_USUARIO_VENDEDOR = ".$codigo_usuario_vendedor.""
+				);
+				oci_execute($datos_favoritos);
+				while ($fila = $conexion->obtenerFila($datos_favoritos)){
+					if($fila["CANTIDAD"] > 0){
+						$accionFavoritos[0] = "Quitar de favoritos";
+						$accionFavoritos[1] = "btn btn-danger";
+					}
 				}
 			}
 			
