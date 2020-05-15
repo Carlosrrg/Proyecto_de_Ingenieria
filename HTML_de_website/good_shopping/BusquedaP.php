@@ -468,7 +468,12 @@
 					$cantidad = 0;
 					$codigo_anterior = 0;
 					while ($fila = $conexion->obtenerFila($busquedaProductos)) {
-						$tiempo_publicado = "hace " . $fila["FECHA_PUBLICACION"] . " días.";
+						$tiempo_publicado = "hace " . $fila["FECHA_PUBLICACION"];
+						if ($fila["FECHA_PUBLICACION"]==1) {
+							$tiempo_publicado .= " día.";
+						} else {
+							$tiempo_publicado .= " días.";
+						}
 						if ($fila["FECHA_PUBLICACION"]==0) {
 							$tiempo_publicado = "hoy.";
 						}
@@ -574,15 +579,9 @@
 				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
 					<h6>Destacados</h6>
-					<a href="index.php" style="color: black;">
+					<a href="Destacados_Region.php" style="color: black;">
 						<span>
 							Región
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Categoría
 						</span>
 					</a>
 					<br>

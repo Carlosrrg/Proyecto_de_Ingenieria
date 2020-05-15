@@ -172,7 +172,7 @@
 							echo '</div>';
 				  			echo '<br>';
 
-				  			echo '<div class="list-group list-group-flush">';
+				  			echo '<div class="list-group list-group-flush" style="width:240px;">';
 								echo '<a href="Adm_gestion_publicaciones.php" class="list-group-item list-group-item-action bg-light"><span>
 									<h6 style="color:green">Gestión de Publicaciones</h6></span></a>'; 
 								echo '<a href="Adm_gestion_vendedores.php" class="list-group-item list-group-item-action bg-light"><span>
@@ -297,15 +297,9 @@
 				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
 					<h6>Destacados</h6>
-					<a href="index.php" style="color: black;">
+					<a href="Destacados_Region.php" style="color: black;">
 						<span>
 							Región
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Categoría
 						</span>
 					</a>
 					<br>

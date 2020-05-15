@@ -341,15 +341,9 @@
 				<div class="col-xs-4 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
 					<h6>Destacados</h6>
-					<a href="index.php" style="color: black;">
+					<a href="Destacados_Region.php" style="color: black;">
 						<span>
 							Región
-						</span>
-					</a>
-					<br>
-					<a href="#" style="color: black;">
-						<span>
-							Categoría
 						</span>
 					</a>
 					<br>
