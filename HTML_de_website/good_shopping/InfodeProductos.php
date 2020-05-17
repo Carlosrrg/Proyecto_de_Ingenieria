@@ -14,6 +14,7 @@
 		integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
 	<link rel="stylesheet" href="css/mensaje_error.css">
+	<link rel="stylesheet" href="css/jquery.rateyo.min.css"/>
   </head>
   <body>
   	<?php
@@ -256,21 +257,25 @@
 								FROM TBL_RANKING
 								WHERE CODIGO_USUARIO_VENDEDOR = '$codigo_usuario_vendedor'");
 							oci_execute($obtener_vendedor_calificacion);
+							
+							//Estrellas de puntuacion de usuario vendedor
 							while ($fila2 = $conexion->obtenerFila($obtener_vendedor_calificacion)) {
-								$promedio_estrellas = intval($fila2["PROMEDIO_ESTRELLAS"]);
+								$promedio_estrellas = $fila2["PROMEDIO_ESTRELLAS"];
 							}
-
-							echo '<br>Calificacion del Vendedor<br>';
-							for ($i=1; $i <= 5 ; $i++) {
-								echo '<span class="fa fa-star ';
-								  	if ($i<=$promedio_estrellas) {
-								  		echo 'checked';
-								  	}	
-								echo'"></span>';
+							for($i = 0;$i < strlen($promedio_estrellas); $i++){
+								if($promedio_estrellas[$i] == ','){
+									$promedio_estrellas[$i] = '.';
+								}
 							}
-							echo '<h3 style="color: orange;">'.$promedio_estrellas.'</h3>';
-							//echo '<br>';
-							//echo '<span class="fa fa-star-half checked "></span>';
+							echo '<br>Calificacion del Vendedor<br>
+								<div class="rateyo" id="puntuacion"
+									starWidth= "10px"
+									data-rateyo-read-only="true"
+									data-rateyo-rating="'.$promedio_estrellas.'"
+									data-rateyo-num-stars= "5"
+									data-rateyo-star-width= "30px"
+									style="margin: 10px auto;">
+								</div>';
 					  ?> 
 					  
 					  	
@@ -673,7 +678,13 @@
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/controlador_enviar_mensaje.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>		
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.rateyo.js"></script>
+  <script>
+		$(function () {
+			$(".rateyo").rateYo().on("rateyo.change", function (e, data) {});
+		});
+  </script>	
 </body>
 </html>
 
