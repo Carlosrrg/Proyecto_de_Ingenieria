@@ -45,9 +45,6 @@ perfil_usuario_comprador.php y perfil_usuario_vendedor.php
 -Back end
 	-ninguno que no se puediera reparar en el mismo instante.
 
-
-
-
 Adm_gestion_vendedores
 -Back end
 	-Mostraba más numeros de articulos a los vendedores de los que tenia.
@@ -60,3 +57,7 @@ EditarTienda.php
 -Back end
 	-Error con la descripcion de la tienda al superar los 500 caracteres.
 	(igual con descripcion de productos y mensajes).
+
+PublicarProducto.php
+-Back End
+	-Permitia subir archivos en sección de imagenes al igual que las demás paginas que dependian de este.

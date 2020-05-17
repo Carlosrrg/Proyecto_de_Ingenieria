@@ -321,7 +321,7 @@
 										} 
 
 										echo '<div id="preview"><img src="'.$ruta_imagen.'" class="img-fluid img-thumbnail"></div>';   			
-									    echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading">';
+									    echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading" accept="image/*">';
 									    echo '<br>';
 								  	}
 								  	

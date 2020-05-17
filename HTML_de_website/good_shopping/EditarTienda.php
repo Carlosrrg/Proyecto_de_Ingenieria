@@ -306,7 +306,7 @@
 							echo '<center><div id="previewbanner"><img src="'.$ruta_imagen_banner.'" style="padding-bottom: 1%;padding-right: 1%;" class="img-fluid"></div></center>';
 							echo '<a id="btn-banner" href="" type="file" class="list-group-item-action bg-light" style="margin-left:650px">Cambiar banner</a>';
 							echo 	'<form id="file-submit" enctype="multipart/form-data" style="display:none">
-									    <input id="banner" name="banner" type="file"/>
+									    <input id="banner" name="banner" type="file" accept="image/*"/>
 									</form>';
 
 							echo '<div><h5 style="padding-right: 14%; " class="col-lg-12">Editar Tienda</h5></div>';
@@ -336,7 +336,7 @@
 
 									echo '<div id="preview"><img src="'.$ruta_imagen.'" class="img-fluid img-thumbnail"></div>';   				
 									   echo '</div>';
-								           echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading">';
+								           echo '<input type="file" id="btn-logo" name="btn-logo" class="btn file-loading" accept="image/*">';
 								       echo '</div>';
 									   
 								//<!--Textbox datos de la tienda-->

@@ -367,7 +367,7 @@
 								  echo '</a>';
 							  echo '</div>';
 							  echo '<div>';
-							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading" disabled>';
+							  	echo '<input type="file" id="btn_subir_foto" name="btn_subir_foto" class="btn file-loading" accept="image/*" disabled>';
 							  	echo '<div style="margin-left: 10px"><b id="agregadas">Imágenes agregadas: '.$activo.'/5</b></div>';
 							  	echo '<div id="mensaje3" class="errores" style="margin:0">*Debe subir al menos 1 imagen</div>';
 							  	echo '<button type="submit" id="btn_cambiar_imagenes" class="btn btn-danger" style="margin-left:10px">Cambiar imágenes</button>';
