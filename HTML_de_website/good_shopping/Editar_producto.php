@@ -341,7 +341,7 @@
 
 						//<!-- CARROUSEL DE IMAGENES -->
 						  echo '<div class="col-md-6 col-lg-5 col-sm-6 offset-lg-0">';
-							  echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width: width:400px; height: 200px">';
+							  echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width:100%; height: 200px">';
 								  echo '<div class="carousel-inner" id="carousel-inner">';
 
 								$activo = 0;
