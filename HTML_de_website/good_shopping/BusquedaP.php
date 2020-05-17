@@ -95,16 +95,22 @@
 							
 					echo'</a>';
 					echo'<div class="dropdown-menu" style="margin: 9px 0 0 -110px;">';
-						if ($tipo_usuario==1) {
+						if (isset($tipo_usuario) && isset($codigo_vendedor)) {
+							if ($tipo_usuario==1) {
 							echo'<a class="dropdown-item" href="Adm_gestion_publicaciones.php">Administrar</a>';
+							}
+							else {
+								if ($codigo_vendedor == 1) {
+									echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
+								}
+								else{
+									echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
+								}
+							}
 						}
-						else {
-							if ($codigo_vendedor == 1) {
-								echo'<a class="dropdown-item" href="Perfil_usuario_comprador.php">Ver Perfil</a>';
-							}
-							else{
-								echo'<a class="dropdown-item" href="Perfil_usuario_empresarial.php">Ver Perfil</a>';
-							}
+						else{
+							session_destroy();
+							echo '<script>window.location="BusquedaP.php"+window.location.search</script>';
 						}
 						echo'<a class="dropdown-item" href="php/session_cerrar.php">Cerrar Sesión</a>';
 					echo'</div>';
@@ -522,6 +528,10 @@
 						}
 						$limiteSuperior = $limiteInferior + $cantidadNumerada;
 						if ($limiteSuperior > $paginas) {
+							$limiteSuperior = $paginas;
+						}
+						if ($paginas<=5) {
+							$limiteInferior = 0;
 							$limiteSuperior = $paginas;
 						}
 				?>
