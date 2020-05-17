@@ -510,6 +510,20 @@
 						echo'<h5>No se encontraron resultados</h5>';
 					}
 					if ($cantidad!=0) {
+						//control de la cantidad de paginas, para que no sea muy grande
+						$cantidadNumerada = 5;
+						$limiteInferior = ($_GET['pagina']-3);
+						if ($_GET['pagina'] < 3) {
+							$limiteInferior = 0;
+						} else {
+							if ($_GET['pagina'] > ($paginas-2)) {
+								$limiteInferior = $paginas - 5;
+							}
+						}
+						$limiteSuperior = $limiteInferior + $cantidadNumerada;
+						if ($limiteSuperior > $paginas) {
+							$limiteSuperior = $paginas;
+						}
 				?>
 				
 				<!--Control de paginacion para cambiar de una pagina a otra-->
@@ -524,12 +538,22 @@
 						href="BusquedaP.php?pagina=<?php echo ($_GET['pagina']-1) . $parametros ?>"
 					> Anterior</a>
 					</li>
+
+					<?php
+						if ($limiteInferior!=0) {
+							echo '<li class="page-item"> 
+								<a class="page-link" 
+									href="BusquedaP.php?pagina='.$limiteInferior.$parametros.'"
+								> ...</a>
+								</li>';
+						}
+					?>
 					
 					<!--Imprime cada una de las paginas especificadas en la cantidad de paginas 
 					si se especifican 13 paginas habran 13 botones numerados, si se especifican n 
 					botones habran n botones numerados, todabia no esta controlado el limite de botones de botones
 					asi que si se usan muchos es posible que se salga de la pantalla-->
-					<?php for($i=0; $i < $paginas; $i++):?>
+					<?php for($i=$limiteInferior; $i < $limiteSuperior; $i++):?>
 				    <li class="page-item 
 					<?php 
 						echo $_GET['pagina']==$i+1 ? 'active' : '' 
@@ -540,6 +564,17 @@
 
 
 					<!--boton que lleva a la siguiente pagina, no es nesesario modificar este componente-->
+
+					<?php
+						if ($limiteSuperior!=$paginas) {
+							echo '<li class="page-item"> 
+								<a class="page-link" 
+									href="BusquedaP.php?pagina='.($limiteSuperior+1).$parametros.'"
+								> ...</a>
+								</li>';
+						}
+					?>
+
 				    <li class="page-item
 						<?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?>
 					"> 
@@ -550,6 +585,7 @@
 			      </ul>
 			  </nav>
 			  <?php } ?>
+
             </div>
 	  </div>
 	  <!-- /#Contenido de la pagina -->
