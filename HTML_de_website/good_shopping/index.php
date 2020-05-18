@@ -115,6 +115,7 @@
 									echo'<label for="txt-contrasena">Contraseña</label>';
 									echo'<input type="password" class="form-control" id="txt-contrasena" name="txt-contrasena" placeholder="Contraseña">';
 								echo'</div>';
+								/*
 								echo'<div class="form-group">';
 									echo'<div class="form-check">';
 									echo'<input type="checkbox" class="form-check-input" id="dropdownCheck">';
@@ -123,6 +124,7 @@
 									</label>';
 									echo'</div>';
 								echo'</div>';
+								*/
 								echo'<button type="submit" id="btn_iniciar" name="btn_iniciar" class="btn btn-success">Iniciar Sesión</button>';
 							echo'</div>';
 								echo'<div id="mostrar_error_login" class="error_login">Ingrese el correo y la contrasena.</div>';

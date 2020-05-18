@@ -566,6 +566,37 @@
 												echo '</span>';
 											echo '</div>';
 									echo '</div>';
+
+									//eliminar cuenta
+									echo '<hr><br><div style="margin-top: 10px;"><h5 style="padding-left: -20%" class="col-lg-12">Eliminar Cuenta</h5></div>';
+
+									echo '<div class="row">';
+											echo '<div class="container-fluid" style="padding: 20px">';
+												echo '<span>';
+													
+													echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-sm">Confirmar eliminar cuenta</button>';
+													echo '<p><b>Nota: </b>Una vez eliminada su cuenta no podrá volver a recuperarla y todas sus publicaciones serán eliminadas de la página.</p>';
+												echo '</span>';
+											echo '</div>';
+									echo '</div>';
+
+									//modal para eliminar cuenta
+									echo '<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+									  <div class="modal-dialog modal-sm" role="document">
+									    <div class="modal-content" style="padding:20px">
+									      <center><b>¿Está seguro que quiere eliminar su cuenta para siempre?</b>
+									      <p style="color:#DC3545">No podrá volver a recuperarla.</p><hr></center>
+									      Introduzca su contraseña para confirmar
+									      <input type="password" class="form-control" id="contrasena_eliminar" required="required"placeholder="Contraseña"><br>
+									      <center>
+									      <div id="mensaje10" class="errores" style="margin-left:240px">Contraseña inválida</div>
+									      <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No</button>
+        									<button type="button" id="btn_eliminar_cuenta" class="btn btn-success btn-sm">Sí, estoy seguro</button>
+        								  </center>
+									    </div>
+									  </div>
+									</div>';
+									
 								echo '</div>';
 							echo '</div>';
 						echo '</div>';

@@ -357,7 +357,7 @@
 								echo$fila["CORREO_ELECTRONICO"];
 							echo'</h6>';
 			
-							echo'<h6>Telefono: +';
+							echo'<h6>Telefono: +504 ';
 								echo $fila["TELEFONO"];
 							echo'</h6>';
 
@@ -372,7 +372,7 @@
 								echo$fila["CORREO_TIENDA"];
 							echo'</h6>';
 			
-							echo'<h6>Telefono: +';
+							echo'<h6>Telefono: +504 ';
 								echo $fila["TELEFONO_TIENDA"];
 							echo'</h6>';
 

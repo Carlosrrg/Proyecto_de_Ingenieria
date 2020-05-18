@@ -141,6 +141,21 @@
 		$codigo_reporte = $_POST['codigo-reporte'];
 		if ($tipo_reporte == 1) { // reporte de vendedor
 
+			//da de baja a todos sus productos
+			$elimina_productos = $conexion->ejecutarInstruccion("	
+				SELECT CODIGO_PUBLICACION_PRODUCTO
+				FROM TBL_VEND_X_TBL_PUBLI
+				WHERE CODIGO_USUARIO_VENDEDOR = '$codigo'");
+			oci_execute($elimina_productos);
+			while ($fila = $conexion->obtenerFila($elimina_productos)) {
+				$codigo_publicacion = $fila["CODIGO_PUBLICACION_PRODUCTO"];
+				$elimina = $conexion->ejecutarInstruccion("	
+					UPDATE TBL_PUBLICACION_PRODUCTOS
+					SET CODIGO_ESTADO_PUBLICACION = 3
+					WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
+				oci_execute($elimina);
+			}
+
 			$edita_usuario = $conexion->ejecutarInstruccion("	
 				UPDATE TBL_USUARIOS
 				SET CORREO_ELECTRONICO = 'correo_deshabilitado'

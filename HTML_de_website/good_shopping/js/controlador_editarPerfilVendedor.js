@@ -218,4 +218,31 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	//Funcion para eliminar cuenta
+	$("#btn_eliminar_cuenta").click(function(){
+		var contrasena = $("#contrasena_eliminar").val();
+		$("#mensaje10").fadeOut();
+
+		$.ajax({
+			url:"ajax_procesar_php/acciones_eliminarCuenta.php",
+			data:"contrasena="+contrasena,
+			method:"POST",
+			success:function(respuesta){
+				//alert(respuesta);
+				if(respuesta == 0){
+					alert("Cuenta eliminada éxitosamente!");
+					window.location="php/session_cerrar.php";
+				} else {
+					if (respuesta == 1) {
+						$("#contrasena_eliminar").val("");
+						$("#mensaje10").fadeIn();
+					} else {
+						alert("Error al eliminar la cuenta.");
+					}
+				}
+			}
+		});	
+	});
+
 });
