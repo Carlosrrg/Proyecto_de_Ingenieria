@@ -26,6 +26,142 @@
 				<h6 style="text-align: center;">Categorías</h6>
 				<?php
 						$conexion->establecerConexion();
+						//Control del numero de paginas que se mostraran
+						//Gestion de parametros para buscar
+						$parametros = "";
+
+						$busca = "";
+						if (isset($_GET['busca'])) {
+							$busca = $_GET['busca'];
+							$parametros .= "&busca=".$busca;
+						}
+
+						$lugar = 0;
+						$sql_lugar = "";
+						if (isset($_GET['lugar'])) {
+							$lugar = $_GET['lugar'];
+							if ($lugar!=0) {
+								$sql_lugar = "AND F.CODIGO_LUGAR = ".$lugar." ";
+							}
+							$parametros .= "&lugar=".$lugar;
+						}
+
+						$categoria = 0;
+						$sql_categoria = "";
+						if (isset($_GET['categoria'])) {
+							$categoria = $_GET['categoria'];
+							if ($categoria!=0) {
+								$sql_categoria = "AND A.CODIGO_CATEGORIA = ".$categoria." ";
+							}
+							$parametros .= "&categoria=".$categoria;
+						}
+
+						$tipo_moneda = 0;
+						$sql_moneda = "";
+						if (isset($_GET['tipo_moneda'])) {
+							$tipo_moneda = $_GET['tipo_moneda'];
+							if ($tipo_moneda==1||$tipo_moneda==2) {
+								$sql_moneda = "AND A.CODIGO_TIPO_MONEDA = ".$tipo_moneda." ";
+							}
+							$parametros .= "&tipo_moneda=".$tipo_moneda;
+						}
+
+						$precio_min = "";
+						$sql_precio_min = "";
+						if (isset($_GET['precio_min'])) {
+							$precio_min = $_GET['precio_min'];
+							if ($precio_min!="") {
+								$sql_precio_min = "AND A.PRECIO >= ".$precio_min." ";
+							}
+							$parametros .= "&precio_min=".$precio_min;
+						}
+						
+						$precio_max = "";
+						$sql_precio_max = "";
+						if (isset($_GET['precio_max'])) {
+							$precio_max = $_GET['precio_max'];
+							if ($precio_max!="") {
+								$sql_precio_max = "AND A.PRECIO <= ".$precio_max." ";
+							}
+							$parametros .= "&precio_max=".$precio_max;
+						}
+						
+						$subcategorias = "";
+						$sql_subcatego1 = "";
+						$sql_subcatego2 = "";
+						if($categoria != 0){
+							if (isset($_GET['subcategorias'])) {
+								$subcategorias = $_GET['subcategorias'];
+								if ($subcategorias!="") {
+									$sql_subcatego1 = "INNER JOIN TBL_PRODU_X_TBL_CATEGO G ON A.CODIGO_PUBLICACION_PRODUCTO=G.CODIGO_PRODUCTO ";
+									$sql_subcatego2 = "AND G.CODIGO_SUB_CATEGORIA IN(".$subcategorias.") ";
+								}
+								$parametros .= "&subcategorias=".$subcategorias;
+							}
+						}
+
+						$orden = 1;
+						$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+						if (isset($_GET['orden'])) {
+							$orden = $_GET['orden'];
+							if ($orden==2) {
+								$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO ASC ";
+							}
+							if ($orden==3) {
+								$sql_orden = "ORDER BY A.PRECIO ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+							}
+							if ($orden==4) {
+								$sql_orden = "ORDER BY A.PRECIO DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+							}
+							if ($orden==5) {
+								$sql_orden = "ORDER BY obtener_valoracion(C.CODIGO_USUARIO) DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+							}
+							if ($orden==6) {
+								$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+							}
+							if ($orden==7) {
+								$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
+							}
+							$parametros .= "&orden=".$orden;
+						}
+
+						$resultado_cantP = $conexion->ejecutarInstruccion(
+							"SELECT  COUNT(*) NUM_PRODUCTOS
+							FROM TBL_PUBLICACION_PRODUCTOS A
+							INNER JOIN TBL_VEND_X_TBL_PUBLI C ON A.CODIGO_PUBLICACION_PRODUCTO=C.CODIGO_PUBLICACION_PRODUCTO
+							INNER JOIN TBL_USUARIOS F ON C.CODIGO_USUARIO_VENDEDOR=F.CODIGO_USUARIO 
+							".$sql_subcatego1."  
+							WHERE A.CODIGO_ESTADO_PUBLICACION = 1
+							AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('%$busca%')
+							".$sql_lugar."
+							".$sql_categoria." 
+							".$sql_moneda." 
+							".$sql_precio_min." 
+							".$sql_precio_max." 
+							".$sql_subcatego2." 
+							");
+						oci_execute($resultado_cantP);
+						while ($cantidad = $conexion->obtenerFila($resultado_cantP)) {
+							$total_productos = $cantidad["NUM_PRODUCTOS"];//todos los productos en venta de la base de datos
+						}
+						
+						$productosAMostrar = 5;// son el numero de productos que se mostraran en una pagina
+						$paginas = ceil($total_productos / $productosAMostrar);//son el total de paginas que abarcaran todos los productos
+						
+						//Control de seguridad por si hay numeros que no corresponden a las paginas
+						if($paginas == 0){
+							$paginas = 1;
+						}
+						if(!$_GET){
+							header('Location:BusquedaP.php?pagina=1');
+						}
+						if($_GET['pagina'] > $paginas){
+							header('Location:BusquedaP.php?pagina='.$paginas.'');
+						}
+						if($_GET['pagina'] < 1){
+							header('Location:BusquedaP.php?pagina=1');
+						}
+						//#Control de seguridad por si hay numeros que no corresponden a las paginas
 
 						echo '<div class="dropdown-divider"></div>';
 
@@ -118,146 +254,6 @@
 			}
 		?>
 	</nav>
-	
-	<?php
-		//Control del numero de paginas que se mostraran
-		$conexion->establecerConexion();
-		//Gestion de parametros para buscar
-		$parametros = "";
-
-		$busca = "";
-		if (isset($_GET['busca'])) {
-			$busca = $_GET['busca'];
-			$parametros .= "&busca=".$busca;
-		}
-
-		$lugar = 0;
-		$sql_lugar = "";
-		if (isset($_GET['lugar'])) {
-			$lugar = $_GET['lugar'];
-			if ($lugar!=0) {
-				$sql_lugar = "AND F.CODIGO_LUGAR = ".$lugar." ";
-			}
-			$parametros .= "&lugar=".$lugar;
-		}
-
-		$categoria = 0;
-		$sql_categoria = "";
-		if (isset($_GET['categoria'])) {
-			$categoria = $_GET['categoria'];
-			if ($categoria!=0) {
-				$sql_categoria = "AND A.CODIGO_CATEGORIA = ".$categoria." ";
-			}
-			$parametros .= "&categoria=".$categoria;
-		}
-
-		$tipo_moneda = 0;
-		$sql_moneda = "";
-		if (isset($_GET['tipo_moneda'])) {
-			$tipo_moneda = $_GET['tipo_moneda'];
-			if ($tipo_moneda==1||$tipo_moneda==2) {
-				$sql_moneda = "AND A.CODIGO_TIPO_MONEDA = ".$tipo_moneda." ";
-			}
-			$parametros .= "&tipo_moneda=".$tipo_moneda;
-		}
-
-		$precio_min = "";
-		$sql_precio_min = "";
-		if (isset($_GET['precio_min'])) {
-			$precio_min = $_GET['precio_min'];
-			if ($precio_min!="") {
-				$sql_precio_min = "AND A.PRECIO >= ".$precio_min." ";
-			}
-			$parametros .= "&precio_min=".$precio_min;
-		}
-		
-		$precio_max = "";
-		$sql_precio_max = "";
-		if (isset($_GET['precio_max'])) {
-			$precio_max = $_GET['precio_max'];
-			if ($precio_max!="") {
-				$sql_precio_max = "AND A.PRECIO <= ".$precio_max." ";
-			}
-			$parametros .= "&precio_max=".$precio_max;
-		}
-		
-		$subcategorias = "";
-		$sql_subcatego1 = "";
-		$sql_subcatego2 = "";
-		if($categoria != 0){
-			if (isset($_GET['subcategorias'])) {
-				$subcategorias = $_GET['subcategorias'];
-				if ($subcategorias!="") {
-					$sql_subcatego1 = "INNER JOIN TBL_PRODU_X_TBL_CATEGO G ON A.CODIGO_PUBLICACION_PRODUCTO=G.CODIGO_PRODUCTO ";
-					$sql_subcatego2 = "AND G.CODIGO_SUB_CATEGORIA IN(".$subcategorias.") ";
-				}
-				$parametros .= "&subcategorias=".$subcategorias;
-			}
-		}
-
-		$orden = 1;
-		$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-		if (isset($_GET['orden'])) {
-			$orden = $_GET['orden'];
-			if ($orden==2) {
-				$sql_orden = "ORDER BY A.CODIGO_PUBLICACION_PRODUCTO ASC ";
-			}
-			if ($orden==3) {
-				$sql_orden = "ORDER BY A.PRECIO ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-			}
-			if ($orden==4) {
-				$sql_orden = "ORDER BY A.PRECIO DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-			}
-			if ($orden==5) {
-				$sql_orden = "ORDER BY obtener_valoracion(C.CODIGO_USUARIO) DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-			}
-			if ($orden==6) {
-				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR ASC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-			}
-			if ($orden==7) {
-				$sql_orden = "ORDER BY G.CODIGO_TIPO_VENDEDOR DESC, A.CODIGO_PUBLICACION_PRODUCTO DESC ";
-			}
-			$parametros .= "&orden=".$orden;
-		}
-
-		$resultado_cantP = $conexion->ejecutarInstruccion(
-			"SELECT  COUNT(*) NUM_PRODUCTOS
-			FROM TBL_PUBLICACION_PRODUCTOS A
-			INNER JOIN TBL_VEND_X_TBL_PUBLI C ON A.CODIGO_PUBLICACION_PRODUCTO=C.CODIGO_PUBLICACION_PRODUCTO
-			INNER JOIN TBL_USUARIOS F ON C.CODIGO_USUARIO_VENDEDOR=F.CODIGO_USUARIO 
-			".$sql_subcatego1."  
-			WHERE A.CODIGO_ESTADO_PUBLICACION = 1
-			AND UPPER(A.NOMBRE_PRODUCTO) LIKE UPPER('%$busca%')
-			".$sql_lugar."
-			".$sql_categoria." 
-			".$sql_moneda." 
-			".$sql_precio_min." 
-			".$sql_precio_max." 
-			".$sql_subcatego2." 
-			");
-		oci_execute($resultado_cantP);
-		while ($cantidad = $conexion->obtenerFila($resultado_cantP)) {
-			$total_productos = $cantidad["NUM_PRODUCTOS"];//todos los productos en venta de la base de datos
-		}
-		
-		$productosAMostrar = 5;// son el numero de productos que se mostraran en una pagina
-		$paginas = ceil($total_productos / $productosAMostrar);//son el total de paginas que abarcaran todos los productos
-		
-		//Control de seguridad por si hay numeros que no corresponden a las paginas
-		if($paginas == 0){
-			$paginas = 1;
-		}
-		if(!$_GET){
-			header('Location:BusquedaP.php?pagina=1');
-		}
-		if($_GET['pagina'] > $paginas){
-			header('Location:BusquedaP.php?pagina='.$paginas.'');
-		}
-		if($_GET['pagina'] < 1){
-			header('Location:BusquedaP.php?pagina=1');
-		}
-		//#Control de seguridad por si hay numeros que no corresponden a las paginas
-	?>
 	
 	<div class="d-flex" id="wrapper">
 		
@@ -395,7 +391,7 @@
 					  </label>
 					  <label style="text-transform: none;" class="btn btn-outline-dark btn-sm">
 						<input type="radio" name="opcion_moneda" id="rb_dolares" value="2"
-						<?php if($tipo_moneda==2){echo ' checked';} ?>> Dolares 
+						<?php if($tipo_moneda==2){echo ' checked';} ?>> Dólares 
 					  </label>
 					  <label style="text-transform: none;" class="btn btn-outline-dark btn-sm">
 						<input type="radio" name="opcion_moneda" id="rb_ambas" value="0"
@@ -608,7 +604,7 @@
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
-					<h6>Goodshopping</h6>
+					<h6>Good Shopping</h6>
 					<a href="Acerca_de_nosotros.html" style="color: black;">
 						<span>
 							Acerca de nosotros
@@ -657,16 +653,16 @@
 				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
 					<br>
 					<h6>Ayuda</h6>
-					<a href="#" style="color: black;">
+					<a href="Preguntas_frecuentes.html" style="color: black;">
 						<span>
-							Soporte técnico
+							Preguntas frecuentes
 						</span>
 					</a>
 				</div>
 
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
-					<h6>Siguenos en</h6>
+					<h6>Síguenos en</h6>
 					<a href="https://www.facebook.com/Good-Shopping-106040207755389/?modal=admin_todo_tour" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
 					<a href="https://www.pinterest.ca/GoodShoppingHn504/" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
 					<a href="https://twitter.com/GoodShopping7" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>

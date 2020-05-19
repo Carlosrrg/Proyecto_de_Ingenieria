@@ -295,7 +295,7 @@
 							      <th scope="col">Contactos</th>
 							      <th scope="col">Fecha recibido</th>
 							      <th scope="col">Mensaje</th>
-							      <th scope="col">Publicacion</th>
+							      <th scope="col">Publicación</th>
 							      <th scope="col">Acción</th>
 							    </tr>
 							  </thead>
@@ -423,16 +423,16 @@
 				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
 					<br>
 					<h6>Ayuda</h6>
-					<a href="#" style="color: black;">
+					<a href="Preguntas_frecuentes.html" style="color: black;">
 						<span>
-							Soporte técnico
+							Preguntas frecuentes
 						</span>
 					</a>
 				</div>
 
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
-					<h6>Siguenos en</h6>
+					<h6>Síguenos en</h6>
 					<a href="https://www.facebook.com/Good-Shopping-106040207755389/?modal=admin_todo_tour" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
 					<a href="https://www.pinterest.ca/GoodShoppingHn504/" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
 					<a href="https://twitter.com/GoodShopping7" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>

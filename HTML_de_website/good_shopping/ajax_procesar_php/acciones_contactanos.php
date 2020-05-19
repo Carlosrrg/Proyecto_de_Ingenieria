@@ -2,7 +2,10 @@
     $nombre = $_POST["txt_nombre"];
     $correo = $_POST["txt_correo"];
     $sugerencia = $_POST["txt_sugerencia"];
-    if (empty($_POST["txt_nombre"])||empty($_POST["txt_correo"])||empty($_POST["txt_sugerencia"])){
+
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        echo '0';
+    }else if (empty($_POST["txt_nombre"])||empty($_POST["txt_correo"])||empty($_POST["txt_sugerencia"])){
         echo 'Ningun campo debe estar vacio';
     }else{
         //FUNCION PARA ENVIAR CORREO DE CAMBIO DE CONTRASEÑA

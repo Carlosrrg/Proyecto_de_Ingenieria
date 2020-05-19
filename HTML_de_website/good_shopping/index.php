@@ -187,7 +187,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalCenterTitle">Restablece tú contraseña</h5>
+	        <h5 class="modal-title" id="exampleModalCenterTitle">Reestablece tu contraseña</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -223,7 +223,7 @@
 					<div id="mensaje20" class="errores">Las contraseñas no coinciden</div>
 				</div>
 			</div>
-			<div id="mensaje21" style="color: green;">Se restablecio la contraseña con éxito. Vuelva a iniciar sesión.</div>
+			<div id="mensaje21" style="color: green;">Se restableció la contraseña con éxito. Vuelva a iniciar sesión.</div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -281,7 +281,7 @@
 					<div class="inner" style="text-align:center;">
 						<a href="busquedaP.php?pagina=1&lugar=7" class="button radius">
 							<span>
-								Cortes
+								Cortés
 							</span>
 						</a>	
 					</div>
@@ -490,7 +490,7 @@
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
-					<h6>Goodshopping</h6>
+					<h6>Good Shopping</h6>
 					<a href="Acerca_de_nosotros.html" style="color: black;">
 						<span>
 							Acerca de nosotros
@@ -538,16 +538,16 @@
 				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
 					<br>
 					<h6>Ayuda</h6>
-					<a href="#" style="color: black;">
+					<a href="Preguntas_frecuentes.html" style="color: black;">
 						<span>
-							Soporte técnico
+							Preguntas frecuentes
 						</span>
 					</a>
 				</div>
 
 				<div class="col-xs-2 col-sm-3 " style="text-align:center; padding-left: 5%;">
 					<br>
-					<h6>Siguenos en</h6>
+					<h6>Síguenos en</h6>
 					<a href="https://www.facebook.com/Good-Shopping-106040207755389/?modal=admin_todo_tour" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
 					<a href="https://www.pinterest.ca/GoodShoppingHn504/" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
 					<a href="https://twitter.com/GoodShopping7" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>

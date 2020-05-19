@@ -111,7 +111,7 @@
 
 			//FUNCION PARA ENVIAR CORREO DE CONFIRMACION DE REGISTRO
 			if (!empty($_POST)) {
-				$email_subject = "Registro éxitoso a Good Shopping!";
+				$email_subject = "Registro exitoso a Good Shopping!";
 				$email_message = "Detalles del registro:\n\n";
 				$email_message .= " - Nombre: " . $nombre . "\n";
 				$email_message .= " - Apellido: " . $apellido . "\n";

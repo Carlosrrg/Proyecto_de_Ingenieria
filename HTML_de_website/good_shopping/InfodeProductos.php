@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Informacion del Producto o Servicio</title>
+    <title>Información del Producto o Servicio</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/estilo2.css" rel="stylesheet">
@@ -146,7 +146,7 @@
 																					WHERE CODIGO_PUBLICACION_PRODUCTO = '$codigo_publicacion'");
 					oci_execute($obtener_tipo_publicacion);
 					while ($fila8 = $conexion->obtenerFila($obtener_tipo_publicacion)) {
-						echo '<div><h5 class="col-lg-12" style="padding-top:30px;">Informacion del ';
+						echo '<div><h5 class="col-lg-12" style="padding-top:30px;">Información del ';
 							if ($fila8["NOMBRE_TIPO_PUBLICACION"] == "Producto") {
 								echo 'Producto';	
 							}
@@ -267,9 +267,8 @@
 									$promedio_estrellas[$i] = '.';
 								}
 							}
-							echo '<br>Calificacion del Vendedor<br>
+							echo '<br>Calificación del Vendedor<br>
 								<div class="rateyo" id="puntuacion"
-									starWidth= "10px"
 									data-rateyo-read-only="true"
 									data-rateyo-rating="'.$promedio_estrellas.'"
 									data-rateyo-num-stars= "5"
@@ -294,7 +293,7 @@
 							$tipo_usuario_seccion = $fila12["CODIGO_TIPO_VENDEDOR"];
 						}
 						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para poder denunciar esta publicacion<br></div>';
+							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para poder denunciar esta publicación<br></div>';
 						}
 						else{
 							if ($codigo_usuario_vendedor != $usuario && $tipo_usuario==2 && $tipo_usuario_seccion == 1) {
@@ -570,7 +569,7 @@
     				<!--scrollbar mensaje de texto-->                    
 					<?php 
 						if (!isset($_SESSION['codigo_usuario_sesion'])) {			
-							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor sobre esta publicacion</div>';
+							echo '<div style="margin-left: 50px; margin-top: 50px">No has iniciado sesión, '." ".' <a href="index.php">Inicia Sesión</a> '." ".' para enviar mensaje a este vendedor sobre esta publicación</div>';
 						}
 						else{
 							if ($codigo_usuario_vendedor!=$usuario && $tipo_usuario_seccion == 1) {
@@ -588,7 +587,7 @@
 					<br><br>
 					<center>
                         <div class="spinner-border text-success" role="status" id="r-cargando">
-                            <span class="sr-only">Loading...</span>
+                            <span class="sr-only">Cargando...</span>
                         </div>
                     </center>
 
@@ -606,7 +605,7 @@
 			<div class="row">
 				<div class="col-xs-6 col-mx-2" style="padding-left:50px; padding-right: 30px;">
 					<br>
-					<h6>Goodshopping</h6>
+					<h6>Good Shopping</h6>
 					<a href="Acerca_de_nosotros.html" style="color: black;">
 						<span>
 							Acerca de nosotros
@@ -655,16 +654,16 @@
 				<div class="col-xs-9 col-mx-2" style="padding-left:50px; padding-right: 50px;">
 					<br>
 					<h6>Ayuda</h6>
-					<a href="#" style="color: black;">
+					<a href="Preguntas_frecuentes.html" style="color: black;">
 						<span>
-							Soporte técnico
+							Preguntas frecuentes
 						</span>
 					</a>
 				</div>
 
 				<div class="col-xs-2  col-md-7 col-sm-5 col-lg-3" style="text-align:center; padding-left: 5%;">
 					<br>
-					<h6>Siguenos en</h6>
+					<h6>Síguenos en</h6>
 					<a href="https://www.facebook.com/Good-Shopping-106040207755389/?modal=admin_todo_tour" class="btn btn-primary"><img src="recursos/imagenes/Facebook.png" width="25"></a>
 					<a href="https://www.pinterest.ca/GoodShoppingHn504/" class="btn btn-danger"><img src="recursos/imagenes/pinterest.png" width="25"></a>
 					<a href="https://twitter.com/GoodShopping7" class="btn btn-primary"><img src="recursos/imagenes/Twiter.png" width="30"></a>
@@ -682,7 +681,7 @@
   <script type="text/javascript" src="js/jquery.rateyo.js"></script>
   <script>
 		$(function () {
-			$(".rateyo").rateYo().on("rateyo.change", function (e, data) {});
+			$(".rateyo").rateYo().on();
 		});
   </script>	
 </body>
