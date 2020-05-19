@@ -217,8 +217,8 @@
 								echo '<div><h6>Seleccione su perfil</h6></div>';
 								echo '<div class="list-group list-group-flush">';
 									echo '<div class="ml-4 col-md-10 col-11 col-lg-10">';
-										echo '<a href="Perfil_usuario_comprador.php" class=" list-group-item-action bg-light">comprador</a><br>';
-										echo '<a href="Productos_y_servicios.php" class=" list-group-item-action bg-light">vendedor</a>';
+										echo '<a href="Perfil_usuario_comprador.php" class=" list-group-item-action bg-light" style="font-weight:bold; margin-left:-39px;">comprador</a><br>';
+										echo '<a href="Productos_y_servicios.php" class=" list-group-item-action bg-light" style="margin-left:-39px;">vendedor</a>';
 									echo '</div>';
 								echo '</div><br>';
 							}
